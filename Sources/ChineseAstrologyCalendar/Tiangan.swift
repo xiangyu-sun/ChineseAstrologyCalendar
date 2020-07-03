@@ -52,6 +52,20 @@ public extension Date {
         return "未卜"
     }
     
+    var month: String {
+          
+          var tianGanDizhi: String?
+          if let t = self.yueGan, let d = self.yueZhi {
+              tianGanDizhi = t.displayText + d.displayText
+          }
+
+          if let tianGanDizhi = tianGanDizhi{
+              return "\(tianGanDizhi)月"
+          }
+
+          return "未卜"
+      }
+    
     var zodiac: String {
         if let d = self.nianZhi {
             let zodiac = Zodiac(d)
