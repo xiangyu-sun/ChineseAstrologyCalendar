@@ -12,7 +12,7 @@ final class ChineseAstrologyCalendarTests: XCTestCase {
         XCTAssertNotNil(Date().nianGan)
     }
     
-    func testNianGanList() {
+    func testNianGanListHasTenElements() {
         for i in 1...10 {
             XCTAssertNotNil(Tiangan(rawValue: i))
         }
@@ -21,9 +21,17 @@ final class ChineseAstrologyCalendarTests: XCTestCase {
         XCTAssertNotNil(Date().nianZhi)
     }
     
-    func testNianZhiList() {
+    func testNianZhiListHasTwelveElements() {
         for i in 1...12 {
             XCTAssertNotNil(Dizhi(rawValue: i))
         }
     }
+    
+    func testYuezhiToNotBeNil() {
+        XCTAssertNotNil(Date().yueZhi)
+    }
+    
+    func testYueGanToNotBeNil() {
+         XCTAssertNotNil(Date().yueZhi)
+     }
 }

@@ -1,7 +1,3 @@
-//
-//  Date+Ganzhi.swift
-//  TianganDizhi
-//
 //  Created by 孙翔宇 on 03/07/2020.
 //  Copyright © 2020 孙翔宇. All rights reserved.
 //
