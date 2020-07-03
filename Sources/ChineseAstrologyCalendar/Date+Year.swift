@@ -15,12 +15,12 @@ public extension Date {
         t = t - 3
         return Tiangan(rawValue: t)
     }
-    
+
     var nianZhi: Dizhi? {
         let dateComponents = Calendar.current.dateComponents([.year], from: self)
         guard let year = dateComponents.value(for: .year) else { return nil }
         let t = (year + 7) % 12
-        
+
         return Dizhi(rawValue: t)
     }
 }

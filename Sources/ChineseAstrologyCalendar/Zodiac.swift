@@ -1,6 +1,6 @@
 //
 //  Zodiac.swift
-//  
+//
 //
 //  Created by 孙翔宇 on 25/03/2020.
 //
@@ -11,7 +11,7 @@ public protocol DizhiConvertible {
     init(_ dizhi: Dizhi)
 }
 
-public enum Zodiac: String, DizhiConvertible{
+public enum Zodiac: String, DizhiConvertible {
     public init(_ dizhi: Dizhi) {
         switch dizhi {
         case .zi:
@@ -40,6 +40,6 @@ public enum Zodiac: String, DizhiConvertible{
             self = .猪
         }
     }
-    
+
     case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 鸡, 狗, 猪
 }

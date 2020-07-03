@@ -1,6 +1,6 @@
 //
 //  Tiangan.swift
-//  
+//
 //
 //  Created by 孙翔宇 on 25/03/2020.
 //
@@ -9,7 +9,7 @@ import Foundation
 
 public enum Tiangan: Int, CaseIterable {
     case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
-    
+
     public var displayText: String {
         switch self {
         case .jia:
@@ -37,53 +37,48 @@ public enum Tiangan: Int, CaseIterable {
 }
 
 public extension Date {
-    
     var year: String {
-        
         var tianGanDizhi: String?
-        if let t = self.nianGan, let d = self.nianZhi {
+        if let t = nianGan, let d = nianZhi {
             tianGanDizhi = t.displayText + d.displayText
         }
 
-        if let tianGanDizhi = tianGanDizhi{
+        if let tianGanDizhi = tianGanDizhi {
             return "\(tianGanDizhi)年"
         }
 
         return "未卜"
     }
-    
+
     var month: String {
-          
-          var tianGanDizhi: String?
-          if let t = self.yueGan, let d = self.yueZhi {
-              tianGanDizhi = t.displayText + d.displayText
-          }
+        var tianGanDizhi: String?
+        if let t = yueGan, let d = yueZhi {
+            tianGanDizhi = t.displayText + d.displayText
+        }
 
-          if let tianGanDizhi = tianGanDizhi{
-              return "\(tianGanDizhi)月"
-          }
+        if let tianGanDizhi = tianGanDizhi {
+            return "\(tianGanDizhi)月"
+        }
 
-          return "未卜"
-      }
-    
+        return "未卜"
+    }
+
     var zodiac: String {
-        if let d = self.nianZhi {
+        if let d = nianZhi {
             let zodiac = Zodiac(d)
             return zodiac.rawValue
         }
-        
+
         return "未卜"
     }
-    
+
     var shichen: String {
-        
         let calendar = Calendar(identifier: .chinese)
-        
+
         let component = calendar.dateComponents(in: TimeZone.current, from: Date())
-        
+
         guard let hour = component.hour else { return "未卜" }
-        
-        
+
         return Dizhi(hourOfDay: hour).displayHourText
     }
 }

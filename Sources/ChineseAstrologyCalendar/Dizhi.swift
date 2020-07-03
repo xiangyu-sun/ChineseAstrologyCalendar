@@ -1,6 +1,6 @@
 //
 //  Dizhi.swift
-//  
+//
 //
 //  Created by 孙翔宇 on 25/03/2020.
 //
@@ -18,10 +18,9 @@ public protocol MonthExpressible {
     var displayMonthText: String { get }
 }
 
-
 public enum Dizhi: Int, CaseIterable {
     case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
-    
+
     public var displayText: String {
         switch self {
         case .zi:
@@ -52,15 +51,15 @@ public enum Dizhi: Int, CaseIterable {
     }
 }
 
-public struct HourInterval<T> where T:Comparable {
-    let start:T
-    let end:T
+public struct HourInterval<T> where T: Comparable {
+    let start: T
+    let end: T
 }
 
 extension HourInterval: CustomStringConvertible where T == Int {
     public var description: String {
         "From \(start) to \(end)"
-        //String.localizedStringWithFormat("From %@ to %@", start, end)
+        // String.localizedStringWithFormat("From %@ to %@", start, end)
     }
 }
 
@@ -95,7 +94,7 @@ extension Dizhi: TimeExpressible {
             self = .zi
         }
     }
-    
+
     public var hourInterval: HourInterval<Int> {
         switch self {
         case .zi:
@@ -124,8 +123,8 @@ extension Dizhi: TimeExpressible {
             return .init(start: 21, end: 22)
         }
     }
-    
+
     public var displayHourText: String { displayText + "時" }
-    
+
     public var displayHourDetailText: String { "\(displayText) \(hourInterval.description) 時" }
 }
