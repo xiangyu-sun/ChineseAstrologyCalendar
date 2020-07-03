@@ -2,14 +2,28 @@ import XCTest
 @testable import ChineseAstrologyCalendar
 
 final class ChineseAstrologyCalendarTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(ChineseAstrologyCalendar().text, "Hello, World!")
-    }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testNianGanToNotbeNil", testNianGanToNotbeNil),
     ]
+    
+    
+    func testNianGanToNotbeNil() {
+        XCTAssertNotNil(Date().nianGan)
+    }
+    
+    func testNianGanList() {
+        for i in 1...10 {
+            XCTAssertNotNil(Tiangan(rawValue: i))
+        }
+    }
+    func testNianZhiToNotbeNil() {
+        XCTAssertNotNil(Date().nianZhi)
+    }
+    
+    func testNianZhiList() {
+        for i in 1...12 {
+            XCTAssertNotNil(Dizhi(rawValue: i))
+        }
+    }
 }
