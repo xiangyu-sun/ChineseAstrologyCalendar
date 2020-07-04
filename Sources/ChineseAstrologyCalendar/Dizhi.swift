@@ -9,7 +9,7 @@ import Foundation
 
 public protocol TimeExpressible {
     init(hourOfDay: Int)
-    var displayText: String { get }
+    var chineseCharactor: String { get }
     var displayHourText: String { get }
     var displayHourDetailText: String { get }
 }
@@ -21,7 +21,7 @@ public protocol MonthExpressible {
 public enum Dizhi: Int, CaseIterable {
     case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
 
-    public var displayText: String {
+    public var chineseCharactor: String {
         switch self {
         case .zi:
             return "子"
@@ -124,7 +124,7 @@ extension Dizhi: TimeExpressible {
         }
     }
 
-    public var displayHourText: String { displayText + "時" }
+    public var displayHourText: String { chineseCharactor + "時" }
 
-    public var displayHourDetailText: String { "\(displayText) \(hourInterval.description) 時" }
+    public var displayHourDetailText: String { "\(chineseCharactor) \(hourInterval.description) 時" }
 }
