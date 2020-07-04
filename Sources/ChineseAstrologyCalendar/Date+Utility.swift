@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  GanzhiDateConverter.swift
 //  
 //
 //  Created by 孙翔宇 on 04/07/2020.
@@ -15,14 +15,14 @@ public enum DateConvertionError: LocalizedError {
 
 public struct GanzhiDateConverter {
     
-    static func nian(_ date: Date) throws -> Ganzhi {
+    public static func nian(_ date: Date) throws -> Ganzhi {
         guard let t = date.nianGan else { throw DateConvertionError.dateGanzhiMissing}
         guard let d = date.nianZhi else { throw DateConvertionError.dateGanzhiMissing}
         
         return Ganzhi(gan: t, zhi: d)
     }
     
-    static func yue(_ date: Date) throws -> Ganzhi {
+    public static func yue(_ date: Date) throws -> Ganzhi {
         
         guard let t = date.yueGan else { throw DateConvertionError.dateGanzhiMissing}
         guard let d = date.yueZhi else { throw DateConvertionError.dateGanzhiMissing}
@@ -30,7 +30,7 @@ public struct GanzhiDateConverter {
         return Ganzhi(gan: t, zhi: d)
     }
     
-    static func zodiac(_ date: Date) throws -> Zodiac {
+    public static func zodiac(_ date: Date) throws -> Zodiac {
         if let d = date.nianZhi {
             let zodiac = Zodiac(d)
             return zodiac
@@ -39,7 +39,7 @@ public struct GanzhiDateConverter {
         throw DateConvertionError.dateGanzhiMissing
     }
     
-    static func shichen(_ date: Date) throws -> Dizhi {
+    public static func shichen(_ date: Date) throws -> Dizhi {
         let calendar = Calendar(identifier: .chinese)
         
         let component = calendar.dateComponents(in: TimeZone.current, from: date)
