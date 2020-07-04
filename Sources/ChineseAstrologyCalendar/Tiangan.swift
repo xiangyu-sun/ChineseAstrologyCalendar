@@ -72,13 +72,13 @@ public extension Date {
         return "未卜"
     }
 
-    var shichen: String {
+    var shichen: Dizhi? {
         let calendar = Calendar(identifier: .chinese)
 
-        let component = calendar.dateComponents(in: TimeZone.current, from: Date())
+        let component = calendar.dateComponents(in: TimeZone.current, from: self)
 
-        guard let hour = component.hour else { return "未卜" }
+        guard let hour = component.hour else { return nil }
 
-        return Dizhi(hourOfDay: hour).displayHourText
+        return Dizhi(hourOfDay: hour)
     }
 }
