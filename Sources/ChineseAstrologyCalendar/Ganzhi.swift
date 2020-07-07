@@ -15,3 +15,14 @@ public struct Ganzhi: CustomStringConvertible {
         gan.chineseCharactor + zhi.chineseCharactor
     }
 }
+
+
+public extension Ganzhi {
+    var formatedYear: String {
+        description + "年"
+    }
+    
+    var formatedMonth: String {
+        description + "月"
+    }
+}
