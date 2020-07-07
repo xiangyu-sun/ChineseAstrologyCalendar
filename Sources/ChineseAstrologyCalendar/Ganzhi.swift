@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct Ganzhi {
+public struct Ganzhi: CustomStringConvertible {
     let gan: Tiangan
     let zhi: Dizhi
+    
+    public var description : String {
+        gan.chineseCharactor + zhi.chineseCharactor
+    }
 }
