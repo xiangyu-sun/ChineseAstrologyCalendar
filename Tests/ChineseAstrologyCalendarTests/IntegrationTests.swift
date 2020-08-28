@@ -14,26 +14,30 @@ final class IntegrationTests: XCTestCase {
         XCTAssertEqual(date.nianGan, Tiangan.yi)
     }
     
-    func testNianZhiToBeZhi() {
+    func testNianGan() {
+        let calendar = Calendar(identifier: .gregorian)
+        let timeZone = TimeZone(abbreviation: "CST")
+        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 1995, month: 2, day: 18)
+        self.date = calendar.date(from: comp)
+        XCTAssertEqual(date.nianZhi, Dizhi.hai)
+        XCTAssertEqual(date.nianGan, Tiangan.yi)
+    }
+    
+    func testNianZhiToBeWei() {
         setupDateOne()
         XCTAssertEqual(date.nianZhi, Dizhi.wei)
     }
     
     func testYuezhiToBeShen() {
         setupDateOne()
-        XCTAssertEqual(date.yueZhi, Dizhi.shen)
+        XCTAssertEqual(date.yueZhi, Dizhi.wei)
     }
     
     func testYueGanToBeJia() {
         setupDateOne()
-        XCTAssertEqual(date.yueGan, Tiangan.jia)
+        XCTAssertEqual(date.yueGan, Tiangan.kui)
     }
     
-    
-    func testNianGanToBeRen() {
-        setupDateTwo()
-        XCTAssertEqual(date.nianGan, Tiangan.ren)
-    }
     
     func testYuezhiToBeHai() {
         setupDateTwo()
@@ -44,7 +48,15 @@ final class IntegrationTests: XCTestCase {
         setupDateTwo()
         XCTAssertEqual(date.yueGan, Tiangan.xin)
     }
-    
+    func testNianGanToBeRen() {
+        setupDateThree()
+        XCTAssertEqual(date.nianGan, Tiangan.ren)
+    }
+    func testNianZhiToBeZi() {
+        setupDateThree()
+        XCTAssertEqual(date.nianZhi, Dizhi.zi)
+    }
+
     
     func setupDateOne() {
         let calendar = Calendar(identifier: .gregorian)
@@ -59,5 +71,13 @@ final class IntegrationTests: XCTestCase {
         let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 2012, month: 10, day: 3)
         self.date = calendar.date(from: comp)
     }
+    
+    func setupDateThree() {
+        let calendar = Calendar(identifier: .gregorian)
+        let timeZone = TimeZone(abbreviation: "CST")
+        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 1912, month: 2, day: 18)
+        self.date = calendar.date(from: comp)
+    }
+    
 }
 

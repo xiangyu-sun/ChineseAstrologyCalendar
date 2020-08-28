@@ -12,7 +12,7 @@ public extension Date {
     }
 
     var yueZhi: Dizhi? {
-        let dateComponents = Calendar.current.dateComponents([.month], from: self)
+        let dateComponents = Calendar(identifier: .gregorian).dateComponents([.month], from: self)
         guard let month = dateComponents.value(for: .month) else { return nil }
         return Dizhi(rawValue: month)
     }
