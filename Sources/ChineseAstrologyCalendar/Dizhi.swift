@@ -141,7 +141,7 @@ extension Dizhi: TimeExpressible {
         
         guard let nextDate = Calendar.current.date(from: nextDateComponent) else { return 0 }
         
-        return currentDate.timeIntervalSince(nextDate)
+        return nextDate.timeIntervalSince(currentDate)
     }
 
     public var displayHourText: String { chineseCharactor + "時" }

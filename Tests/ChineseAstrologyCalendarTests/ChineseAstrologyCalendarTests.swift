@@ -34,4 +34,9 @@ final class ChineseAstrologyCalendarTests: XCTestCase {
     func testYueGanToNotBeNil() {
          XCTAssertNotNil(Date().yueZhi)
      }
+    
+    func testTimeInterval() throws {
+        let dizhi = try GanzhiDateConverter.shichen(Date())
+        XCTAssertGreaterThan(dizhi.secondToNextShiChen(), 0)
+    }
 }
