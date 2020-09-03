@@ -63,9 +63,9 @@ extension HourInterval: CustomStringConvertible where T == Int {
     }
 }
 
-public
+
 extension Dizhi: TimeExpressible {
-    init(hourOfDay: Int) {
+    public init(hourOfDay: Int) {
         switch hourOfDay {
         case 23, 0:
             self = .zi
@@ -96,7 +96,7 @@ extension Dizhi: TimeExpressible {
         }
     }
 
-    var hourInterval: HourInterval<Int> {
+    public var hourInterval: HourInterval<Int> {
         switch self {
         case .zi:
             return .init(start: 23, end: 0)
@@ -125,20 +125,26 @@ extension Dizhi: TimeExpressible {
         }
     }
     
-    func secondToNextShiChen() -> TimeInterval {
-        let nextShiChenHour = hourInterval.end + 1
+    public func secondToNextShiChen() -> TimeInterval {
+        let nextShiChenHour = hourInterval.end.advanced(by: 1)
         let currentDate = Date()
         
         let currentDateComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: currentDate)
         var nextDateComponent = currentDateComponent
+        
+        if hourInterval.end == 0 {
+            nextDateComponent.day = nextDateComponent.day?.advanced(by: 1)
+        }
+        
         nextDateComponent.hour = nextShiChenHour
+        
         
         guard let nextDate = Calendar.current.date(from: nextDateComponent) else { return 0 }
         
         return currentDate.timeIntervalSince(nextDate)
     }
 
-    var displayHourText: String { chineseCharactor + "時" }
+    public var displayHourText: String { chineseCharactor + "時" }
 
-    var displayHourDetailText: String { "\(chineseCharactor) \(hourInterval.description) 時" }
+    public var displayHourDetailText: String { "\(chineseCharactor) \(hourInterval.description) 時" }
 }
