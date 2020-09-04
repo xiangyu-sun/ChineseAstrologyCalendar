@@ -78,6 +78,20 @@ public enum Dizhi: Int, CaseIterable {
             return "人定"
         }
     }
+    
+    public var next: Dizhi {
+        guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
+            return .yin
+        }
+        return nextDizhi
+    }
+    
+    public var previous: Dizhi {
+        guard let previousDizhi = Dizhi(rawValue: rawValue - 1) else {
+            return .chou
+        }
+        return previousDizhi
+    }
 }
 
 public struct HourInterval<T> where T: Comparable {
