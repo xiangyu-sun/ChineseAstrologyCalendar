@@ -49,6 +49,35 @@ public enum Dizhi: Int, CaseIterable {
             return "亥"
         }
     }
+    
+    public var aliasName: String {
+        switch self {
+        case .zi:
+            return "夜半"
+        case .chou:
+            return "鸡鸣"
+        case .yin:
+            return "平旦"
+        case .mao:
+            return "日出"
+        case .chen:
+            return "食时"
+        case .si:
+            return "隅中"
+        case .wu:
+            return "日中"
+        case .wei:
+            return "日昳"
+        case .shen:
+            return "晡时"
+        case .you:
+            return "日入"
+        case .xu:
+            return "黄昏"
+        case .hai:
+            return "人定"
+        }
+    }
 }
 
 public struct HourInterval<T> where T: Comparable {
