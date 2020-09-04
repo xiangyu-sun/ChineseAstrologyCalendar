@@ -79,6 +79,35 @@ public enum Dizhi: Int, CaseIterable {
         }
     }
     
+    public var organReference: String {
+        switch self {
+        case .zi:
+            return "膽"
+        case .chou:
+            return "肝"
+        case .yin:
+            return "肺"
+        case .mao:
+            return "大腸"
+        case .chen:
+            return "胃"
+        case .si:
+            return "脾"
+        case .wu:
+            return "心"
+        case .wei:
+            return "小腸"
+        case .shen:
+            return "膀胱"
+        case .you:
+            return "腎"
+        case .xu:
+            return "心包"
+        case .hai:
+            return "三焦"
+        }
+    }
+    
     public var next: Dizhi {
         guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
             return .yin
