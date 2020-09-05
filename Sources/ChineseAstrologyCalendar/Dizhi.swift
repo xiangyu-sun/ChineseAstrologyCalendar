@@ -223,6 +223,4 @@ extension Dizhi: TimeExpressible {
     }
 
     public var displayHourText: String { chineseCharactor + "時" }
-
-    public var displayHourDetailText: String { "\(chineseCharactor) \(hourInterval.description) 時" }
 }
