@@ -11,7 +11,6 @@ public protocol TimeExpressible {
     init(hourOfDay: Int)
     var chineseCharactor: String { get }
     var displayHourText: String { get }
-    var displayHourDetailText: String { get }
     func secondToNextShiChen() -> TimeInterval
 }
 
