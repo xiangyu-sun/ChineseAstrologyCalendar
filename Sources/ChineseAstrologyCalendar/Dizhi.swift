@@ -12,6 +12,7 @@ public protocol TimeExpressible {
     var chineseCharactor: String { get }
     var displayHourText: String { get }
     var displayHourDetailText: String { get }
+    func secondToNextShiChen() -> TimeInterval
 }
 
 public protocol MonthExpressible {
@@ -195,6 +196,19 @@ extension Dizhi: TimeExpressible {
         case .hai:
             return .init(start: 21, end: 22)
         }
+    }
+
+    static var dateIntervalFormatter: DateIntervalFormatter = {
+        let fm = DateIntervalFormatter()
+        fm.dateTemplate = "jm"
+        return fm
+    }()
+    
+    
+    @available(iOS 10.0, *)
+    var formattedRange: String? {
+        guard let date = Calendar.current.date(bySetting: .hour, value: hourInterval.start, of: Date()) else { return nil }
+        return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration:60 * 60 * 2))
     }
     
     public func secondToNextShiChen() -> TimeInterval {
