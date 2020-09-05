@@ -129,14 +129,6 @@ public struct HourInterval<T> where T: Comparable {
     let end: T
 }
 
-extension HourInterval: CustomStringConvertible where T == Int {
-    public var description: String {
-        "From \(start) to \(end)"
-        // String.localizedStringWithFormat("From %@ to %@", start, end)
-    }
-}
-
-
 extension Dizhi: TimeExpressible {
     public init(hourOfDay: Int) {
         switch hourOfDay {
@@ -206,7 +198,7 @@ extension Dizhi: TimeExpressible {
     
     
     @available(iOS 10.0, *)
-    var formattedRange: String? {
+    public var formattedHourRange: String? {
         guard let date = Calendar.current.date(bySetting: .hour, value: hourInterval.start, of: Date()) else { return nil }
         return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration:60 * 60 * 2))
     }
