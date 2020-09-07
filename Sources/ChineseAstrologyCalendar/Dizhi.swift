@@ -214,6 +214,19 @@ extension Dizhi: TimeExpressible {
         return Dizhi.monthFormatter.string(from: date)
     }
     
+    public var startDateComponent: Date? {
+        let startHour = hourInterval.start
+        let currentDate = Date()
+        
+        var startDP = Calendar.current.dateComponents([.year, .month,.day,.hour, .minute, .second, .nanosecond], from: currentDate)
+        startDP.hour = startHour
+        startDP.minute = 0
+        startDP.second = 0
+        startDP.nanosecond = 0
+        
+        return Calendar.current.date(from: startDP)
+    }
+    
     public func secondToNextShiChen() -> TimeInterval {
         let nextShiChenHour = hourInterval.end.advanced(by: 1)
         let currentDate = Date()
