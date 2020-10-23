@@ -61,7 +61,7 @@ public enum Dizhi: Int, CaseIterable {
         case .mao:
             return "日出"
         case .chen:
-            return "食时"
+            return "食時"
         case .si:
             return "隅中"
         case .wu:
@@ -69,7 +69,7 @@ public enum Dizhi: Int, CaseIterable {
         case .wei:
             return "日昳"
         case .shen:
-            return "晡时"
+            return "晡時"
         case .you:
             return "日入"
         case .xu:
@@ -226,25 +226,5 @@ extension Dizhi: TimeExpressible {
         
         return Calendar.current.date(from: startDP)
     }
-    
-    public func secondToNextShiChen() -> TimeInterval {
-        let nextShiChenHour = hourInterval.end.advanced(by: 1)
-        let currentDate = Date()
-        
-        let currentDateComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: currentDate)
-        var nextDateComponent = currentDateComponent
-        
-        if hourInterval.end == 0 {
-            nextDateComponent.day = nextDateComponent.day?.advanced(by: 1)
-        }
-        
-        nextDateComponent.hour = nextShiChenHour
-        
-        
-        guard let nextDate = Calendar.current.date(from: nextDateComponent) else { return 0 }
-        
-        return nextDate.timeIntervalSince(currentDate)
-    }
-
     public var displayHourText: String { chineseCharactor + "時" }
 }
