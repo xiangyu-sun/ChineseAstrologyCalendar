@@ -2,7 +2,7 @@ import XCTest
 @testable import ChineseAstrologyCalendar
 
 final class ChineseAstrologyCalendarTests: XCTestCase {
-
+    
     static var allTests = [
         ("testNianGanToNotbeNil", testNianGanToNotbeNil),
     ]
@@ -32,11 +32,6 @@ final class ChineseAstrologyCalendarTests: XCTestCase {
     }
     
     func testYueGanToNotBeNil() {
-         XCTAssertNotNil(Date().yueZhi)
-     }
-    
-    func testTimeInterval() throws {
-        let dizhi = try GanzhiDateConverter.shichen(Date())
-        XCTAssertGreaterThan(dizhi.secondToNextShiChen(), 0)
+        XCTAssertNotNil(Date().yueZhi)
     }
 }

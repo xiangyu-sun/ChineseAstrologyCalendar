@@ -11,7 +11,6 @@ public protocol TimeExpressible {
     init(hourOfDay: Int)
     var chineseCharactor: String { get }
     var displayHourText: String { get }
-    func secondToNextShiChen() -> TimeInterval
 }
 
 public protocol MonthExpressible {
@@ -129,6 +128,7 @@ public struct HourInterval<T> where T: Comparable {
 }
 
 extension Dizhi: TimeExpressible {
+    
     public init(hourOfDay: Int) {
         switch hourOfDay {
         case 23, 0:
