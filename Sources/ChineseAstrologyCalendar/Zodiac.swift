@@ -42,4 +42,33 @@ public enum Zodiac: String, DizhiConvertible {
     }
 
     case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 雞, 狗, 猪
+    
+    var emoji: String {
+        switch self {
+        case .兔:
+            return "🐇"
+        case .牛:
+            return "🐂"
+        case .狗:
+            return "🐕"
+        case .猪:
+            return "🐖"
+        case .猴:
+            return "🐵"
+        case .羊:
+            return "🐏"
+        case .虎:
+            return "🐅"
+        case .蛇:
+            return "🐍"
+        case .雞:
+            return "🐓"
+        case .马:
+            return "🐎"
+        case .鼠:
+            return "🐀"
+        case .龙:
+            return "🐉"
+        }
+    }
 }
