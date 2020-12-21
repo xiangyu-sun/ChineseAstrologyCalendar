@@ -42,7 +42,7 @@ public enum Zodiac: String, DizhiConvertible {
     }
 
     case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 雞, 狗, 猪
-    
+    static 
     public var emoji: String {
         switch self {
         case .兔:
