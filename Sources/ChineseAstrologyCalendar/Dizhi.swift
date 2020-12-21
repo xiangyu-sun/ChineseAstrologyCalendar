@@ -20,7 +20,7 @@ public protocol MonthExpressible {
 public enum Dizhi: Int, CaseIterable {
     case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
     
-    static let orderedAllCases: [Dizhi] = [.zi, chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu]
+    public static let orderedAllCases: [Dizhi] = [.zi, chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu]
     
     public var chineseCharactor: String {
         switch self {
