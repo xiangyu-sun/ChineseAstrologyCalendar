@@ -17,10 +17,10 @@ final class IntegrationTests: XCTestCase {
     func testNianGan() {
         let calendar = Calendar(identifier: .gregorian)
         let timeZone = TimeZone(abbreviation: "CST")
-        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 1995, month: 2, day: 18)
+        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 2020, month: 1, day: 10)
         self.date = calendar.date(from: comp)
-        XCTAssertEqual(date.nianZhi, Dizhi.hai)
-        XCTAssertEqual(date.nianGan, Tiangan.yi)
+        XCTAssertEqual(date.nianZhi, Dizhi.zi)
+        XCTAssertEqual(date.nianGan, Tiangan.geng)
     }
     
     func testNianZhiToBeWei() {
@@ -30,7 +30,7 @@ final class IntegrationTests: XCTestCase {
     
     func testYuezhiToBeShen() {
         setupDateOne()
-        XCTAssertEqual(date.yueZhi, Dizhi.wei)
+        XCTAssertEqual(date.yueZhi, Dizhi.shen)
     }
     
     func testYueGanToBeJia() {
