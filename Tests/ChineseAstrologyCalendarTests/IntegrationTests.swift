@@ -11,50 +11,50 @@ final class IntegrationTests: XCTestCase {
     
     func testNianGanToBeYi() {
         setupDateOne()
-        XCTAssertEqual(date.nianGan, Tiangan.yi)
+        XCTAssertEqual(date.dateComponentsFromCurrentCalendar.nianGan, Tiangan.yi)
     }
     
     func testNianGan() {
         let calendar = Calendar(identifier: .gregorian)
         let timeZone = TimeZone(abbreviation: "CST")
-        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 2020, month: 1, day: 10)
+        let comp = DateComponents(calendar: calendar, timeZone: timeZone, year: 2021, month: 1, day: 10)
         self.date = calendar.date(from: comp)
-        XCTAssertEqual(date.nianZhi, Dizhi.zi)
-        XCTAssertEqual(date.nianGan, Tiangan.geng)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.nianZhi, Dizhi.zi)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.nianGan, Tiangan.geng)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.yueZhi, Dizhi.zi)
     }
     
     func testNianZhiToBeWei() {
         setupDateOne()
-        XCTAssertEqual(date.nianZhi, Dizhi.wei)
+        XCTAssertEqual(date.dateComponentsFromCurrentCalendar.nianZhi, Dizhi.wei)
     }
     
     func testYuezhiToBeShen() {
         setupDateOne()
-        XCTAssertEqual(date.yueZhi, Dizhi.shen)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.yueZhi, Dizhi.wu)
     }
     
     func testYueGanToBeJia() {
         setupDateOne()
-        XCTAssertEqual(date.yueGan, Tiangan.kui)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.yueGan, Tiangan.kui)
     }
-    
     
     func testYuezhiToBeHai() {
         setupDateTwo()
-        XCTAssertEqual(date.yueZhi, Dizhi.hai)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.yueZhi, Dizhi.you)
     }
     
     func testYueGanToBeXin() {
         setupDateTwo()
-        XCTAssertEqual(date.yueGan, Tiangan.xin)
+        XCTAssertEqual(date.dateComponentsFromChineseCalendar.yueGan, Tiangan.xin)
     }
     func testNianGanToBeRen() {
         setupDateThree()
-        XCTAssertEqual(date.nianGan, Tiangan.ren)
+        XCTAssertEqual(date.dateComponentsFromCurrentCalendar.nianGan, Tiangan.ren)
     }
     func testNianZhiToBeZi() {
         setupDateThree()
-        XCTAssertEqual(date.nianZhi, Dizhi.zi)
+        XCTAssertEqual(date.dateComponentsFromCurrentCalendar.nianZhi, Dizhi.zi)
     }
 
     

@@ -16,22 +16,22 @@ public enum DateConvertionError: LocalizedError {
 public struct GanzhiDateConverter {
     
     public static func nian(_ date: Date) throws -> Ganzhi {
-        guard let t = date.nianGan else { throw DateConvertionError.dateGanzhiMissing}
-        guard let d = date.nianZhi else { throw DateConvertionError.dateGanzhiMissing}
+        guard let t = date.dateComponentsFromCurrentCalendar.nianGan else { throw DateConvertionError.dateGanzhiMissing}
+        guard let d = date.dateComponentsFromCurrentCalendar.nianZhi else { throw DateConvertionError.dateGanzhiMissing}
         
         return Ganzhi(gan: t, zhi: d)
     }
     
     public static func yue(_ date: Date) throws -> Ganzhi {
         
-        guard let t = date.yueGan else { throw DateConvertionError.dateGanzhiMissing}
-        guard let d = date.yueZhi else { throw DateConvertionError.dateGanzhiMissing}
+        guard let t = date.dateComponentsFromChineseCalendar.yueGan else { throw DateConvertionError.dateGanzhiMissing}
+        guard let d = date.dateComponentsFromChineseCalendar.yueZhi else { throw DateConvertionError.dateGanzhiMissing}
         
         return Ganzhi(gan: t, zhi: d)
     }
     
     public static func zodiac(_ date: Date) throws -> Zodiac {
-        if let d = date.nianZhi {
+        if let d = date.dateComponentsFromCurrentCalendar.nianZhi {
             let zodiac = Zodiac(d)
             return zodiac
         }
