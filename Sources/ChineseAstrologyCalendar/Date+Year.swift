@@ -9,6 +9,7 @@ public extension Date {
        let df =  DateFormatter()
         df.calendar = Date.chineseCalendar
         df.dateStyle = .short
+        df.locale = Locale(identifier: "en_US")
         return df
     }()
     
