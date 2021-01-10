@@ -8,18 +8,14 @@ public extension Date {
     var nianGan: Tiangan? {
         let dateComponents = Calendar.current.dateComponents([.year], from: self)
         guard let year = dateComponents.value(for: .year) else { return nil }
-        var t = year % 10
-        if t < 3 {
-            t = t + 10
-        }
-        t = t - 3
+        let t = (year - 3) % 10
         return Tiangan(rawValue: t)
     }
 
     var nianZhi: Dizhi? {
         let dateComponents = Calendar.current.dateComponents([.year], from: self)
         guard let year = dateComponents.value(for: .year) else { return nil }
-        let t = (year + 7) % 12
+        let t = year  % 12
 
         return Dizhi(rawValue: t)
     }
