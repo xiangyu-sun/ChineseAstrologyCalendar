@@ -4,30 +4,41 @@
 
 import Foundation
 
+extension Calendar {
+    static let chineseCalendar = Calendar(identifier: .chinese)
+}
+
 public extension Date {
-    static let chineseDF: DateFormatter = {
+    static let chineseENDateFormatter: DateFormatter = {
        let df =  DateFormatter()
-        df.calendar = Date.chineseCalendar
+        df.calendar = Calendar.chineseCalendar
         df.dateStyle = .short
         df.locale = Locale(identifier: "en_US")
         return df
     }()
     
-    static let chineseCalendar = Calendar(identifier: .chinese)
+    
+    static let chineseTranditionalChineseDateFormatter: DateFormatter = {
+       let df =  DateFormatter()
+        df.calendar = Calendar.chineseCalendar
+        df.dateStyle = .long
+        df.locale = Locale(identifier: "zh_Hant")
+        return df
+    }()
     
     var dateComponentsFromCurrentCalendar: DateComponents {
         Calendar.current.dateComponents([.era,.year,.month,.day,.hour,.minute,.second], from: self)
     }
     
     var dateComponentsFromChineseCalendar: DateComponents {
-        let elements = Date.chineseDF.string(from: self).split(separator: "/")
+        let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")
         let day = Int(elements[1])
         let month = Int(elements[0])
         let year = Int(elements[2])
         
         let orginalDateComponents = self.dateComponentsFromCurrentCalendar
         
-        var dp = DateComponents(calendar: Date.chineseCalendar)
+        var dp = DateComponents(calendar: Calendar.chineseCalendar)
         dp.day = day
         dp.month = month
         dp.era = orginalDateComponents.chineseEra
@@ -39,6 +50,11 @@ public extension Date {
         return dp
     }
     
+    var chineseYearMonthDate: String {
+        let dateInChinese = Date.chineseTranditionalChineseDateFormatter.string(from: self)
+
+        return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
+    }
 }
 
 extension DateComponents {
