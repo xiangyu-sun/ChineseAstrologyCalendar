@@ -56,7 +56,7 @@ public enum Dizhi: Int, CaseIterable {
         case .zi:
             return "夜半"
         case .chou:
-            return "鸡鸣"
+            return "雞鳴"
         case .yin:
             return "平旦"
         case .mao:
