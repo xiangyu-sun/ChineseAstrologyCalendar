@@ -206,7 +206,8 @@ extension Dizhi: TimeExpressible {
     @available(OSX 10.12, *)
     @available(iOS 10.0, *)
     public var formattedHourRange: String? {
-        guard let date = Calendar.current.date(bySetting: .hour, value: hourInterval.start, of: Date()) else { return nil }
+        guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date()) else { return nil }
+        
         return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration:60 * 60 * 2))
     }
     
