@@ -103,11 +103,11 @@ public extension Qijie {
     var qishierHou: String {
         switch self {
         case .lichun:
-            return "立春之日東風解凍，又五日蟄蟲始振，又五日魚上冰（魚陟負冰"
+            return "立春之日東風解凍，又五日蟄蟲始振，又五日魚上冰（魚陟負冰)"
         case .yushui:
             return "雨水之日獺祭魚，又五日鴻雁來（候雁北），又五日草木萌動"
         case .jingzhe:
-            return "惊蛰之日桃始華，又五日倉庚鳴，又五日鷹化為鳩"
+            return "驚蟄之日桃始華，又五日倉庚鳴，又五日鷹化為鳩"
         case .chunfen:
             return "春分之日玄鳥至，又五日雷乃發聲，又五日始電"
         case .qingming:
