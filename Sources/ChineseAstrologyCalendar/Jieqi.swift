@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum Qijie: Int, CaseIterable {
+/// 太陽位於黃經角度
+public enum Jieqi: Float, CaseIterable {
     case lichun = 315
     case yushui = 330
     case jingzhe = 345
@@ -41,7 +42,13 @@ public enum Qijie: Int, CaseIterable {
     case dahan = 300
 }
 
-public extension Qijie {
+//extension Jieqi: DizhiConvertable {
+//    public var dizhi: Dizhi? {
+//        Dizhi(rawValue: (self.rawValue / 15))
+//    }
+//}
+
+public extension Jieqi {
     
     var chineseName: String {
         switch self {

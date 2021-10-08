@@ -17,6 +17,10 @@ public protocol MonthExpressible {
     var displayMonthText: String { get }
 }
 
+public protocol DizhiConvertable {
+    var dizhi: Dizhi? { get }
+}
+
 public enum Dizhi: Int, CaseIterable {
     case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
     
