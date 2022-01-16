@@ -42,5 +42,33 @@ class DayConverterTests: XCTestCase {
         XCTAssertEqual(monthsHasSanshi,["1/17/22", "2/1/22", "2/15/22", "3/3/22", "3/17/22", "4/1/22", "4/15/22", "5/1/22", "5/15/22", "5/30/22", "6/13/22", "6/29/22", "7/13/22", "7/29/22", "8/12/22", "8/27/22", "9/10/22", "9/26/22", "10/10/22", "10/25/22", "11/8/22", "11/24/22", "12/8/22"])
     }
 
+    func testOneDateAndMonthDoesNotExist() throws {
+        let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0)
+        
+        XCTAssertTrue(days.isEmpty)
+    }
+    
+    func testOneDateAndMonthEarlierThanNow() throws {
+        let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
+        
+        let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
+        
+        XCTAssertTrue(days.isEmpty)
+    }
 
+    func testOneDateAndMonthLaterThanNow() throws {
+        let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
+        
+        let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 1, from: calendar.date(from: testDate)!).map{ formatter.string(from: $0.date) }
+        
+        XCTAssertEqual(days, ["1/30/22"])
+    }
+    
+    func testOneDateAndMonthFiveYearsLaterThanNow() throws {
+        let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
+        
+        let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 5, from: calendar.date(from: testDate)!).map{ formatter.string(from: $0.date) }
+        
+        XCTAssertEqual(days, ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
+    }
 }

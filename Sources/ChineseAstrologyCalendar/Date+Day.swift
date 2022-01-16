@@ -30,6 +30,25 @@ public final class DayConverter {
         }
     }
     
+    
+    public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
+        let compoents = calendar.dateComponents([.era,.year,.month,.day], from: date)
+        
+        return Array(0..<inNextYears).reduce(into: [EventModel]()){result, year in
+            
+            var copy = compoents
+            copy.month = month.rawValue
+            copy.year! += Int(year)
+            copy.day = day.rawValue
+            
+            guard let date = calendar.date(from: copy), isValid(component: copy, date: date) else {
+                return
+            }
+            
+            result.append(EventModel(date: date, name: day, dateComponents: copy))
+        }
+    }
+    
     func isValid(component: DateComponents, date: Date) -> Bool{
         date >= Date() &&
         calendar.dateComponents([.era,.year,.month,.day], from: date) == component

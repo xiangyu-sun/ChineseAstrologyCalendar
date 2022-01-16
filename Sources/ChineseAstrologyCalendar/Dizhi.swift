@@ -21,8 +21,15 @@ public protocol DizhiConvertable {
     var dizhi: Dizhi? { get }
 }
 
-public enum Dizhi: Int, CaseIterable {
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
+    public var id: Int {
+        rawValue
+    }
     case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
+    
+    public static func < (lhs: Dizhi, rhs: Dizhi) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
     
     public static let orderedAllCases: [Dizhi] = [.zi, chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai]
     
@@ -240,4 +247,8 @@ extension Dizhi: TimeExpressible {
         return Calendar.current.date(from: startDP)
     }
     public var displayHourText: String { chineseCharactor + "時" }
+    
+    public var chineseCalendarMonthName: String {
+        chineseCharactor + "月"
+    }
 }
