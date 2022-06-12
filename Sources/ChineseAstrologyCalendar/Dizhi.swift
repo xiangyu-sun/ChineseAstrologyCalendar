@@ -234,7 +234,7 @@ extension Dizhi: TimeExpressible {
         return Dizhi.monthFormatter.string(from: date)
     }
     
-    public var startDateComponent: Date? {
+    public var startDate: Date? {
         let startHour = hourInterval.start
         let currentDate = Date()
         
@@ -246,6 +246,22 @@ extension Dizhi: TimeExpressible {
         
         return Calendar.current.date(from: startDP)
     }
+    
+    
+    public var endDate: Date? {
+        let startHour = hourInterval.end
+        let currentDate = Date()
+        
+        var startDP = Calendar.current.dateComponents([.year, .month,.day,.hour, .minute, .second], from: currentDate)
+        startDP.hour = startHour
+        startDP.minute = 59
+        startDP.second = 59
+        
+        return Calendar.current.date(from: startDP)
+    }
+    
+    
+    
     public var displayHourText: String { chineseCharactor + "時" }
     
     public var chineseCalendarMonthName: String {
