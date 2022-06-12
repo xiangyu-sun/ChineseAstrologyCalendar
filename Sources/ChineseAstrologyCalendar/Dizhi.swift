@@ -249,11 +249,11 @@ extension Dizhi: TimeExpressible {
     
     
     public var endDate: Date? {
-        let startHour = hourInterval.end
+        let endHour = hourInterval.end
         let currentDate = Date()
         
         var startDP = Calendar.current.dateComponents([.year, .month,.day,.hour, .minute, .second], from: currentDate)
-        startDP.hour = startHour
+        startDP.hour = endHour
         startDP.minute = 59
         startDP.second = 59
         
