@@ -55,6 +55,18 @@ public extension Date {
 
         return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
     }
+  
+  var displayStringOfChineseYearMonthDateWithZodiac: String {
+    var result = chineseYearMonthDate
+    
+    guard let index = result.firstIndex(of: "年") else { return "" }
+    
+    guard let zodiac = ((try? GanzhiDateConverter.zodiac(self).rawValue) ?? "").first else { return "" }
+    
+    result.insert(zodiac, at: index)
+    
+    return result
+  }
 }
 
 extension DateComponents {
