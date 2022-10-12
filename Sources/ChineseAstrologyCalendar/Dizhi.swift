@@ -238,7 +238,7 @@ extension Dizhi: TimeExpressible {
         let startHour = hourInterval.start
         let currentDate = Date()
         
-        var startDP = Calendar.current.dateComponents([.year, .month,.day,.hour, .minute, .second, .nanosecond], from: currentDate)
+        var startDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: currentDate)
         startDP.hour = startHour
         startDP.minute = 0
         startDP.second = 0
@@ -252,12 +252,15 @@ extension Dizhi: TimeExpressible {
         let endHour = hourInterval.end
         let currentDate = Date()
         
-        var startDP = Calendar.current.dateComponents([.year, .month,.day,.hour, .minute, .second], from: currentDate)
-        startDP.hour = endHour
-        startDP.minute = 59
-        startDP.second = 59
+        var endDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: currentDate)
+        endDP.hour = endHour
+        endDP.minute = 59
+        endDP.second = 59
+        if hourInterval.end == 0 {
+            endDP.day = endDP.day! + 1
+        }
         
-        return Calendar.current.date(from: startDP)
+        return Calendar.current.date(from: endDP)
     }
     
     
