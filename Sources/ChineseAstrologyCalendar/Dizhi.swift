@@ -213,6 +213,12 @@ extension Dizhi: TimeExpressible {
         return fm
     }()
     
+    static var hourIntervalFormatter: DateIntervalFormatter = {
+        let fm = DateIntervalFormatter()
+        fm.dateTemplate = "HH:mm"
+        return fm
+    }()
+    
     
     @available(OSX 10.12, *)
     @available(iOS 10.0, *)
@@ -220,6 +226,14 @@ extension Dizhi: TimeExpressible {
         guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date()) else { return nil }
         
         return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration:60 * 60 * 2))
+    }
+    
+    @available(OSX 10.12, *)
+    @available(iOS 10.0, *)
+    public var formattedShortHourRange: String? {
+        guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date()) else { return nil }
+        
+        return Dizhi.hourIntervalFormatter.string(from: DateInterval(start: date, duration:60 * 60 * 2))
     }
     
     static var monthFormatter: DateFormatter = {
