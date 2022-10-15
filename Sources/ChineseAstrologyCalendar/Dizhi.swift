@@ -253,6 +253,11 @@ extension Dizhi: TimeExpressible {
         let currentDate = Date()
         
         var startDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: currentDate)
+        
+        if startHour == 23 && startDP.hour == 0 {
+            startDP.day = startDP.day! - 1
+        }
+        
         startDP.hour = startHour
         startDP.minute = 0
         startDP.second = 0
@@ -267,12 +272,15 @@ extension Dizhi: TimeExpressible {
         let currentDate = Date()
         
         var endDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: currentDate)
+        
+        if endHour == 0 && endDP.hour == 23 {
+            endDP.day = endDP.day! + 1
+        }
+        
         endDP.hour = endHour
         endDP.minute = 59
         endDP.second = 59
-        if hourInterval.end == 0 {
-            endDP.day = endDP.day! + 1
-        }
+     
         
         return Calendar.current.date(from: endDP)
     }

@@ -10,7 +10,7 @@ extension Calendar {
 
 public extension Date {
     static let chineseENDateFormatter: DateFormatter = {
-       let df =  DateFormatter()
+        let df =  DateFormatter()
         df.calendar = Calendar.chineseCalendar
         df.dateStyle = .short
         df.locale = Locale(identifier: "en_US")
@@ -19,7 +19,7 @@ public extension Date {
     
     
     static let chineseTranditionalChineseDateFormatter: DateFormatter = {
-       let df =  DateFormatter()
+        let df =  DateFormatter()
         df.calendar = Calendar.chineseCalendar
         df.dateStyle = .long
         df.locale = Locale(identifier: "zh_Hant")
@@ -52,21 +52,23 @@ public extension Date {
     
     var chineseYearMonthDate: String {
         let dateInChinese = Date.chineseTranditionalChineseDateFormatter.string(from: self)
-
+        
         return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
     }
-  
-  var displayStringOfChineseYearMonthDateWithZodiac: String {
-    var result = chineseYearMonthDate
     
-    guard let index = result.firstIndex(of: "年") else { return "" }
-    
-    guard let zodiac = ((try? GanzhiDateConverter.zodiac(self).rawValue) ?? "").first else { return "" }
-    
-    result.insert(zodiac, at: index)
-    
-    return result
-  }
+    var displayStringOfChineseYearMonthDateWithZodiac: String {
+        var result = chineseYearMonthDate
+        
+        let dizhi = Dizhi(rawValue: self.dateComponentsFromChineseCalendar.month!)
+        
+        guard let index = result.firstIndex(of: "年") else { return "" }
+        
+        guard let zodiac = ((try? GanzhiDateConverter.zodiac(self).rawValue) ?? "").first else { return "" }
+        
+        result.insert(zodiac, at: index)
+
+        return result
+    }
 }
 
 extension DateComponents {
@@ -74,7 +76,7 @@ extension DateComponents {
         let t = chineseYear % 10
         return Tiangan(rawValue: t)
     }
-
+    
     var nianZhi: Dizhi? {
         let t = chineseYear % 12
         return Dizhi.orderedAllCases[t-1]
@@ -82,7 +84,7 @@ extension DateComponents {
     
     var chineseYear: Int {
         let g_adj_year =  (year ?? 0) + 2697
-
+        
         let c_era = Int(g_adj_year/60)
         return  g_adj_year - c_era * 60
     }
