@@ -125,6 +125,21 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
         }
     }
     
+    public var wuxing: Wuxing {
+        switch self {
+        case .yin, .mao:
+            return .mu
+        case .si, .wu:
+            return .huo
+        case .shen, .you:
+            return .jin
+        case .hai, .zi:
+            return .shui
+        case .chen, .wei, .chou,. xu:
+            return .tu
+        }
+    }
+    
     public var next: Dizhi {
         guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
             return .yin
