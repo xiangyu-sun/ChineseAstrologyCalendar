@@ -26,6 +26,7 @@ public extension Date {
         return df
     }()
     
+    
     var dateComponentsFromCurrentCalendar: DateComponents {
         Calendar.current.dateComponents([.era,.year,.month,.day,.hour,.minute,.second], from: self)
     }
@@ -50,6 +51,15 @@ public extension Date {
         return dp
     }
     
+    var chineseDate: String {
+        let dateInChinese = Date.chineseTranditionalChineseDateFormatter.string(from: self)
+        guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
+        let start = index.utf16Offset(in: dateInChinese) + 1
+        
+        return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
+    }
+    
+    
     var chineseYearMonthDate: String {
         let dateInChinese = Date.chineseTranditionalChineseDateFormatter.string(from: self)
         
@@ -58,8 +68,6 @@ public extension Date {
     
     var displayStringOfChineseYearMonthDateWithZodiac: String {
         var result = chineseYearMonthDate
-        
-        let dizhi = Dizhi(rawValue: self.dateComponentsFromChineseCalendar.month!)
         
         guard let index = result.firstIndex(of: "年") else { return "" }
         
