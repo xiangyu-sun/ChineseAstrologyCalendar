@@ -7,9 +7,10 @@
 
 import Foundation
 
-public enum Sifang {
+public enum FangWei {
     case dong
     case nan
     case xi
     case bei
+    case zhong
 }

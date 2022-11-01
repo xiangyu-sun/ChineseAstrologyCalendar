@@ -39,7 +39,7 @@ public enum Season {
         }
     }
     
-    public var fangwei: Sifang {
+    public var fangwei: FangWei {
         switch self {
         case .spring:
             return .dong
