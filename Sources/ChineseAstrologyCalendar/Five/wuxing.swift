@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Wuxing {
+public enum Wuxing: CaseIterable {
     case jin
     case mu
     case shui
