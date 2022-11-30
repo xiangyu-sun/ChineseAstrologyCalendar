@@ -2,11 +2,11 @@ import XCTest
 @testable import ChineseAstrologyCalendar
 
 final class QijieDizhiTests: XCTestCase {
-    
+
 //    static var allTests = [
 //        ("testYin", testYin),
 //    ]
-    
+
 //    func testYin() {
 //        XCTAssertEqual(Jieqi.lichun.dizhi, .yin)
 //        XCTAssertEqual(Jieqi.yushui.dizhi, .yin)
