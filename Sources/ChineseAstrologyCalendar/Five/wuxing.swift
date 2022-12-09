@@ -9,10 +9,10 @@ import Foundation
 
 public enum Wuxing: CaseIterable {
   case jin
+  case tu
+  case huo
   case mu
   case shui
-  case huo
-  case tu
 
   // MARK: Public
 
