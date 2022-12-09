@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Wuxing: CaseIterable {
+public enum Wuxing: Int, CaseIterable {
   case jin
   case tu
   case huo
@@ -29,5 +29,13 @@ public enum Wuxing: CaseIterable {
     case .tu:
       return "土"
     }
+  }
+
+  public var sheng: Wuxing {
+    Wuxing(rawValue: rawValue.advanced(by: 1) % Wuxing.allCases.count) ?? .jin
+  }
+
+  public var ke: Wuxing {
+    Wuxing(rawValue: rawValue.advanced(by: 2) % Wuxing.allCases.count) ?? .jin
   }
 }
