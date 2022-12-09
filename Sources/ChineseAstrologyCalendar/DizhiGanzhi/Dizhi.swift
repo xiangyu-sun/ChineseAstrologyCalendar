@@ -30,16 +30,16 @@ public protocol DizhiConvertable {
 // MARK: - Dizhi
 
 public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
-  case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
+    case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
 
   // MARK: Public
 
-  public static let orderedAllCases: [Dizhi] = [.zi, chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai]
+    public static let orderedAllCases: [Dizhi] = [.zi, .chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai]
 
   public static let xiaDynastyYearOrder: [Dizhi] = [
     .hai,
     .zi,
-    chou,
+    .chou,
     .yin,
     .mao,
     .chen,

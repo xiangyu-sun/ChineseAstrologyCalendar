@@ -46,7 +46,7 @@ final class DateStringTests: XCTestCase {
     let compoenent = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
 
     let date = Calendar.current.date(from: compoenent)
-    XCTAssertEqual(date!.chineseMonthAndDate, "初八")
+    XCTAssertEqual(date!.chineseYearMonthDate, "初八")
   }
 
 }
