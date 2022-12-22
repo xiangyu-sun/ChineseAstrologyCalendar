@@ -101,6 +101,29 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
     }
   }
 
+  public var moonPhase: ChineseMoonPhase {
+    switch self {
+    case .chuyi:
+      return .朔
+    case .chuer, .chusan, .chusi, .chuwu, .chulliu:
+      return .蛾眉月
+    case .chuqi, .chuba:
+      return .上弦月
+    case .chujiu, .chushi, .shiyi, .shier, .shisan, .shisi:
+      return .渐盈凸月
+    case .shiwu:
+      return .望
+    case .shiliu, .shiqi, .shiba , .shijiu, .ershi, .eryi:
+      return .渐亏凸月
+    case .erer, .ersan:
+      return .下弦月
+    case .ersi, .erwu, .erliu, .erqi, .erba, .erjiu:
+      return .残月
+    case .sanshi:
+      return .晦
+    }
+  }
+
   public static func < (lhs: Day, rhs: Day) -> Bool {
     lhs.rawValue < rhs.rawValue
   }

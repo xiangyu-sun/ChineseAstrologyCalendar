@@ -2,8 +2,8 @@
 import WeatherKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
-public extension MoonPhase {
-  func acientChineseName(_ day: Day) -> String {
+extension MoonPhase {
+  public func acientChineseName(_ day: Day) -> String {
     switch self {
     case .new:
       if day == .sanshi {
@@ -11,7 +11,7 @@ public extension MoonPhase {
       } else {
         return "朔"
       }
-      
+
     case .waxingCrescent:
       return "蛾眉月"
     case .firstQuarter:
@@ -28,8 +28,8 @@ public extension MoonPhase {
       return "残月"
     }
   }
-  
-  func modernChineseName(_: Day) -> String {
+
+  public func modernChineseName(_: Day) -> String {
     switch self {
     case .new:
       return "新月"
@@ -49,44 +49,47 @@ public extension MoonPhase {
       return "下蛾眉月"
     }
   }
-  
+
 }
 
 #endif
 
+// MARK: - ChineseMoonPhase
 
-public enum ChineseMoonPhase : String, CaseIterable {
-  
+public enum ChineseMoonPhase: String, CaseIterable {
+
   /// The disk is unlit where the moon is not visible.
   case 朔
-  
+
   /// The disk is partially lit as the moon is waxing.
   case 蛾眉月
-  
+
   /// The disk is half lit.
   case 上弦月
-  
+
   /// The disk is half lit as the moon is waxing.
   case 渐盈凸月
-  
+
   /// The disk is fully lit where the moon is visible.
   case 望
-  
+
   /// The disk is half lit as the moon is waning.
   case 渐亏凸月
-  
+
   /// The disk is half lit.
   case 下弦月
-  
+
   /// The disk is partially lit as the moon is waning.
   case 残月
-  
+
   case 晦
-  
-  public func acientChineseName(_ day: Day) -> String {
-    return self.rawValue
+
+  // MARK: Public
+
+  public func acientChineseName(_: Day) -> String {
+    rawValue
   }
-  
+
   public func modernChineseName(_: Day) -> String {
     switch self {
     case .朔:
@@ -109,5 +112,5 @@ public enum ChineseMoonPhase : String, CaseIterable {
       return "晦"
     }
   }
-  
+
 }
