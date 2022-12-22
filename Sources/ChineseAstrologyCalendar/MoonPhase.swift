@@ -20,7 +20,7 @@ public extension ChineseMoonPhase {
     case .下弦月:
       return .lastQuarter
     case .殘月:
-      return .lastQuarter
+      return .waningCrescent
     case .晦:
       return .new
     }
