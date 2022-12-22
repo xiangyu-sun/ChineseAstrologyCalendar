@@ -48,6 +48,11 @@ extension Date {
 
     return dp
   }
+  
+  public var chineseDay: Day? {
+    guard let day = dateComponentsFromChineseCalendar.day else { return nil}
+    return Day(rawValue: day)
+  }
 
   public var chineseDate: String {
     let dateInChinese = Date.chineseTranditionalChineseDateFormatter.string(from: self)
