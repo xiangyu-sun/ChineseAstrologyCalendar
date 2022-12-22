@@ -1,7 +1,7 @@
 #if canImport(WeatherKit)
 import WeatherKit
 
-@available(iOS 16.0, *)
+@available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 public extension MoonPhase {
   func acientChineseName(_ day: Day) -> String {
     switch self {
