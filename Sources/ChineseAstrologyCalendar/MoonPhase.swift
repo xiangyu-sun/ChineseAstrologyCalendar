@@ -17,15 +17,15 @@ extension MoonPhase {
     case .firstQuarter:
       return "上弦月"
     case .waxingGibbous:
-      return "渐盈凸月"
+      return "漸盈凸月"
     case .full:
       return "望"
     case .waningGibbous:
-      return "渐亏凸月"
+      return "漸虧凸月"
     case .lastQuarter:
       return "下弦月"
     case .waningCrescent:
-      return "残月"
+      return "殘月"
     }
   }
 
@@ -38,11 +38,11 @@ extension MoonPhase {
     case .firstQuarter:
       return "上弦月"
     case .waxingGibbous:
-      return "渐盈凸月"
+      return "漸盈凸月"
     case .full:
-      return "满月"
+      return "滿月"
     case .waningGibbous:
-      return "渐亏凸月"
+      return "漸虧凸月"
     case .lastQuarter:
       return "下弦月"
     case .waningCrescent:
@@ -68,19 +68,19 @@ public enum ChineseMoonPhase: String, CaseIterable {
   case 上弦月
 
   /// The disk is half lit as the moon is waxing.
-  case 渐盈凸月
+  case 漸盈凸月
 
   /// The disk is fully lit where the moon is visible.
   case 望
 
   /// The disk is half lit as the moon is waning.
-  case 渐亏凸月
+  case 漸虧凸月
 
   /// The disk is half lit.
   case 下弦月
 
   /// The disk is partially lit as the moon is waning.
-  case 残月
+  case 殘月
 
   case 晦
 
@@ -98,15 +98,15 @@ public enum ChineseMoonPhase: String, CaseIterable {
       return "上蛾眉月"
     case .上弦月:
       return "上弦月"
-    case .渐盈凸月:
-      return "渐盈凸月"
+    case .漸盈凸月:
+      return "漸盈凸月"
     case .望:
-      return "满月"
-    case .渐亏凸月:
-      return "渐亏凸月"
+      return "滿月"
+    case .漸虧凸月:
+      return "漸虧凸月"
     case .下弦月:
       return "下弦月"
-    case .残月:
+    case .殘月:
       return "下蛾眉月"
     case .晦:
       return "晦"
