@@ -110,15 +110,15 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
     case .chuqi, .chuba:
       return .上弦月
     case .chujiu, .chushi, .shiyi, .shier, .shisan, .shisi:
-      return .渐盈凸月
+      return .漸盈凸月
     case .shiwu:
       return .望
     case .shiliu, .shiqi, .shiba , .shijiu, .ershi, .eryi:
-      return .渐亏凸月
+      return .漸虧凸月
     case .erer, .ersan:
       return .下弦月
     case .ersi, .erwu, .erliu, .erqi, .erba, .erjiu:
-      return .残月
+      return .殘月
     case .sanshi:
       return .晦
     }
