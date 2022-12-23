@@ -38,7 +38,7 @@ final class DateStringTests: XCTestCase {
     let compoenent = DateComponents(calendar: .current, year: 2022, month: 6, day: 7, hour: 17)
 
     let date = Calendar.current.date(from: compoenent)
-    let dizhi = try GanzhiDateConverter.shichen(date!)
+    let dizhi = try XCTUnwrap(date?.shichen)
     XCTAssertEqual(dizhi.formattedMonth, "五月")
   }
 

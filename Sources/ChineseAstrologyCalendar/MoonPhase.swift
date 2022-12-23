@@ -2,8 +2,8 @@
 import WeatherKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
-public extension ChineseMoonPhase {
-  var moonPhase: MoonPhase {
+extension ChineseMoonPhase {
+  public var moonPhase: MoonPhase {
     switch self {
     case .朔:
       return .new

@@ -34,7 +34,7 @@ final class ShichenTests: XCTestCase {
   }
 
   func testStartAndEndWithDayAndMonth() throws {
-    let shichen = try! GanzhiDateConverter.shichen(Date(timeIntervalSince1970: 1665872877.2155929))
+    let shichen = try XCTUnwrap(Date(timeIntervalSince1970: 1665872877.2155929).shichen)
     XCTAssertEqual(shichen, .zi)
     let actualStart = Calendar.current.dateComponents([.month, .day, .hour, .minute ,.second], from: shichen.startDate!)
     let expectedStart = DateComponents(calendar: Calendar.current, month: 10, day: 15, hour: 23, minute: 0, second: 0)
@@ -56,7 +56,7 @@ final class ShichenTests: XCTestCase {
   }
 
   func testStartAndEndWithDayAndMonthBefore12() throws {
-    let shichen = try! GanzhiDateConverter.shichen(Date(timeIntervalSince1970: 1665869364.8679671))
+    let shichen = try XCTUnwrap(Date(timeIntervalSince1970: 1665869364.8679671).shichen)
     XCTAssertEqual(shichen, .zi)
     let actualStart = Calendar.current.dateComponents([.month, .day, .hour, .minute ,.second], from: shichen.startDate!)
     let expectedStart = DateComponents(calendar: Calendar.current, month: 10, day: 15, hour: 23, minute: 0, second: 0)

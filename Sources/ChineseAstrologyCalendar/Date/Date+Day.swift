@@ -1,62 +1,17 @@
+//
+//  File.swift
+//
+//
+//  Created by Xiangyu Sun on 23/12/22.
+//
+
 import Foundation
 
-public final class DayConverter {
+extension Date {
 
-  // MARK: Lifecycle
-
-  public init() { }
-
-  // MARK: Public
-
-  public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = calendar.dateComponents([.era,.year,.month,.day], from: date)
-
-    return Array(0..<inNextMonths).reduce(into: [EventModel]()) { result, month in
-
-      for d in days {
-        var copy = compoents
-
-        let newMonth = (copy.month! + month)
-        let newYear: Float = (Float(newMonth) / 13.0).rounded(.towardZero)
-
-        copy.month = newMonth <= 12 ? newMonth : newMonth - 12
-        copy.year! += Int(newYear)
-        copy.day = d.rawValue
-
-        guard let date = calendar.date(from: copy), isValid(component: copy, date: date) else {
-          continue
-        }
-
-        result.append(EventModel(date: date, name: d, dateComponents: copy))
-      }
-    }
-  }
-
-  public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = calendar.dateComponents([.era,.year,.month,.day], from: date)
-
-    return Array(0..<inNextYears).reduce(into: [EventModel]()) { result, year in
-
-      var copy = compoents
-      copy.month = month.rawValue
-      copy.year! += Int(year)
-      copy.day = day.rawValue
-
-      guard let date = calendar.date(from: copy), isValid(component: copy, date: date) else {
-        return
-      }
-
-      result.append(EventModel(date: date, name: day, dateComponents: copy))
-    }
-  }
-
-  // MARK: Internal
-
-  let calendar = Calendar(identifier: .chinese)
-
-  func isValid(component: DateComponents, date: Date) -> Bool {
-    date >= Date() &&
-      calendar.dateComponents([.era,.year,.month,.day], from: date) == component
+  public var chineseDay: Day? {
+    guard let day = dateComponentsFromChineseCalendar.day else { return nil }
+    return Day(rawValue: day)
   }
 
 }
