@@ -33,14 +33,14 @@ extension Date {
     return nil
   }
 
-  public var shichen: Dizhi? {
+  public var shichen: Shichen? {
     let calendar = Calendar.chineseCalendar
 
     let component = calendar.dateComponents(in: TimeZone.current, from: self)
 
     guard let hour = component.hour else { return nil }
 
-    return Dizhi(hourOfDay: hour)
+    return Shichen(dizhi: Dizhi(hourOfDay: hour), date: self)
   }
 
 }
