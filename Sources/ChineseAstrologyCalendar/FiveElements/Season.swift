@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Season: CaseIterable {
+public enum Season: CaseIterable, WuxingConvertable {
   case spring
   case summer
   case fall

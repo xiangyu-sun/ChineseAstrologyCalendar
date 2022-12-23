@@ -24,7 +24,7 @@ extension Date {
 
     guard let index = result.firstIndex(of: "年") else { return "" }
 
-    guard let zodiac = (self.zodiac?.rawValue ?? "").first else { return "" }
+    guard let zodiac = (zodiac?.rawValue ?? "").first else { return "" }
 
     result.insert(zodiac, at: index)
 

@@ -10,24 +10,23 @@ import Foundation
 // MARK: - GanzhiDateConverter
 
 extension Date {
-  
+
   public var nian: Ganzhi? {
-    
-    guard let t = self.dateComponentsFromChineseCalendar.nianGan else {return nil }
-    guard let d = self.dateComponentsFromChineseCalendar.nianZhi else { return nil }
+    guard let t = dateComponentsFromChineseCalendar.nianGan else { return nil }
+    guard let d = dateComponentsFromChineseCalendar.nianZhi else { return nil }
 
     return Ganzhi(gan: t, zhi: d)
   }
 
   public var yue: Ganzhi? {
-    guard let t = self.dateComponentsFromChineseCalendar.yueGan else { return nil }
-    guard let d = self.dateComponentsFromChineseCalendar.yueZhi else { return nil }
+    guard let t = dateComponentsFromChineseCalendar.yueGan else { return nil }
+    guard let d = dateComponentsFromChineseCalendar.yueZhi else { return nil }
 
     return Ganzhi(gan: t, zhi: d)
   }
 
   public var zodiac: Zodiac? {
-    if let d = self.dateComponentsFromChineseCalendar.nianZhi {
+    if let d = dateComponentsFromChineseCalendar.nianZhi {
       let zodiac = Zodiac(d)
       return zodiac
     }
@@ -43,5 +42,5 @@ extension Date {
 
     return Dizhi(hourOfDay: hour)
   }
-  
+
 }

@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum FangWei {
+public enum FangWei: CaseIterable, WuxingConvertable {
+
   case dong
   case nan
   case xi
@@ -28,6 +29,21 @@ public enum FangWei {
       return "北"
     case .zhong:
       return "中"
+    }
+  }
+
+  public var wuxing: Wuxing {
+    switch self {
+    case .dong:
+      return .mu
+    case .nan:
+      return .huo
+    case .xi:
+      return .jin
+    case .bei:
+      return .shui
+    case .zhong:
+      return .tu
     }
   }
 }
