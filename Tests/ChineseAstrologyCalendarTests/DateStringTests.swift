@@ -35,13 +35,12 @@ final class DateStringTests: XCTestCase {
   }
 
   func test_chineseMonth() throws {
+    let dizhi = Dizhi.you
 
-      let dizhi = Dizhi.you
-      
-      let component2 = DateComponents(calendar: .current, year: 2022, month: 8, day: 10, hour: 17)
+    let component2 = DateComponents(calendar: .current, year: 2022, month: 8, day: 10, hour: 17)
 
-      let date2 = Calendar.current.date(from: component2)
-      
+    let date2 = Calendar.current.date(from: component2)
+
     XCTAssertEqual(dizhi.formattedMonth, Dizhi.monthFormatter.string(from: date2!))
   }
 

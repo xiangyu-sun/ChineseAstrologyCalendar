@@ -23,7 +23,10 @@ public final class DayConverter {
         copy.year! += Int(newYear)
         copy.day = d.rawValue
 
-        guard let targetDate = Calendar.chineseCalendar.date(from: copy), isValid(component: copy, targetDate: targetDate, originDate: date) else {
+        guard
+          let targetDate = Calendar.chineseCalendar.date(from: copy),
+          isValid(component: copy, targetDate: targetDate, originDate: date) else
+        {
           continue
         }
 
@@ -42,7 +45,10 @@ public final class DayConverter {
       copy.year! += Int(year)
       copy.day = day.rawValue
 
-      guard let targetDate = Calendar.chineseCalendar.date(from: copy), isValid(component: copy, targetDate: targetDate, originDate: date) else {
+      guard
+        let targetDate = Calendar.chineseCalendar.date(from: copy),
+        isValid(component: copy, targetDate: targetDate, originDate: date) else
+      {
         return
       }
 
@@ -52,8 +58,9 @@ public final class DayConverter {
 
   // MARK: Internal
 
-    func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
-        targetDate >= originDate && Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: targetDate) == component
+  func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
+    targetDate >= originDate && Calendar.chineseCalendar
+      .dateComponents([.era,.year,.month,.day], from: targetDate) == component
   }
 
 }
