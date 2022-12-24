@@ -11,8 +11,13 @@ import Foundation
 public struct Shichen {
     public let dizhi: Dizhi
     public let date: Date
+    public let ke: Double = 15 * 60
     
-    public var startDate: Date? {
+    public var currentKe: Int {
+        Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)
+    }
+    
+    public var startDate: Date {
         let startHour = dizhi.hourInterval.start
 
       var startDP = Calendar.current.dateComponents(
@@ -28,10 +33,10 @@ public struct Shichen {
       startDP.second = 0
       startDP.nanosecond = 0
 
-      return Calendar.current.date(from: startDP)
+      return Calendar.current.date(from: startDP) ?? Date()
     }
 
-    public var endDate: Date? {
+    public var endDate: Date {
         let endHour = dizhi.hourInterval.end
 
       var endDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: date)
@@ -44,6 +49,6 @@ public struct Shichen {
       endDP.minute = 59
       endDP.second = 59
 
-      return Calendar.current.date(from: endDP)
+      return Calendar.current.date(from: endDP) ?? Date()
     }
 }

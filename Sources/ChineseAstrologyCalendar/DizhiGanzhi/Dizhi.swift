@@ -30,11 +30,10 @@ public protocol DizhiConvertable {
 // MARK: - Dizhi
 
 public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
-  case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
+  case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public
-
-  public static let orderedAllCases: [Dizhi] = [.zi, .chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai]
+  public static let orderedMonthAlCases: [Dizhi] = [.yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai, .zi, .chou]
 
   public static let xiaDynastyYearOrder: [Dizhi] = [
     .hai,
@@ -159,14 +158,14 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
 
   public var next: Dizhi {
     guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
-      return .yin
+      return .zi
     }
     return nextDizhi
   }
 
   public var previous: Dizhi {
     guard let previousDizhi = Dizhi(rawValue: rawValue - 1) else {
-      return .chou
+      return .hai
     }
     return previousDizhi
   }
@@ -266,7 +265,8 @@ extension Dizhi: TimeExpressible {
   }
 
   public var formattedMonth: String {
-    let date = Calendar.current.date(bySetting: .month, value: rawValue, of: Date()) ?? Date()
+      let month = (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
+    let date = Calendar.current.date(bySetting: .month, value: month, of: Date()) ?? Date()
     return Dizhi.monthFormatter.string(from: date)
   }
 

@@ -40,7 +40,7 @@ extension DateComponents {
 
   var nianZhi: Dizhi? {
     let t = chineseYear % 12
-    return Dizhi.orderedAllCases[t - 1]
+    return Dizhi.allCases[t - 1]
   }
 
   var chineseYear: Int {

@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Ganzhi
 
-public struct Ganzhi: CustomStringConvertible {
+public struct Ganzhi: CustomStringConvertible, Equatable {
   let gan: Tiangan
   let zhi: Dizhi
 

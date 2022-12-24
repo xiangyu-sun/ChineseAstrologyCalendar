@@ -12,7 +12,7 @@ extension DateComponents {
   }
 
   public var yueZhi: Dizhi? {
-    guard let month = month else { return nil }
-    return Dizhi(rawValue: month)
+      guard let month = month, month >= 1 else { return nil }
+      return Dizhi.orderedMonthAlCases[month - 1]
   }
 }
