@@ -42,7 +42,7 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   case dongzhi
   case xiaohan
   case dahan
-    
+
   // MARK: Public
 
   public var qi: Bool {

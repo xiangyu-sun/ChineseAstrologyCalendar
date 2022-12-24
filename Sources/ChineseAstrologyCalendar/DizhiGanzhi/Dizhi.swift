@@ -54,21 +54,20 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   public var id: Int {
     rawValue
   }
-    
-    public var jie: Jieqi {
-        let base = rawValue * 2 - 1
-        return Jieqi(rawValue: base) ?? .lichun
-    }
-    
-    public var qi: Jieqi{
-        let base = rawValue * 2 - 1
-        return Jieqi(rawValue: base + 1) ?? .lichun
-    }
-    
-    public var monthIndex: Int {
-        (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
-    }
 
+  public var jie: Jieqi {
+    let base = rawValue * 2 - 1
+    return Jieqi(rawValue: base) ?? .lichun
+  }
+
+  public var qi: Jieqi {
+    let base = rawValue * 2 - 1
+    return Jieqi(rawValue: base + 1) ?? .lichun
+  }
+
+  public var monthIndex: Int {
+    (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
+  }
 
   public var chineseCharactor: String {
     switch self {
@@ -279,7 +278,6 @@ extension Dizhi: TimeExpressible {
 
     return Dizhi.hourIntervalFormatter.string(from: DateInterval(start: date, duration: 60 * 60 * 2))
   }
-    
 
   public var formattedMonth: String {
     let date = Calendar.current.date(bySetting: .month, value: monthIndex, of: Date()) ?? Date()

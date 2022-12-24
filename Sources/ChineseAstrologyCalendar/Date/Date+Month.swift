@@ -15,4 +15,9 @@ extension DateComponents {
     guard let month = month, month >= 1 else { return nil }
     return Dizhi.orderedMonthAlCases[month - 1]
   }
+
+  public var yueZhu: Ganzhi? {
+    guard let yueGan = yueGan, let yueZhi = yueZhi else { return nil }
+    return Ganzhi(gan: yueGan, zhi: yueZhi)
+  }
 }
