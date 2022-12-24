@@ -9,12 +9,12 @@ public final class DayConverter {
   // MARK: Public
 
   public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
 
     return Array(0..<inNextMonths).reduce(into: [EventModel]()) { result, month in
 
       for d in days {
-        var copy = compoents
+        var copy = components
 
         let newMonth = (copy.month! + month)
         let newYear: Float = (Float(newMonth) / 13.0).rounded(.towardZero)
