@@ -8,6 +8,9 @@ extension DateComponents {
   public var yueGan: Tiangan? {
     guard let tiangan = nianGan?.rawValue, let dizhi = yueZhi?.rawValue else { return nil }
     let yueGan = (tiangan * 2 + dizhi) % 10
+      if yueGan == 0 {
+          return .kui
+      }
     return Tiangan(rawValue: yueGan)
   }
 
