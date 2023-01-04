@@ -38,7 +38,7 @@ public final class DayConverter {
   public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
     let compoents = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
-    return Array(0..<inNextYears).reduce(into: [EventModel]()) { result, year in
+    return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
       var copy = compoents
       copy.month = monthConverted
