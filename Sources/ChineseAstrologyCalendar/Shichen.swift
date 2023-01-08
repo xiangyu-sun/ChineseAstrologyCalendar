@@ -9,8 +9,6 @@ import Foundation
 
 public struct Shichen {
 
-  // MARK: Public
-
   public let dizhi: Dizhi
   public let date: Date
   public let ke: Double = 15 * 60
@@ -54,7 +52,7 @@ public struct Shichen {
     return Calendar.current.date(from: endDP) ?? Date()
   }
 
-    public var nextStartDate: Date {
+  public var nextStartDate: Date {
     let startHour = dizhi.next.hourInterval.start
 
     var startDP = Calendar.current.dateComponents(

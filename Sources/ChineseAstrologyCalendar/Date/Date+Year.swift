@@ -6,7 +6,7 @@ import Foundation
 
 extension Date {
   public var chineseDate: String {
-    let dateInChinese = (CalendarManager.shared.useGTM8 ? DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8 : DateFormatter.chineseTranditionalChineseDateFormatter).string(from: self)
+    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
     guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
     let start = index.utf16Offset(in: dateInChinese) + 1
 
@@ -14,10 +14,25 @@ extension Date {
   }
 
   public var chineseYearMonthDate: String {
-    let dateInChinese = (CalendarManager.shared.useGTM8 ? DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8 : DateFormatter.chineseTranditionalChineseDateFormatter).string(from: self)
+    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
 
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
+
+  public var chineseDateGTM8: String {
+    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
+    guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
+    let start = index.utf16Offset(in: dateInChinese) + 1
+
+    return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
+  }
+
+  public var chineseYearMonthDateGTM8: String {
+    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
+
+    return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
+  }
+
 
   public var displayStringOfChineseYearMonthDateWithZodiac: String {
     var result = chineseYearMonthDate

@@ -27,7 +27,6 @@ class DayConverterTests: XCTestCase {
   }
 
   override func tearDownWithError() throws {
-    
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
@@ -102,10 +101,10 @@ class DayConverterTests: XCTestCase {
 
     XCTAssertEqual(days, ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
   }
-  
+
   func testNewYear() throws {
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
-    
+
     let expectedDate: DateComponents = .init(calendar: Calendar.current, year: 2023, month: 1, day: 22, hour: 0, minute: 0)
 
     let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
@@ -113,13 +112,19 @@ class DayConverterTests: XCTestCase {
 
     XCTAssertEqual(days, [calendar.date(from: expectedDate)!])
   }
-  
+
   func testNewYearWithCST() throws {
     CalendarManager.shared.useGTM8 = true
-    
+
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
-    
-    let expectedDate: DateComponents = .init(calendar: Calendar.chineseCalendarGTM8, year: 40, month: 1, day: 1, hour: 0, minute: 0)
+
+    let expectedDate: DateComponents = .init(
+      calendar: Calendar.chineseCalendarGTM8,
+      year: 40,
+      month: 1,
+      day: 1,
+      hour: 0,
+      minute: 0)
 
     let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
       .map(\.date)
