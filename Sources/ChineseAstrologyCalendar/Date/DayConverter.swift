@@ -2,14 +2,18 @@ import Foundation
 
 public final class DayConverter {
 
+  let calendar: Calendar
+  
   // MARK: Lifecycle
 
-  public init() { }
+  public init(calendar: Calendar = .chineseCalendar) {
+    self.calendar = calendar
+  }
 
   // MARK: Public
 
   public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
-    let components = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
 
     return Array(0..<inNextMonths).reduce(into: [EventModel]()) { result, month in
 
@@ -24,7 +28,7 @@ public final class DayConverter {
         copy.day = d.rawValue
 
         guard
-          let targetDate = Calendar.chineseCalendar.date(from: copy),
+          let targetDate = calendar.date(from: copy),
           isValid(component: copy, targetDate: targetDate, originDate: date) else
         {
           continue
@@ -36,7 +40,7 @@ public final class DayConverter {
   }
 
   public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
+    let compoents = calendar.dateComponents([.era,.year,.month,.day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
     return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
@@ -46,7 +50,7 @@ public final class DayConverter {
       copy.day = day.rawValue
 
       guard
-        let targetDate = Calendar.chineseCalendar.date(from: copy),
+        let targetDate = calendar.date(from: copy),
         isValid(component: copy, targetDate: targetDate, originDate: date) else
       {
         return
@@ -59,7 +63,7 @@ public final class DayConverter {
   // MARK: Internal
 
   func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
-    targetDate >= originDate && Calendar.chineseCalendar
+    targetDate >= originDate && calendar
       .dateComponents([.era,.year,.month,.day], from: targetDate) == component
   }
 

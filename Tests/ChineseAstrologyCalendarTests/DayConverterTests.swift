@@ -13,7 +13,7 @@ class DayConverterTests: XCTestCase {
   let calendar = Calendar.current
   let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 5, hour: 11, minute: 7)
 
-  let dateConverter = DayConverter()
+  var dateConverter = DayConverter()
   let formatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeStyle = .none
@@ -22,7 +22,6 @@ class DayConverterTests: XCTestCase {
   }()
 
   override func setUpWithError() throws {
-    CalendarManager.shared.useGTM8 = false
     // Put setup code here. This method is called before the invocation of each test method in the class.
   }
 
@@ -114,8 +113,8 @@ class DayConverterTests: XCTestCase {
   }
 
   func testNewYearWithCST() throws {
-    CalendarManager.shared.useGTM8 = true
-
+    dateConverter = DayConverter(calendar: .chineseCalendarGTM8)
+    
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
 
     let expectedDate: DateComponents = .init(

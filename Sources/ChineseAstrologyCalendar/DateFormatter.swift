@@ -20,12 +20,7 @@ extension Calendar {
   }()
 
   public static var chineseCalendar: Calendar {
-    if CalendarManager.shared.useGTM8 {
-      return chineseCalendarGTM8
-
-    } else {
-      return Calendar(identifier: .chinese)
-    }
+    return Calendar(identifier: .chinese)
   }
 }
 
