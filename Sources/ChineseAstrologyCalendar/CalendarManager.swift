@@ -10,6 +10,6 @@ import Foundation
 public final class CalendarManager {
   public static let shared = CalendarManager()
   
-  public var useGTM8: Bool = true
+  public var useGTM8: Bool = false
   
 }

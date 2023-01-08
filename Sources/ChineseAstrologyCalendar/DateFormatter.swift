@@ -48,4 +48,13 @@ extension DateFormatter {
     df.locale = Locale(identifier: "zh_Hant")
     return df
   }()
+  
+  public static let chineseTranditionalChineseDateFormatterWithGTM8: DateFormatter = {
+    let df = DateFormatter()
+    df.calendar = Calendar.chineseCalendar
+    df.dateStyle = .long
+    df.timeZone = .chinaStandardTime
+    df.locale = Locale(identifier: "zh_Hant")
+    return df
+  }()
 }

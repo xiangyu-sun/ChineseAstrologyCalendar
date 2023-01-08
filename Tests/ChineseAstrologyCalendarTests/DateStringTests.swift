@@ -11,6 +11,7 @@ import XCTest
 final class DateStringTests: XCTestCase {
 
   override func setUpWithError() throws {
+    CalendarManager.shared.useGTM8 = false
     // Put setup code here. This method is called before the invocation of each test method in the class.
   }
 
@@ -51,4 +52,12 @@ final class DateStringTests: XCTestCase {
     XCTAssertEqual(date!.chineseYearMonthDate, "壬寅年十月初八")
   }
 
+  func test_chineseMonthandDateGTM8() throws {
+    CalendarManager.shared.useGTM8 = true
+    let component = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
+
+    let date = Calendar.current.date(from: component)
+    XCTAssertEqual(date!.chineseYearMonthDate, "壬寅年十月初九")
+  }
+  
 }

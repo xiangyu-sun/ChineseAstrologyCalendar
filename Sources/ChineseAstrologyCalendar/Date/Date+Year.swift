@@ -6,7 +6,7 @@ import Foundation
 
 extension Date {
   public var chineseDate: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
+    let dateInChinese = (CalendarManager.shared.useGTM8 ? DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8 : DateFormatter.chineseTranditionalChineseDateFormatter).string(from: self)
     guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
     let start = index.utf16Offset(in: dateInChinese) + 1
 
@@ -14,7 +14,7 @@ extension Date {
   }
 
   public var chineseYearMonthDate: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
+    let dateInChinese = (CalendarManager.shared.useGTM8 ? DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8 : DateFormatter.chineseTranditionalChineseDateFormatter).string(from: self)
 
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
