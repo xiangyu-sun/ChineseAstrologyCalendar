@@ -33,7 +33,18 @@ extension Date {
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
 
+  public var displayStringOfChineseYearMonthDateWithZodiacGTM8: String {
+    var result = chineseYearMonthDateGTM8
 
+    guard let index = result.firstIndex(of: "年") else { return "" }
+
+    guard let zodiac = (zodiac?.rawValue ?? "").first else { return "" }
+
+    result.insert(zodiac, at: index)
+
+    return result
+  }
+  
   public var displayStringOfChineseYearMonthDateWithZodiac: String {
     var result = chineseYearMonthDate
 
