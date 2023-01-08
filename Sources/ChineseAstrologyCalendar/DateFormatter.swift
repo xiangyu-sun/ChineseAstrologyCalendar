@@ -7,9 +7,30 @@
 
 import Foundation
 
-extension Calendar {
-  public static let chineseCalendar = Calendar(identifier: .chinese)
+
+extension TimeZone {
+  static let chinaStandardTime = TimeZone(abbreviation: "GMT+8") ?? .autoupdatingCurrent
 }
+
+extension Calendar {
+  public static var chineseCalendar:Calendar {
+    if CalendarManager.shared.useGTM8 {
+      return chineseCalendarGTM8
+      
+    } else {
+      return Calendar(identifier: .chinese)
+    }
+  }
+  
+  public static let chineseCalendarGTM8: Calendar = {
+    var calendar = Calendar(identifier: .chinese)
+    calendar.timeZone = .chinaStandardTime
+    return calendar
+  }()
+}
+
+
+
 
 extension DateFormatter {
   public static let chineseENDateFormatter: DateFormatter = {

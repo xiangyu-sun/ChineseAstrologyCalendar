@@ -22,10 +22,12 @@ class DayConverterTests: XCTestCase {
   }()
 
   override func setUpWithError() throws {
+    CalendarManager.shared.useGTM8 = false
     // Put setup code here. This method is called before the invocation of each test method in the class.
   }
 
   override func tearDownWithError() throws {
+    
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
@@ -110,5 +112,18 @@ class DayConverterTests: XCTestCase {
       .map(\.date)
 
     XCTAssertEqual(days, [calendar.date(from: expectedDate)!])
+  }
+  
+  func testNewYearWithCST() throws {
+    CalendarManager.shared.useGTM8 = true
+    
+    let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
+    
+    let expectedDate: DateComponents = .init(calendar: Calendar.chineseCalendarGTM8, year: 40, month: 1, day: 1, hour: 0, minute: 0)
+
+    let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+      .map(\.date)
+
+    XCTAssertEqual(days, [Calendar.chineseCalendarGTM8.date(from: expectedDate)!])
   }
 }
