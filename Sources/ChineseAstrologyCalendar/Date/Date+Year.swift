@@ -18,19 +18,21 @@ extension Date {
 
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
-  
+
   public var displayStringOfChineseYearMonthDateWithZodiac: String {
     var result = chineseYearMonthDate
 
+    let dateCompoenent = dateComponentsFromChineseCalendar()
+
     guard let index = result.firstIndex(of: "年") else { return "" }
 
-    guard let zodiac = (zodiac?.rawValue ?? "").first else { return "" }
+    guard let zodiac = (dateCompoenent.zodiac?.rawValue ?? "").first else { return "" }
 
     result.insert(zodiac, at: index)
 
     return result
   }
-  
+
   public var chineseDateGTM8: String {
     let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
     guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
@@ -48,9 +50,11 @@ extension Date {
   public var displayStringOfChineseYearMonthDateWithZodiacGTM8: String {
     var result = chineseYearMonthDateGTM8
 
+    let dateCompoenent = dateComponentsFromChineseCalendar(.chineseCalendarGTM8)
+
     guard let index = result.firstIndex(of: "年") else { return "" }
 
-    guard let zodiac = (zodiac?.rawValue ?? "").first else { return "" }
+    guard let zodiac = (dateCompoenent.zodiac?.rawValue ?? "").first else { return "" }
 
     result.insert(zodiac, at: index)
 

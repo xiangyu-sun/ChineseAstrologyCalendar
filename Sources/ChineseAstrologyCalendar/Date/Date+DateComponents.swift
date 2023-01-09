@@ -14,7 +14,7 @@ extension Date {
   }
 
   // Chinese calendar date components
-  public var dateComponentsFromChineseCalendar: DateComponents {
+  public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
     let elements = DateFormatter.chineseENDateFormatter.string(from: self).split(separator: "/")
     let day = Int(elements[1])
     let month = Int(elements[0])
@@ -22,7 +22,7 @@ extension Date {
 
     let orginalDateComponents = dateComponentsFromCurrentCalendar
 
-    var dp = DateComponents(calendar: Calendar.chineseCalendar)
+    var dp = DateComponents(calendar: calendar)
     dp.day = day
     dp.month = month
     dp.era = orginalDateComponents.chineseEra

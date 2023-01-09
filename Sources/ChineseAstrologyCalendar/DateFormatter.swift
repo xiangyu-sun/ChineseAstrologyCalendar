@@ -20,7 +20,7 @@ extension Calendar {
   }()
 
   public static var chineseCalendar: Calendar {
-    return Calendar(identifier: .chinese)
+    Calendar(identifier: .chinese)
   }
 }
 

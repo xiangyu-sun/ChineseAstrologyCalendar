@@ -2,8 +2,6 @@ import Foundation
 
 public final class DayConverter {
 
-  let calendar: Calendar
-  
   // MARK: Lifecycle
 
   public init(calendar: Calendar = .chineseCalendar) {
@@ -61,6 +59,8 @@ public final class DayConverter {
   }
 
   // MARK: Internal
+
+  let calendar: Calendar
 
   func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
     targetDate >= originDate && calendar

@@ -114,7 +114,7 @@ class DayConverterTests: XCTestCase {
 
   func testNewYearWithCST() throws {
     dateConverter = DayConverter(calendar: .chineseCalendarGTM8)
-    
+
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
 
     let expectedDate: DateComponents = .init(
