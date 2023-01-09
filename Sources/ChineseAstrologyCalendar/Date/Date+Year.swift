@@ -50,11 +50,11 @@ extension Date {
   public var displayStringOfChineseYearMonthDateWithZodiacGTM8: String {
     var result = chineseYearMonthDateGTM8
 
-    let dateCompoenent = dateComponentsFromChineseCalendar(.chineseCalendarGTM8)
+    let dateComponent = dateComponentsFromChineseCalendar(.chineseCalendarGTM8)
 
     guard let index = result.firstIndex(of: "年") else { return "" }
 
-    guard let zodiac = (dateCompoenent.zodiac?.rawValue ?? "").first else { return "" }
+    guard let zodiac = (dateComponent.zodiac?.rawValue ?? "").first else { return "" }
 
     result.insert(zodiac, at: index)
 

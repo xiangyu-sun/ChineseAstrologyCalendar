@@ -8,6 +8,14 @@
 import Foundation
 
 extension Date {
+   static let chineseENDateFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.calendar = Calendar.chineseCalendar
+    df.dateStyle = .short
+    df.locale = Locale(identifier: "en_US")
+    return df
+  }()
+  
   /// .era,.year,.month,.day,.hour,.minute,.second, .nanosecond
   public var dateComponentsFromCurrentCalendar: DateComponents {
     Calendar.current.dateComponents([.era,.year,.month,.day,.hour,.minute,.second, .nanosecond], from: self)
@@ -15,7 +23,8 @@ extension Date {
 
   // Chinese calendar date components
   public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
-    let elements = DateFormatter.chineseENDateFormatter.string(from: self).split(separator: "/")
+    Date.chineseENDateFormatter.timeZone = calendar.timeZone
+    let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")
     let day = Int(elements[1])
     let month = Int(elements[0])
     let year = Int(elements[2])
