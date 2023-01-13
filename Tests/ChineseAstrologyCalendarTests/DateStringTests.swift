@@ -47,10 +47,16 @@ final class DateStringTests: XCTestCase {
     XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiacGTM8, "癸卯兔年正月初一")
   }
   
+  func test_chineseYearMonthDateZodiac() throws {
+    let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 22, hour: 0)
+
+    let date = Calendar.current.date(from: component)
+
+    XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiac, "癸卯兔年正月初一")
+  }
+  
   func test_chineseYearMonthDateZodiaGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
-    
-    let chineseDate = Calendar.chineseCalendarGTM8.dateComponents(in: .chinaStandardTime, from: date)
     
     XCTAssertEqual(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8, "癸卯兔年正月初一")
   }

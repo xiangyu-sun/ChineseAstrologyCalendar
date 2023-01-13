@@ -46,6 +46,21 @@ public enum Wuxing: Int, CaseIterable {
       return "土"
     }
   }
+  
+  public var colorDescription: String {
+    switch self {
+    case .jin:
+      return "白"
+    case .mu:
+      return "青"
+    case .shui:
+      return "黑"
+    case .huo:
+      return "赤"
+    case .tu:
+      return "黃"
+    }
+  }
 
   public var sheng: Wuxing {
     Wuxing(rawValue: rawValue.advanced(by: 1) % Wuxing.allCases.count) ?? .jin
