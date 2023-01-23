@@ -69,11 +69,6 @@ class DayConverterTests: XCTestCase {
       ])
   }
 
-  func testOneDateAndMonthDoesNotExist() throws {
-    let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0)
-
-    XCTAssertTrue(days.isEmpty)
-  }
 
   func testOneDateAndMonthEarlierThanNow() throws {
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)

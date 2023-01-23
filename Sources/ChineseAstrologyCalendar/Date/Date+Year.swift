@@ -64,7 +64,10 @@ extension Date {
 
 extension DateComponents {
   var nianGan: Tiangan? {
-    let t = chineseYear % 10
+    var t = chineseYear % 10
+    if t == 0 {
+      t = 10
+    }
     return Tiangan(rawValue: t)
   }
 

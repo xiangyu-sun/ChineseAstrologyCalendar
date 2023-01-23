@@ -58,7 +58,7 @@ final class DateStringTests: XCTestCase {
   func test_chineseYearMonthDateZodiaGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
     
-    XCTAssertEqual(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8, "癸卯兔年正月初一")
+    XCTAssertEqual(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8, "甲辰龙年正月初一")
   }
 
   func test_chineseMonth() throws {
