@@ -26,7 +26,6 @@ extension Calendar {
 
 extension DateFormatter {
 
-
   public static let chineseTranditionalChineseDateFormatter: DateFormatter = {
     let df = DateFormatter()
     df.calendar = Calendar.chineseCalendar

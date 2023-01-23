@@ -23,7 +23,7 @@ final class IntegrationTests: XCTestCase {
     XCTAssertEqual(date.dateComponentsFromChineseCalendar().nianGan, Tiangan.geng)
     XCTAssertEqual(date.dateComponentsFromChineseCalendar().yueZhi, Dizhi.zi)
   }
-  
+
   func testNianGan2023() {
     let calendar = Calendar(identifier: .gregorian)
     let timeZone = TimeZone.chinaStandardTime

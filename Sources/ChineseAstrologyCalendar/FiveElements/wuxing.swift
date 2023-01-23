@@ -46,7 +46,7 @@ public enum Wuxing: Int, CaseIterable {
       return "土"
     }
   }
-  
+
   public var colorDescription: String {
     switch self {
     case .jin:

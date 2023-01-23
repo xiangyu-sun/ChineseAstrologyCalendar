@@ -10,6 +10,11 @@ import XCTest
 
 final class DateStringTests: XCTestCase {
 
+  var event: EventModel {
+    DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1).first ??
+      .init(date: Date(), name: .chuyi, dateComponents: .init())
+  }
+
   override func setUpWithError() throws {
     // Put setup code here. This method is called before the invocation of each test method in the class.
   }
@@ -33,12 +38,7 @@ final class DateStringTests: XCTestCase {
 
     XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiac, "壬寅虎年五月初九")
   }
-  
-  var event: EventModel {
-    return DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1).first ??
-      .init(date: Date(), name: .chuyi, dateComponents: .init())
-  }
-  
+
   func test_chineseYearMonthDateZodiaGTM8() throws {
     let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 22, hour: 0)
 
@@ -46,7 +46,7 @@ final class DateStringTests: XCTestCase {
 
     XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiacGTM8, "癸卯兔年正月初一")
   }
-  
+
   func test_chineseYearMonthDateZodiac() throws {
     let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 22, hour: 0)
 
@@ -54,10 +54,10 @@ final class DateStringTests: XCTestCase {
 
     XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiac, "癸卯兔年正月初一")
   }
-  
+
   func test_chineseYearMonthDateZodiaGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
-    
+
     XCTAssertEqual(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8, "甲辰龙年正月初一")
   }
 
