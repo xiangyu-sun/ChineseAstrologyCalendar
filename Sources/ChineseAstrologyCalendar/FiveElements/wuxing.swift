@@ -61,6 +61,23 @@ public enum Wuxing: Int, CaseIterable {
       return "黃"
     }
   }
+  
+
+  /// 凡酸屬木入肝，苦屬火入心，甘屬土入脾，辛屬金入肺，鹹屬水入腎，此五味之義也。
+  public var fiveFlavor: String {
+    switch self {
+    case .mu:
+      return "酸"
+    case .huo:
+      return "苦"
+    case .tu:
+      return "甘"
+    case .jin:
+      return "辛"
+    case .shui:
+      return "鹹"
+    }
+  }
 
   public var sheng: Wuxing {
     Wuxing(rawValue: rawValue.advanced(by: 1) % Wuxing.allCases.count) ?? .jin
