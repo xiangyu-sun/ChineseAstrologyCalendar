@@ -92,9 +92,9 @@ public enum Wuxing: Int, CaseIterable {
     case .mu:
       return [.yin, .mao]
     case .huo:
-      return [.wu, .si]
+      return [.si, .wu]
     case .tu:
-      return [.chen, .wu, .chou, .wei]
+      return [.chen, .xu, .chou, .wei]
     case .jin:
       return [.shen, .you]
     case .shui:
