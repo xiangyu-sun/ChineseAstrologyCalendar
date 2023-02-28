@@ -12,7 +12,8 @@ public struct EventModel: Codable {
   public let date: Date
   public let dateComponents: DateComponents
   public let day: Day
-
+  
+  public var alternativeTitle: String?
 }
 
 extension EventModel {
