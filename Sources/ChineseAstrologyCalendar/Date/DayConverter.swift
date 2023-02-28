@@ -38,13 +38,34 @@ public final class DayConverter {
   }
 
   public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = calendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
     return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
-      var copy = compoents
+      var copy = components
       copy.month = monthConverted
       copy.year! += Int(year)
+      copy.day = day.rawValue
+
+      guard
+        let targetDate = calendar.date(from: copy),
+        isValid(component: copy, targetDate: targetDate, originDate: date) else
+      {
+        return
+      }
+
+      result.append(EventModel(date: targetDate, name: day, dateComponents: copy))
+    }
+  }
+  
+  public func find(days: [Day], month: Dizhi ,from date: Date = Date()) -> [EventModel] {
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+    let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
+    
+    return days.reduce(into: [EventModel]()) { result, day in
+
+      var copy = components
+      copy.month = monthConverted
       copy.day = day.rawValue
 
       guard
