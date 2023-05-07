@@ -61,7 +61,6 @@ public enum Wuxing: Int, CaseIterable {
       return "黃"
     }
   }
-  
 
   /// 凡酸屬木入肝，苦屬火入心，甘屬土入脾，辛屬金入肺，鹹屬水入腎，此五味之義也。
   public var fiveFlavor: String {

@@ -17,3 +17,9 @@ https://baike.baidu.com/item/五味/1269566
 ## Usage
 
 Interface is Date
+
+
+## 算命
+
+https://zhuanlan.zhihu.com/p/390502214
+https://suanming.xuenb.com/nayin/

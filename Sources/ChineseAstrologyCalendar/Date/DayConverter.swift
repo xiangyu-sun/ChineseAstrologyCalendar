@@ -57,11 +57,11 @@ public final class DayConverter {
       result.append(EventModel(date: targetDate, name: day, dateComponents: copy))
     }
   }
-  
+
   public func find(days: [Day], month: Dizhi ,from date: Date = Date()) -> [EventModel] {
     let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
-    
+
     return days.reduce(into: [EventModel]()) { result, day in
 
       var copy = components

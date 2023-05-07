@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by 孙翔宇 on 10/8/21.
-//
-
 import Foundation
 
 // MARK: - Jieqi
@@ -54,11 +47,14 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   }
 }
 
-// extension Jieqi: DizhiConvertable {
-//    public var dizhi: Dizhi? {
-//        Dizhi(rawValue: (self.rawValue / 15))
-//    }
-// }
+// MARK: DizhiConvertable
+
+extension Jieqi: DizhiConvertable {
+  public var dizhi: Dizhi? {
+    let base = (Double(rawValue) * 0.5).rounded(.up)
+    return Dizhi(rawValue: (Int(base) + 2) % 12)
+  }
+}
 
 extension Jieqi {
 

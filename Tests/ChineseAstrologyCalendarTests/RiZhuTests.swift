@@ -8,12 +8,12 @@ final class RiZhuTests: XCTestCase {
 
     XCTAssertEqual(component.riZhu?.description, "壬辰")
   }
-  
+
   func test_rizhu() throws {
     let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 23)
 
     XCTAssertEqual(component.riZhu?.description, "辛巳")
     XCTAssertEqual(component.yue?.description, "丙寅")
   }
-  
+
 }
