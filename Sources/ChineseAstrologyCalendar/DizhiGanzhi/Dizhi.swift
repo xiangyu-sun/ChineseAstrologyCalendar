@@ -56,13 +56,15 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   }
 
   public var jie: Jieqi {
-    let base = rawValue * 2 - 1
+    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
+    let base = (index + 1) * 2 - 1
     return Jieqi(rawValue: base) ?? .lichun
   }
 
   public var qi: Jieqi {
-    let base = rawValue * 2 - 1
-    return Jieqi(rawValue: base + 1) ?? .lichun
+    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
+    let base = (index + 1) * 2
+    return Jieqi(rawValue: base) ?? .lichun
   }
 
   public var monthIndex: Int {
