@@ -45,6 +45,13 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   public var celestialLongitude: Int {
     (300 + (15 * rawValue)) % 360
   }
+  
+  public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
+    (0..<12).map { base in
+      let value = base * 2
+      return (Jieqi(rawValue: value + 1) ?? .lichun, Jieqi(rawValue: value + 2) ?? .lichun)
+    }
+  }
 }
 
 // MARK: DizhiConvertable
