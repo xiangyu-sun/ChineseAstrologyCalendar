@@ -13,7 +13,7 @@ class DayConverterTests: XCTestCase {
   let calendar = Calendar.current
   let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 5, hour: 11, minute: 7)
 
-  let dateConverter = DayConverter()
+  var dateConverter = DayConverter()
   let formatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeStyle = .none
@@ -69,12 +69,6 @@ class DayConverterTests: XCTestCase {
       ])
   }
 
-  func testOneDateAndMonthDoesNotExist() throws {
-    let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0)
-
-    XCTAssertTrue(days.isEmpty)
-  }
-
   func testOneDateAndMonthEarlierThanNow() throws {
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
@@ -86,7 +80,7 @@ class DayConverterTests: XCTestCase {
   func testOneDateAndMonthLaterThanNow() throws {
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
-    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 1, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     XCTAssertEqual(days, ["1/30/22"])
@@ -95,9 +89,39 @@ class DayConverterTests: XCTestCase {
   func testOneDateAndMonthFiveYearsLaterThanNow() throws {
     let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
-    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 5, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 4, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     XCTAssertEqual(days, ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
+  }
+
+  func testNewYear() throws {
+    let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
+
+    let expectedDate: DateComponents = .init(calendar: Calendar.current, year: 2023, month: 1, day: 22, hour: 0, minute: 0)
+
+    let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+      .map(\.date)
+
+    XCTAssertEqual(days, [calendar.date(from: expectedDate)!])
+  }
+
+  func testNewYearWithCST() throws {
+    dateConverter = DayConverter(calendar: .chineseCalendarGTM8)
+
+    let testDate: DateComponents = .init(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
+
+    let expectedDate: DateComponents = .init(
+      calendar: Calendar.chineseCalendarGTM8,
+      year: 40,
+      month: 1,
+      day: 1,
+      hour: 0,
+      minute: 0)
+
+    let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+      .map(\.date)
+
+    XCTAssertEqual(days, [Calendar.chineseCalendarGTM8.date(from: expectedDate)!])
   }
 }

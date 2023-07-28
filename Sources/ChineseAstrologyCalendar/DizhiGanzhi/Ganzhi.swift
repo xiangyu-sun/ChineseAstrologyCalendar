@@ -9,7 +9,11 @@ import Foundation
 
 // MARK: - Ganzhi
 
-public struct Ganzhi: CustomStringConvertible {
+public struct Ganzhi: CustomStringConvertible, Equatable, YinYangIdentifiable, Hashable {
+  public var yin: Bool {
+    gan.yin && zhi.yin
+  }
+
   let gan: Tiangan
   let zhi: Dizhi
 

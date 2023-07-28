@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Tiangan: Int, CaseIterable {
+public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
   case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
 
   // MARK: Public

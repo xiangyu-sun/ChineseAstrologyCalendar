@@ -1,54 +1,67 @@
-//
-//  File.swift
-//
-//
-//  Created by 孙翔宇 on 10/8/21.
-//
-
 import Foundation
 
 // MARK: - Jieqi
 
 /// 太陽位於黃經角度
-public enum Jieqi: Float, CaseIterable {
-  case lichun = 315
-  case yushui = 330
-  case jingzhe = 345
+public enum Jieqi: Int, CaseIterable, Equatable {
+  case lichun = 1
+  case yushui
+  case jingzhe
 
-  case chunfen = 0
-  case qingming = 15
-  case guyu = 30
+  case chunfen
+  case qingming
+  case guyu
 
-  case lixia = 45
-  case xiaoman = 60
-  case mangzhong = 75
+  case lixia
+  case xiaoman
+  case mangzhong
 
-  case xiazhi = 90
-  case xiaoshu = 105
-  case dashu = 120
+  case xiazhi
+  case xiaoshu
+  case dashu
 
-  case liqiu = 135
-  case chushu = 150
-  case bailu = 165
+  case liqiu
+  case chushu
+  case bailu
 
-  case qiufen = 180
-  case hanlu = 195
-  case shuangjiang = 210
+  case qiufen
+  case hanlu
+  case shuangjiang
 
-  case lidong = 225
-  case xiaoxue = 240
-  case daxue = 255
+  case lidong
+  case xiaoxue
+  case daxue
 
-  case dongzhi = 270
-  case xiaohan = 285
-  case dahan = 300
+  case dongzhi
+  case xiaohan
+  case dahan
+
+  // MARK: Public
+
+  public var qi: Bool {
+    rawValue.isMultiple(of: 2)
+  }
+
+  public var celestialLongitude: Int {
+    (300 + (15 * rawValue)) % 360
+  }
+  
+  public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
+    (0..<12).map { base in
+      let value = base * 2
+      return (Jieqi(rawValue: value + 1) ?? .lichun, Jieqi(rawValue: value + 2) ?? .lichun)
+    }
+  }
 }
 
-// extension Jieqi: DizhiConvertable {
-//    public var dizhi: Dizhi? {
-//        Dizhi(rawValue: (self.rawValue / 15))
-//    }
-// }
+// MARK: DizhiConvertable
+
+extension Jieqi: DizhiConvertable {
+  public var dizhi: Dizhi? {
+    let base = (Double(rawValue) * 0.5).rounded(.up)
+    return Dizhi(rawValue: (Int(base) + 2) % 12)
+  }
+}
 
 extension Jieqi {
 

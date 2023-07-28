@@ -9,8 +9,8 @@ import Foundation
 
 extension Date {
 
-  public var chineseDay: Day? {
-    guard let day = dateComponentsFromChineseCalendar.day else { return nil }
+  public func chineseDay(calendar: Calendar = .chineseCalendar) -> Day? {
+    guard let day = dateComponentsFromChineseCalendar(calendar).day else { return nil }
     return Day(rawValue: day)
   }
 

@@ -4,17 +4,19 @@ public final class DayConverter {
 
   // MARK: Lifecycle
 
-  public init() { }
+  public init(calendar: Calendar = .chineseCalendar) {
+    self.calendar = calendar
+  }
 
   // MARK: Public
 
   public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
 
     return Array(0..<inNextMonths).reduce(into: [EventModel]()) { result, month in
 
       for d in days {
-        var copy = compoents
+        var copy = components
 
         let newMonth = (copy.month! + month)
         let newYear: Float = (Float(newMonth) / 13.0).rounded(.towardZero)
@@ -23,38 +25,67 @@ public final class DayConverter {
         copy.year! += Int(newYear)
         copy.day = d.rawValue
 
-        guard let date = Calendar.chineseCalendar.date(from: copy), isValid(component: copy, date: date) else {
+        guard
+          let targetDate = calendar.date(from: copy),
+          isValid(component: copy, targetDate: targetDate, originDate: date) else
+        {
           continue
         }
 
-        result.append(EventModel(date: date, name: d, dateComponents: copy))
+        result.append(EventModel(date: targetDate, name: d, dateComponents: copy))
       }
     }
   }
 
   public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
-    let compoents = Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+    let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
+    return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
-    return Array(0..<inNextYears).reduce(into: [EventModel]()) { result, year in
-
-      var copy = compoents
-      copy.month = month.rawValue
+      var copy = components
+      copy.month = monthConverted
       copy.year! += Int(year)
       copy.day = day.rawValue
 
-      guard let date = Calendar.chineseCalendar.date(from: copy), isValid(component: copy, date: date) else {
+      guard
+        let targetDate = calendar.date(from: copy),
+        isValid(component: copy, targetDate: targetDate, originDate: date) else
+      {
         return
       }
 
-      result.append(EventModel(date: date, name: day, dateComponents: copy))
+      result.append(EventModel(date: targetDate, name: day, dateComponents: copy))
+    }
+  }
+
+  public func find(days: [Day], month: Dizhi ,from date: Date = Date()) -> [EventModel] {
+    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+    let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
+
+    return days.reduce(into: [EventModel]()) { result, day in
+
+      var copy = components
+      copy.month = monthConverted
+      copy.day = day.rawValue
+
+      guard
+        let targetDate = calendar.date(from: copy),
+        isValid(component: copy, targetDate: targetDate, originDate: date) else
+      {
+        return
+      }
+
+      result.append(EventModel(date: targetDate, name: day, dateComponents: copy))
     }
   }
 
   // MARK: Internal
 
-  func isValid(component: DateComponents, date: Date) -> Bool {
-    date >= Date() &&
-      Calendar.chineseCalendar.dateComponents([.era,.year,.month,.day], from: date) == component
+  let calendar: Calendar
+
+  func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
+    targetDate >= originDate && calendar
+      .dateComponents([.era,.year,.month,.day], from: targetDate) == component
   }
 
 }

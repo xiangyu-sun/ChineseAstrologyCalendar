@@ -8,11 +8,19 @@ extension DateComponents {
   public var yueGan: Tiangan? {
     guard let tiangan = nianGan?.rawValue, let dizhi = yueZhi?.rawValue else { return nil }
     let yueGan = (tiangan * 2 + dizhi) % 10
+    if yueGan == 0 {
+      return .kui
+    }
     return Tiangan(rawValue: yueGan)
   }
 
   public var yueZhi: Dizhi? {
-    guard let month = month else { return nil }
-    return Dizhi(rawValue: month)
+    guard let month = month, month >= 1 else { return nil }
+    return Dizhi.orderedMonthAlCases[month - 1]
+  }
+
+  public var yueZhu: Ganzhi? {
+    guard let yueGan = yueGan, let yueZhi = yueZhi else { return nil }
+    return Ganzhi(gan: yueGan, zhi: yueZhi)
   }
 }

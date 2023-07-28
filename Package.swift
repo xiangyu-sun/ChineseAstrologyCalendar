@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ChineseAstrologyCalendar",
-    platforms: [.iOS(.v13), .watchOS(.v4), .macOS(.v10_14)],
+    platforms: [.iOS(.v13), .watchOS(.v5), .macOS(.v10_14)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
@@ -14,13 +14,16 @@ let package = Package(
     ],
     dependencies: [
       .package(url: "https://github.com/airbnb/swift", from: "1.0.0"),
+      .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "ChineseAstrologyCalendar",
-            dependencies: []),
+            dependencies: [
+              .product(name: "Numerics", package: "swift-numerics"),
+            ]),
         .testTarget(
             name: "ChineseAstrologyCalendarTests",
             dependencies: ["ChineseAstrologyCalendar"]),

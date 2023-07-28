@@ -29,12 +29,12 @@ public protocol DizhiConvertable {
 
 // MARK: - Dizhi
 
-public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
-  case yin = 1, mao, chen, si, wu, wei, shen, you, xu, hai, zi, chou
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable {
+  case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public
 
-  public static let orderedAllCases: [Dizhi] = [.zi, .chou, .yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai]
+  public static let orderedMonthAlCases: [Dizhi] = [.yin, .mao, .chen, .si, .wu, .wei, .shen, .you, .xu, .hai, .zi, .chou]
 
   public static let xiaDynastyYearOrder: [Dizhi] = [
     .hai,
@@ -53,6 +53,22 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
 
   public var id: Int {
     rawValue
+  }
+
+  public var jie: Jieqi {
+    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
+    let base = (index + 1) * 2 - 1
+    return Jieqi(rawValue: base) ?? .lichun
+  }
+
+  public var qi: Jieqi {
+    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
+    let base = (index + 1) * 2
+    return Jieqi(rawValue: base) ?? .lichun
+  }
+
+  public var monthIndex: Int {
+    (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
   }
 
   public var chineseCharactor: String {
@@ -159,14 +175,14 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable {
 
   public var next: Dizhi {
     guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
-      return .yin
+      return .zi
     }
     return nextDizhi
   }
 
   public var previous: Dizhi {
     guard let previousDizhi = Dizhi(rawValue: rawValue - 1) else {
-      return .chou
+      return .hai
     }
     return previousDizhi
   }
@@ -251,8 +267,6 @@ extension Dizhi: TimeExpressible {
     }
   }
 
-  @available(OSX 10.12, *)
-  @available(iOS 10.0, *)
   public var formattedHourRange: String? {
     guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date())
     else { return nil }
@@ -260,8 +274,6 @@ extension Dizhi: TimeExpressible {
     return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration: 60 * 60 * 2))
   }
 
-  @available(OSX 10.12, *)
-  @available(iOS 10.0, *)
   public var formattedShortHourRange: String? {
     guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date())
     else { return nil }
@@ -270,45 +282,8 @@ extension Dizhi: TimeExpressible {
   }
 
   public var formattedMonth: String {
-    let date = Calendar.current.date(bySetting: .month, value: rawValue, of: Date()) ?? Date()
+    let date = Calendar.current.date(bySetting: .month, value: monthIndex, of: Date()) ?? Date()
     return Dizhi.monthFormatter.string(from: date)
-  }
-
-  public var startDate: Date? {
-    let startHour = hourInterval.start
-    let currentDate = Date()
-
-    var startDP = Calendar.current.dateComponents(
-      [.year, .month, .day,.hour, .minute, .second, .nanosecond],
-      from: currentDate)
-
-    if startHour == 23, startDP.hour == 0 {
-      startDP.day = startDP.day! - 1
-    }
-
-    startDP.hour = startHour
-    startDP.minute = 0
-    startDP.second = 0
-    startDP.nanosecond = 0
-
-    return Calendar.current.date(from: startDP)
-  }
-
-  public var endDate: Date? {
-    let endHour = hourInterval.end
-    let currentDate = Date()
-
-    var endDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: currentDate)
-
-    if endHour == 0, endDP.hour == 23 {
-      endDP.day = endDP.day! + 1
-    }
-
-    endDP.hour = endHour
-    endDP.minute = 59
-    endDP.second = 59
-
-    return Calendar.current.date(from: endDP)
   }
 
   public var displayHourText: String { chineseCharactor + "時" }
@@ -333,6 +308,7 @@ extension Dizhi: TimeExpressible {
 
   static var monthFormatter: DateFormatter = {
     let dfm = DateFormatter()
+    dfm.locale = tranditonalChineseLocal
     dfm.dateFormat = "MMMM"
     return dfm
   }()
