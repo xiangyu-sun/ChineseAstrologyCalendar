@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct Shichen {
+public struct Shichen: Codable {
 
   public let dizhi: Dizhi
   public let date: Date
-  public let ke: Double = 15 * 60
+  public var ke: Double { 15 * 60 }
 
   public var currentKe: Int {
     Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)

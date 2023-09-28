@@ -29,7 +29,7 @@ public protocol DizhiConvertable {
 
 // MARK: - Dizhi
 
-public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable {
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, Codable {
   case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public
