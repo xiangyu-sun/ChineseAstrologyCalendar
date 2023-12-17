@@ -26,28 +26,6 @@ extension ChineseMoonPhase {
       return .new
     }
   }
-  
-  public var gua: Trigram? {
-    switch self {
-    case .朔, .晦:
-      return .kun
-    case .蛾眉月:
-      return .zhen
-    case .上弦月:
-      return .dui
-    case .漸盈凸月:
-      return nil
-    case .望:
-      return .qian
-    case .漸虧凸月:
-      return nil
-    case .下弦月:
-      return .xun
-    case .殘月:
-      return .gen
-    }
-  }
-
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
@@ -157,6 +135,27 @@ public enum ChineseMoonPhase: String, CaseIterable {
       return "下蛾眉月"
     case .晦:
       return "晦"
+    }
+  }
+
+  public var gua: Trigram? {
+    switch self {
+    case .朔, .晦:
+      return .kun
+    case .蛾眉月:
+      return .zhen
+    case .上弦月:
+      return .dui
+    case .漸盈凸月:
+      return nil
+    case .望:
+      return .qian
+    case .漸虧凸月:
+      return nil
+    case .下弦月:
+      return .xun
+    case .殘月:
+      return .gen
     }
   }
 
