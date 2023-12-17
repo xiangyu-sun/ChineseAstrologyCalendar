@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
       .package(url: "https://github.com/airbnb/swift", from: "1.0.0"),
       .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
+      .package(url: "git@github.com:xiangyu-sun/BaGua.git", .branch("main")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -23,6 +24,7 @@ let package = Package(
             name: "ChineseAstrologyCalendar",
             dependencies: [
               .product(name: "Numerics", package: "swift-numerics"),
+              .product(name: "Bagua", package: "bagua"),
             ]),
         .testTarget(
             name: "ChineseAstrologyCalendarTests",

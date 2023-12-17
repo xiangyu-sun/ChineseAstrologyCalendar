@@ -1,5 +1,6 @@
 #if canImport(WeatherKit)
 import WeatherKit
+import Bagua
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 extension ChineseMoonPhase {
@@ -55,6 +56,26 @@ extension MoonPhase {
     }
   }
 
+  public var gua: Trigram? {
+    switch self {
+    case .new:
+      return .kun
+    case .waxingCrescent:
+      return .zhen
+    case .firstQuarter:
+      return .dui
+    case .waxingGibbous:
+      return nil
+    case .full:
+      return .qian
+    case .waningGibbous:
+      return nil
+    case .lastQuarter:
+      return .xun
+    case .waningCrescent:
+      return .gen
+    }
+  }
 }
 
 #endif
