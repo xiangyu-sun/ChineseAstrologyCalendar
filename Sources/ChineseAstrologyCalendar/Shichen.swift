@@ -12,9 +12,14 @@ public struct Shichen: Codable {
   public let dizhi: Dizhi
   public let date: Date
   public var ke: Double { 15 * 60 }
-
+  
   public var currentKe: Int {
     Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)
+  }
+  
+  public init(dizhi: Dizhi, date: Date) {
+    self.dizhi = dizhi
+    self.date = date
   }
 
   public var startDate: Date {

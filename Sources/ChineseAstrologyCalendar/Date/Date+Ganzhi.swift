@@ -9,23 +9,23 @@ import Foundation
 
 // MARK: - GanzhiDateConverter
 
-extension DateComponents {
+public extension DateComponents {
 
-  public var nian: Ganzhi? {
+  var nian: Ganzhi? {
     guard let t = nianGan else { return nil }
     guard let d = nianZhi else { return nil }
 
     return Ganzhi(gan: t, zhi: d)
   }
 
-  public var yue: Ganzhi? {
+  var yue: Ganzhi? {
     guard let t = yueGan else { return nil }
     guard let d = yueZhi else { return nil }
 
     return Ganzhi(gan: t, zhi: d)
   }
 
-  public var zodiac: Zodiac? {
+  var zodiac: Zodiac? {
     if let d = nianZhi {
       let zodiac = Zodiac(d)
       return zodiac
@@ -35,8 +35,8 @@ extension DateComponents {
 
 }
 
-extension Date {
-  public var shichenGTM8: Shichen? {
+public extension Date {
+   var shichenGTM8: Shichen? {
     let calendar = Calendar.chineseCalendarGTM8
 
     let component = calendar.dateComponents(in: calendar.timeZone, from: self)
@@ -46,7 +46,7 @@ extension Date {
     return Shichen(dizhi: Dizhi(hourOfDay: hour), date: self)
   }
 
-  public var shichen: Shichen? {
+  var shichen: Shichen? {
     let calendar = Calendar.chineseCalendar
 
     let component = calendar.dateComponents(in: TimeZone.current, from: self)
