@@ -1,6 +1,6 @@
 #if canImport(WeatherKit)
-import WeatherKit
 import Bagua
+import WeatherKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 extension ChineseMoonPhase {
@@ -30,6 +30,27 @@ extension ChineseMoonPhase {
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 extension MoonPhase {
+  public var gua: Trigram? {
+    switch self {
+    case .new:
+      return .kun
+    case .waxingCrescent:
+      return .zhen
+    case .firstQuarter:
+      return .dui
+    case .waxingGibbous:
+      return nil
+    case .full:
+      return .qian
+    case .waningGibbous:
+      return nil
+    case .lastQuarter:
+      return .xun
+    case .waningCrescent:
+      return .gen
+    }
+  }
+
   public func moonPhase(day: Day) -> ChineseMoonPhase {
     switch self {
     case .new:
@@ -55,26 +76,6 @@ extension MoonPhase {
     }
   }
 
-  public var gua: Trigram? {
-    switch self {
-    case .new:
-      return .kun
-    case .waxingCrescent:
-      return .zhen
-    case .firstQuarter:
-      return .dui
-    case .waxingGibbous:
-      return nil
-    case .full:
-      return .qian
-    case .waningGibbous:
-      return nil
-    case .lastQuarter:
-      return .xun
-    case .waningCrescent:
-      return .gen
-    }
-  }
 }
 
 #endif
@@ -111,6 +112,27 @@ public enum ChineseMoonPhase: String, CaseIterable {
 
   // MARK: Public
 
+  public var gua: Trigram? {
+    switch self {
+    case .朔, .晦:
+      return .kun
+    case .蛾眉月:
+      return .zhen
+    case .上弦月:
+      return .dui
+    case .漸盈凸月:
+      return nil
+    case .望:
+      return .qian
+    case .漸虧凸月:
+      return nil
+    case .下弦月:
+      return .xun
+    case .殘月:
+      return .gen
+    }
+  }
+
   public func acientChineseName(_: Day) -> String {
     rawValue
   }
@@ -135,27 +157,6 @@ public enum ChineseMoonPhase: String, CaseIterable {
       return "下蛾眉月"
     case .晦:
       return "晦"
-    }
-  }
-
-  public var gua: Trigram? {
-    switch self {
-    case .朔, .晦:
-      return .kun
-    case .蛾眉月:
-      return .zhen
-    case .上弦月:
-      return .dui
-    case .漸盈凸月:
-      return nil
-    case .望:
-      return .qian
-    case .漸虧凸月:
-      return nil
-    case .下弦月:
-      return .xun
-    case .殘月:
-      return .gen
     }
   }
 

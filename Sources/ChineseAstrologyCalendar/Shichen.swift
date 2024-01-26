@@ -1,25 +1,24 @@
-//
-//  File.swift
-//
-//
-//  Created by Xiangyu Sun on 23/12/22.
-//
 
 import Foundation
 
 public struct Shichen: Codable {
 
-  public let dizhi: Dizhi
-  public let date: Date
-  public var ke: Double { 15 * 60 }
-  
-  public var currentKe: Int {
-    Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)
-  }
-  
+  // MARK: Lifecycle
+
   public init(dizhi: Dizhi, date: Date) {
     self.dizhi = dizhi
     self.date = date
+  }
+
+  // MARK: Public
+
+  public let dizhi: Dizhi
+  public let date: Date
+
+  public var ke: Double { 15 * 60 }
+
+  public var currentKe: Int {
+    Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)
   }
 
   public var startDate: Date {
