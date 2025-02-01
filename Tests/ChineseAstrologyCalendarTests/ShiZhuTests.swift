@@ -17,7 +17,7 @@ final class ShiZhuTests: XCTestCase {
     
     XCTAssertEqual(component.shiZhu?.description, "辛寅", "Hour pillar for 3 AM should be 辛寅")
     XCTAssertEqual(component.shiGan?.chineseCharactor, "辛", "Hour heavenly stem for 3 AM should be 辛")
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "寅", "Hour earthly branch for 3 AM should be 寅")
+    XCTAssertEqual(component.shiZhi?.chineseCharactor, "寅", "Hour earthly branch for 3 AM should be 寅")
   }
   
   /// Test the hour pillar for 2010-04-12 at 11 PM.
@@ -32,7 +32,7 @@ final class ShiZhuTests: XCTestCase {
     
     XCTAssertEqual(component.shiZhu?.description, "辛子", "Hour pillar for 11 PM should be 辛子")
     XCTAssertEqual(component.shiGan?.chineseCharactor, "辛", "Hour heavenly stem for 11 PM should be 辛")
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "子", "Hour earthly branch for 11 PM should be 子")
+    XCTAssertEqual(component.shiZhi?.chineseCharactor, "子", "Hour earthly branch for 11 PM should be 子")
   }
   
   // MARK: - Default Hour Tests
@@ -44,9 +44,9 @@ final class ShiZhuTests: XCTestCase {
     let calendar = Calendar(identifier: .gregorian)
     let component = DateComponents(calendar: calendar, year: 2010, month: 4, day: 12)
     
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "子", "Missing hour should default to 0, mapping to 子")
+    XCTAssertNil(component.shiZhi?.chineseCharactor, "Missing hour nil")
     XCTAssertEqual(component.shiGan?.chineseCharactor, "辛", "Hour heavenly stem should be computed as 辛")
-    XCTAssertEqual(component.shiZhu?.description, "辛子", "Hour pillar for missing hour should be 辛子")
+    XCTAssertNil(component.shiZhu?.description, "Hour pillar for missing hour should be nil")
   }
   
   // MARK: - Boundary Hour Tests
@@ -58,7 +58,7 @@ final class ShiZhuTests: XCTestCase {
     let component = DateComponents(calendar: calendar, year: 2010, month: 4, day: 12, hour: 0)
     
     XCTAssertEqual(component.shiZhu?.description, "辛子", "Hour pillar for midnight should be 辛子")
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "子", "Hour earthly branch for midnight should be 子")
+    XCTAssertEqual(component.shiZhi?.chineseCharactor, "子", "Hour earthly branch for midnight should be 子")
   }
   
   /// Test the hour pillar for noon (12 PM).
@@ -70,6 +70,6 @@ final class ShiZhuTests: XCTestCase {
     let component = DateComponents(calendar: calendar, year: 2010, month: 4, day: 12, hour: 12)
     
     XCTAssertEqual(component.shiZhu?.description, "辛午", "Hour pillar for noon should be 辛午")
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "午", "Hour earthly branch for noon should be 午")
+    XCTAssertEqual(component.shiZhi?.chineseCharactor, "午", "Hour earthly branch for noon should be 午")
   }
 }

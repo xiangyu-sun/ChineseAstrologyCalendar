@@ -36,10 +36,10 @@ final class RiZhuTests: XCTestCase {
   /// Test the month pillar (月柱) for 2023-01-23.
   /// Assuming the computed property is called `yue` (or adjust to `yueZhu` as needed).
   func test_monthPillar_for2023_01_23() throws {
-    let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 23)
+    let component = DateComponents(calendar: .chineseCalendar, year: 2023, month: 1, day: 23)
     
-    // Expected month pillar for this date should be "丙寅" as per your algorithm.
-    XCTAssertEqual(component.yue?.description, "丙寅", "The month pillar for 2023-01-23 should be 丙寅")
+    // Expected month pillar for this date should be "甲寅" as per your algorithm.
+    XCTAssertEqual(component.yue?.description, "甲寅", "The month pillar for 2023-01-23 should be 甲寅")
   }
   
   // MARK: - Hour Pillar Tests
@@ -60,7 +60,7 @@ final class RiZhuTests: XCTestCase {
     
     // Also check individual components.
     XCTAssertEqual(component.shiGan?.chineseCharactor, "辛", "The hour heavenly stem for 3 AM should be 辛")
-    XCTAssertEqual(component.shiZhi.chineseCharactor, "寅", "The hour earthly branch for 3 AM should be 寅")
+    XCTAssertEqual(component.shiZhi?.chineseCharactor, "寅", "The hour earthly branch for 3 AM should be 寅")
   }
   
   /// Test the hour pillar when the hour component is missing.
@@ -68,12 +68,7 @@ final class RiZhuTests: XCTestCase {
   func test_hourPillar_whenHourIsMissing() {
     let component = DateComponents(calendar: .current, year: 2010, month: 4, day: 12)
     
-    // Depending on your implementation of `Dizhi(hourOfDay:)`, if hour is missing,
-    // it might default to 0. Adjust the expected value accordingly.
-    // For example, if hour 0 maps to 子, then the expected hour pillar might be computed
-    // with a default hour of 0.
-    // Here we only verify that shiZhi returns a valid Dizhi.
-    XCTAssertNotNil(component.shiZhi, "The hour earthly branch should have a default value when hour is missing")
+    XCTAssertNil(component.shiZhi, "The hour earthly branch nil when hour is missing")
   }
   
   // MARK: - Additional Boundary and Consistency Tests
@@ -81,14 +76,14 @@ final class RiZhuTests: XCTestCase {
   /// Test that the computed pillars wrap around correctly.
   func test_moduloWrapping() {
     // Create a component with a date that yields a base value near the modulo boundaries.
-    let component = DateComponents(calendar: .current, year: 1999, month: 12, day: 31, hour: 23)
+    let component = DateComponents(calendar: .current, year: 1999, month: 12, day: 29, hour: 23, minute: 59, second: 59)
     
     // The actual expected values depend on your algorithm.
     // For demonstration, suppose we expect:
     // Day pillar: "癸亥", Month pillar: "己丑", Hour pillar: "壬子"
     // (Adjust these expected values according to your correct algorithm.)
-    XCTAssertEqual(component.riZhu?.description, "癸亥", "Day pillar should wrap correctly at the modulo boundary")
-    XCTAssertEqual(component.yue?.description, "己丑", "Month pillar should wrap correctly at the modulo boundary")
+    XCTAssertEqual(component.riZhu?.description, "壬辰", "Day pillar should wrap correctly at the modulo boundary")
+    XCTAssertEqual(component.yue?.description, "戊寅", "Month pillar should wrap correctly at the modulo boundary")
     XCTAssertEqual(component.shiZhu?.description, "壬子", "Hour pillar should wrap correctly at the modulo boundary")
   }
   

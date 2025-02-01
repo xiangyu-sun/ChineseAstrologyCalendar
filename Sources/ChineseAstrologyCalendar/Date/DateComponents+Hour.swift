@@ -28,15 +28,18 @@ extension DateComponents {
   ///
   /// The custom initializer of `Dizhi` (i.e. `Dizhi(hourOfDay:)`) is expected
   /// to map the hour (0–23) to the corresponding Earthly Branch.
-  public var shiZhi: Dizhi {
+  public var shiZhi: Dizhi? {
+    guard let hour else {
+      return nil
+    }
     // If the hour component is missing, assume 0.
-    let hourValue = hour ?? 0
+    let hourValue = hour
     return Dizhi(hourOfDay: hourValue)
   }
 
   /// Combines the hour Heavenly Stem and Earthly Branch to form the hour pillar (时柱).
   public var shiZhu: Ganzhi? {
-    guard let stem = shiGan else { return nil }
+    guard let stem = shiGan, let shiZhi else { return nil }
     return Ganzhi(gan: stem, zhi: shiZhi)
   }
 }
