@@ -56,9 +56,9 @@ final class IntegrationTests: XCTestCase {
     XCTAssertEqual(date.dateComponentsFromChineseCalendar().yueZhi, Dizhi.you)
   }
 
-  func testYueGanToBeXin() {
+  func testYueGanToBeYi() {
     setupDateTwo()
-    XCTAssertEqual(date.dateComponentsFromChineseCalendar().yueGan, Tiangan.xin)
+    XCTAssertEqual(date.dateComponentsFromChineseCalendar().yueGan, Tiangan.yi)
   }
 
   func testNianGanToBeRen() {
