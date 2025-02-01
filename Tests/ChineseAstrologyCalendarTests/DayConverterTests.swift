@@ -16,6 +16,7 @@ class DayConverterTests: XCTestCase {
   var dateConverter = DayConverter()
   let formatter: DateFormatter = {
     let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "en_US")
     formatter.timeStyle = .none
     formatter.dateStyle = .short
     return formatter

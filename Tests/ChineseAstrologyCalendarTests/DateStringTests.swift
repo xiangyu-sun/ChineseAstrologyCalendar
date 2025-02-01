@@ -1,18 +1,14 @@
-//
-//  DateStringTests.swift
-//
-//
-//  Created by Xiangyu Sun on 23/6/22.
-//
-
 import XCTest
 @testable import ChineseAstrologyCalendar
 
 final class DateStringTests: XCTestCase {
 
   var event: EventModel {
-    DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1).first ??
-      .init(date: Date(), name: .chuyi, dateComponents: .init())
+    let component = DateComponents(calendar: .current, year: 2023, month: 6, day: 7, hour: 17)
+
+    let date = Calendar.current.date(from: component)
+
+    return DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1, from: date!).first!
   }
 
   override func setUpWithError() throws {

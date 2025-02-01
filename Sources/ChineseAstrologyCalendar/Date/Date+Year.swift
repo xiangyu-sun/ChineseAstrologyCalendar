@@ -63,28 +63,34 @@ extension Date {
 }
 
 extension DateComponents {
-  var nianGan: Tiangan? {
-    var t = chineseYear % 10
-    if t == 0 {
-      t = 10
+    /// Computes the adjusted year by adding the offset between the Gregorian year and the Chinese cyclic calendar.
+    ///
+  /// - Note: The offset of 2697 is used to align the Gregorian year with the Chinese 60‑year cycle.
+  private var adjustedYear: Int? {
+    guard let year else {
+      return nil
     }
-    return Tiangan(rawValue: t)
+    // If `year` is nil, default to 0.
+    return year + 2697
   }
-
-  var nianZhi: Dizhi? {
-    let t = chineseYear % 12
-    return Dizhi.allCases[t - 1]
+  
+  /// The Chinese cyclical year number (from 0 to 59) computed from the Gregorian year.
+  ///
+  /// This value is the remainder after dividing the adjusted year by 60.
+  var chineseYear: Int? {
+    guard let adjustedYear else {
+      return nil
+    }
+    return adjustedYear % 60
   }
-
-  var chineseYear: Int {
-    let g_adj_year = (year ?? 0) + 2697
-
-    let c_era = Int(g_adj_year / 60)
-    return g_adj_year - c_era * 60
-  }
-
-  var chineseEra: Int {
-    let g_adj_year = (year ?? 0) + 2697
-    return Int(g_adj_year / 60)
+  
+  /// The Chinese era number computed from the Gregorian year.
+  ///
+  /// This value represents the number of complete 60‑year cycles that have passed.
+  var chineseEra: Int? {
+    guard let adjustedYear else {
+      return nil
+    }
+    return adjustedYear / 60
   }
 }

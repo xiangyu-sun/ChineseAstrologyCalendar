@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Bagua",
+        "repositoryURL": "git@github.com:xiangyu-sun/BaGua.git",
+        "state": {
+          "branch": "main",
+          "revision": "584934478ff56ee74b48b8c8cd2111a249ab626e",
+          "version": null
+        }
+      },
+      {
         "package": "AirbnbSwift",
         "repositoryURL": "https://github.com/airbnb/swift",
         "state": {

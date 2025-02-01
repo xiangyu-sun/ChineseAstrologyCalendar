@@ -1,9 +1,4 @@
-//
-//  File.swift
-//
-//
-//  Created by Xiangyu Sun on 24/12/22.
-//
+
 import Foundation
 import Swift
 

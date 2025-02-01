@@ -9,7 +9,7 @@ final class QijieDizhiTests: XCTestCase {
 
   func testJieQiPairs() {
     XCTAssertEqual(
-      Dizhi.allCases.map(\.jie),
+      Dizhi.orderedMonthAlCases.map(\.jie),
       [
         ChineseAstrologyCalendar.Jieqi.lichun,
         ChineseAstrologyCalendar.Jieqi.jingzhe,
@@ -26,7 +26,7 @@ final class QijieDizhiTests: XCTestCase {
       ])
 
     XCTAssertEqual(
-      Dizhi.allCases.map(\.qi),
+      Dizhi.orderedMonthAlCases.map(\.qi),
       [
         ChineseAstrologyCalendar.Jieqi.yushui,
         ChineseAstrologyCalendar.Jieqi.chunfen,

@@ -1,9 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Xiangyu Sun on 23/12/22.
-//
 
 import Foundation
 
@@ -16,7 +10,7 @@ extension Date {
     Calendar.current.dateComponents([.era,.year,.month,.day,.hour,.minute,.second, .nanosecond], from: self)
   }
 
-  // Chinese calendar date components
+  /// Chinese calendar date components while without covert the year to mode 60
   public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
     Date.chineseENDateFormatter.timeZone = calendar.timeZone
     let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")

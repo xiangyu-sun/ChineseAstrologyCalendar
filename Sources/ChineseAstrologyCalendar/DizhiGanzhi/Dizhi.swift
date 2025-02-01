@@ -29,7 +29,7 @@ public protocol DizhiConvertable {
 
 // MARK: - Dizhi
 
-public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable {
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, Codable {
   case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public
@@ -56,14 +56,12 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   }
 
   public var jie: Jieqi {
-    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
-    let base = (index + 1) * 2 - 1
+    let base = monthIndex * 2 - 1
     return Jieqi(rawValue: base) ?? .lichun
   }
 
   public var qi: Jieqi {
-    let index = Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0
-    let base = (index + 1) * 2
+    let base = monthIndex * 2
     return Jieqi(rawValue: base) ?? .lichun
   }
 
