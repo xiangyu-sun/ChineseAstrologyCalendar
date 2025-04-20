@@ -5,11 +5,7 @@ import Foundation
 
 /// 太陽位於黃經角度
 public enum Jieqi: Int, CaseIterable, Equatable {
-  case lichun = 1
-  case yushui
-  case jingzhe
-
-  case chunfen
+  case chunfen = 0
   case qingming
   case guyu
 
@@ -36,6 +32,10 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   case dongzhi
   case xiaohan
   case dahan
+  
+  case lichun
+  case yushui
+  case jingzhe
 
   // MARK: Public
 
