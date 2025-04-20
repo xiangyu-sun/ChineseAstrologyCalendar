@@ -19,7 +19,7 @@ final class JiaziTests: XCTestCase {
   }
 
   func testYinYang() {
-    getJiazhi().forEach { ganzhi in
+    for ganzhi in getJiazhi() {
       XCTAssertEqual(ganzhi.gan.yin, ganzhi.zhi.yin)
     }
   }

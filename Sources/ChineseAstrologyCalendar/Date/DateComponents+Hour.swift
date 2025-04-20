@@ -12,15 +12,15 @@ extension DateComponents {
     guard let dayStem = riGan, let dayBranch = riZhi else {
       return nil
     }
-    
+
     // Calculate the preliminary value.
     // We assume that both dayStem.rawValue and dayBranch.rawValue are 1-indexed.
     let preliminaryValue = (dayStem.rawValue * 2) + dayBranch.rawValue - 2
-    
+
     // Calculate the hour stem index in the range 1...10.
     // If preliminaryValue % 10 == 0, we consider it as 10.
     let hourStemIndex = preliminaryValue % 10 == 0 ? 10 : preliminaryValue % 10
-    
+
     return Tiangan(rawValue: hourStemIndex)
   }
 

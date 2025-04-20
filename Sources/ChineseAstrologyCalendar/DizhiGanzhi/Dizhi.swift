@@ -166,7 +166,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
       return .jin
     case .hai, .zi:
       return .shui
-    case .chen, .wei, .chou,. xu:
+    case .chen, .wei, .chou, .xu:
       return .tu
     }
   }
@@ -185,7 +185,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     return previousDizhi
   }
 
-  public static func < (lhs: Dizhi, rhs: Dizhi) -> Bool {
+  public static func <(lhs: Dizhi, rhs: Dizhi) -> Bool {
     lhs.rawValue < rhs.rawValue
   }
 }

@@ -7,7 +7,7 @@ extension Date {
 
   /// .era,.year,.month,.day,.hour,.minute,.second, .nanosecond
   public var dateComponentsFromCurrentCalendar: DateComponents {
-    Calendar.current.dateComponents([.era,.year,.month,.day,.hour,.minute,.second, .nanosecond], from: self)
+    Calendar.current.dateComponents([.era, .year, .month, .day, .hour, .minute, .second, .nanosecond], from: self)
   }
 
   /// Chinese calendar date components while without covert the year to mode 60

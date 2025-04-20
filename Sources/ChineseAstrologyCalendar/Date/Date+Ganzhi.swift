@@ -27,8 +27,7 @@ extension DateComponents {
 
   public var zodiac: Zodiac? {
     if let d = nianZhi {
-      let zodiac = Zodiac(d)
-      return zodiac
+      return Zodiac(d)
     }
     return nil
   }

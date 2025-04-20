@@ -113,7 +113,7 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
       return .漸盈凸月
     case .shiwu:
       return .望
-    case .shiliu, .shiqi, .shiba , .shijiu, .ershi, .eryi:
+    case .shiliu, .shiqi, .shiba, .shijiu, .ershi, .eryi:
       return .漸虧凸月
     case .erer, .ersan:
       return .下弦月
@@ -124,7 +124,7 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
     }
   }
 
-  public static func < (lhs: Day, rhs: Day) -> Bool {
+  public static func <(lhs: Day, rhs: Day) -> Bool {
     lhs.rawValue < rhs.rawValue
   }
 }

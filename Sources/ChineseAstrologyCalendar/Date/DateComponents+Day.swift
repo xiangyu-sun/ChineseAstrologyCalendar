@@ -6,9 +6,9 @@ import Foundation
 import Foundation
 
 extension DateComponents {
-  
-  // MARK: - Public
-  
+
+  // MARK: Public
+
   /// 日干：根据 base 计算
   public var riGan: Tiangan? {
     guard let base else {
@@ -19,7 +19,7 @@ extension DateComponents {
     let index = base % 10 == 0 ? 10 : base % 10
     return Tiangan(rawValue: index)
   }
-  
+
   /// 日支：根据 base 计算
   public var riZhi: Dizhi? {
     guard let base else {
@@ -30,15 +30,17 @@ extension DateComponents {
     let index = base % 12 == 0 ? 12 : base % 12
     return Dizhi(rawValue: index)
   }
-  
+
   /// 日柱：天干与地支的组合
   public var riZhu: Ganzhi? {
     guard let gan = riGan, let zhi = riZhi else { return nil }
     return Ganzhi(gan: gan, zhi: zhi)
   }
-  
+
+  // MARK: Internal
+
   // MARK: - Internal Computation
-  
+
   /// Computes a base value used for determining the day stem and branch.
   /// - Note: The algorithm works as follows:
   ///   1. Take the last two digits of the year (`yearInCentury`).
@@ -50,26 +52,28 @@ extension DateComponents {
     guard let year = year else {
       return nil
     }
-    
+
     // 1. Compute the last two digits of the year.
     let yearInCentury = year % 100
-    
+
     // 2. Compute the intermediate base value.
     let baseValue = ((yearInCentury + 7) * 5 + 15 + (yearInCentury + 19) / 4) % 60
-    
+
     // 3. Use January 1 as the baseline date.
     let januaryFirst = DateComponents(year: year, month: 1, day: 1)
     let calendar = Calendar(identifier: .gregorian)
-    
+
     // Convert DateComponents to Date.
-    guard let startDate = calendar.date(from: januaryFirst),
-          let currentDate = calendar.date(from: self) else {
+    guard
+      let startDate = calendar.date(from: januaryFirst),
+      let currentDate = calendar.date(from: self)
+    else {
       return baseValue
     }
-    
+
     // Compute the day difference between January 1 and the current date.
     let dayDifference = calendar.dateComponents([.day], from: startDate, to: currentDate).day ?? 0
-    
+
     // 4. Return the adjusted base value modulo 60.
     return (baseValue + dayDifference) % 60
   }

@@ -16,7 +16,7 @@ extension DateComponents {
     let adjusted = remainder == 0 ? 10 : remainder
     return Tiangan(rawValue: adjusted)
   }
-  
+
   /// Computes the Earthly Branch (年支) for the Chinese year.
   ///
   /// The formula is:

@@ -11,7 +11,7 @@ public final class DayConverter {
   // MARK: Public
 
   public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
-    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+    let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
 
     return Array(0..<inNextMonths).reduce(into: [EventModel]()) { result, month in
 
@@ -27,8 +27,8 @@ public final class DayConverter {
 
         guard
           let targetDate = calendar.date(from: copy),
-          isValid(component: copy, targetDate: targetDate, originDate: date) else
-        {
+          isValid(component: copy, targetDate: targetDate, originDate: date)
+        else {
           continue
         }
 
@@ -37,8 +37,8 @@ public final class DayConverter {
     }
   }
 
-  public func find(day: Day, month: Dizhi , inNextYears: Int, from date: Date = Date()) -> [EventModel] {
-    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+  public func find(day: Day, month: Dizhi, inNextYears: Int, from date: Date = Date()) -> [EventModel] {
+    let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
     return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
@@ -49,8 +49,8 @@ public final class DayConverter {
 
       guard
         let targetDate = calendar.date(from: copy),
-        isValid(component: copy, targetDate: targetDate, originDate: date) else
-      {
+        isValid(component: copy, targetDate: targetDate, originDate: date)
+      else {
         return
       }
 
@@ -58,8 +58,8 @@ public final class DayConverter {
     }
   }
 
-  public func find(days: [Day], month: Dizhi ,from date: Date = Date()) -> [EventModel] {
-    let components = calendar.dateComponents([.era,.year,.month,.day], from: date)
+  public func find(days: [Day], month: Dizhi, from date: Date = Date()) -> [EventModel] {
+    let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
 
     return days.reduce(into: [EventModel]()) { result, day in
@@ -70,8 +70,8 @@ public final class DayConverter {
 
       guard
         let targetDate = calendar.date(from: copy),
-        isValid(component: copy, targetDate: targetDate, originDate: date) else
-      {
+        isValid(component: copy, targetDate: targetDate, originDate: date)
+      else {
         return
       }
 
@@ -85,7 +85,7 @@ public final class DayConverter {
 
   func isValid(component: DateComponents, targetDate: Date, originDate: Date) -> Bool {
     targetDate >= originDate && calendar
-      .dateComponents([.era,.year,.month,.day], from: targetDate) == component
+      .dateComponents([.era, .year, .month, .day], from: targetDate) == component
   }
 
 }

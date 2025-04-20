@@ -25,7 +25,7 @@ public struct Shichen: Codable {
     let startHour = dizhi.hourInterval.start
 
     var startDP = Calendar.current.dateComponents(
-      [.year, .month, .day,.hour, .minute, .second, .nanosecond],
+      [.year, .month, .day, .hour, .minute, .second, .nanosecond],
       from: date)
 
     if startHour == 23, startDP.hour == 0 {
@@ -43,7 +43,7 @@ public struct Shichen: Codable {
   public var endDate: Date {
     let endHour = dizhi.hourInterval.end
 
-    var endDP = Calendar.current.dateComponents([.year, .month, .day,.hour, .minute, .second, .nanosecond], from: date)
+    var endDP = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
 
     if endHour == 0, endDP.hour == 23 {
       endDP.day = endDP.day! + 1
@@ -60,7 +60,7 @@ public struct Shichen: Codable {
     let startHour = dizhi.next.hourInterval.start
 
     var startDP = Calendar.current.dateComponents(
-      [.year, .month, .day,.hour, .minute, .second, .nanosecond],
+      [.year, .month, .day, .hour, .minute, .second, .nanosecond],
       from: date)
 
     if startHour == 23, startDP.hour == 0 {

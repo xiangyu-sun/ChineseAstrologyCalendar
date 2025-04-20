@@ -6,7 +6,7 @@
         "repositoryURL": "git@github.com:xiangyu-sun/Astral.git",
         "state": {
           "branch": "main",
-          "revision": "23f40ee44fe095e9d17238cc2196ca6e2558d90a",
+          "revision": "720444339f8df3f4f4104a82ea95971ce6f3aab3",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "git@github.com:xiangyu-sun/BaGua.git",
         "state": {
           "branch": "main",
-          "revision": "584934478ff56ee74b48b8c8cd2111a249ab626e",
+          "revision": "a14862efb07ff7383c04ba214ea891abca68d795",
           "version": null
         }
       },
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/airbnb/swift",
         "state": {
           "branch": null,
-          "revision": "07bb2e0822ca6e464bf3610ed452568931fdbf65",
-          "version": "1.0.3"
+          "revision": "c7e833face3f893b8defde66eecb66f24b55ca35",
+          "version": "1.0.8"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "fddd1c00396eed152c45a46bea9f47b98e59301d",
-          "version": "1.2.0"
+          "revision": "41982a3656a71c768319979febd796c6fd111d5c",
+          "version": "1.5.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/apple/swift-numerics",
         "state": {
           "branch": null,
-          "revision": "0a5bc04095a675662cf24757cc0640aa2204253b",
-          "version": "1.0.2"
+          "revision": "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
+          "version": "1.0.3"
         }
       }
     ]

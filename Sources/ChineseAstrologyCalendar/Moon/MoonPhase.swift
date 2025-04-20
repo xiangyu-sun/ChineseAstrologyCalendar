@@ -59,18 +59,25 @@ extension MoonPhase {
       } else {
         return .朔
       }
+
     case .waxingCrescent:
       return .蛾眉月
+
     case .firstQuarter:
       return .上弦月
+
     case .waxingGibbous:
       return .漸盈凸月
+
     case .full:
       return .望
+
     case .waningGibbous:
       return .漸虧凸月
+
     case .lastQuarter:
       return .下弦月
+
     case .waningCrescent:
       return .殘月
     }

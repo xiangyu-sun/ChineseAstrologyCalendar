@@ -1,5 +1,5 @@
-import Foundation
 import Astral
+import Foundation
 
 // MARK: - Jieqi
 
@@ -38,7 +38,7 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   case dahan
 
   // MARK: Public
-  
+
   public static var current: Jieqi? {
     self.init(rawValue: Int(floor(currentSolarTerm())))
   }
@@ -90,7 +90,6 @@ extension Jieqi {
       return "小滿"
     case .mangzhong:
       return "芒種"
-
     case .xiazhi:
       return "夏至"
     case .xiaoshu:
@@ -103,21 +102,18 @@ extension Jieqi {
       return "處暑"
     case .bailu:
       return "白露"
-
     case .qiufen:
       return "秋分"
     case .hanlu:
       return "寒露"
     case .shuangjiang:
       return "霜降"
-
     case .lidong:
       return "立冬"
     case .xiaoxue:
       return "小雪"
     case .daxue:
       return "大雪"
-
     case .dongzhi:
       return "冬至"
     case .xiaohan:
@@ -147,7 +143,6 @@ extension Jieqi {
       return "小滿之日苦菜秀，又五日靡草死，又五日小暑至（麥秋生，麥秋至)"
     case .mangzhong:
       return "芒種之日螳螂生，又五日鵙始鳴，又五日反舌無聲"
-
     case .xiazhi:
       return "夏至之日鹿角解，又五日蜩始鳴，又五日半夏生"
     case .xiaoshu:
@@ -160,21 +155,18 @@ extension Jieqi {
       return "處暑之日鷹乃祭鳥，又五日天地始肅，又五日禾乃登"
     case .bailu:
       return "白露之日鴻雁來，又五日玄鳥歸，又五日群鳥養羞"
-
     case .qiufen:
       return "秋分之日雷始收聲，又五日蟄蟲培坯戶，又五日水始涸"
     case .hanlu:
       return "寒露之日鴻雁來賓，又五日雀入大水為蛤，又五日菊有黃華"
     case .shuangjiang:
       return "霜降之日豺乃祭獸，又五日草木黃落，又五日蟄蟲咸俯"
-
     case .lidong:
       return "立冬之日水始冰，又五日地始凍，又五日雉入大水為蜃"
     case .xiaoxue:
       return "小雪之日虹藏不見，又五日天氣上騰地氣下降，又五日閉塞而成冬"
     case .daxue:
       return "大雪之日鶡旦不鳴，又五日虎始交，又五日荔挺生（荔挺出）"
-
     case .dongzhi:
       return "冬至之日蚯蚓結，又五日麋角解，又五日水泉動"
     case .xiaohan:

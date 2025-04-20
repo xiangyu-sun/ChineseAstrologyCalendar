@@ -63,17 +63,9 @@ extension Date {
 }
 
 extension DateComponents {
-    /// Computes the adjusted year by adding the offset between the Gregorian year and the Chinese cyclic calendar.
-    ///
-  /// - Note: The offset of 2697 is used to align the Gregorian year with the Chinese 60‑year cycle.
-  private var adjustedYear: Int? {
-    guard let year else {
-      return nil
-    }
-    // If `year` is nil, default to 0.
-    return year + 2697
-  }
-  
+
+  // MARK: Internal
+
   /// The Chinese cyclical year number (from 0 to 59) computed from the Gregorian year.
   ///
   /// This value is the remainder after dividing the adjusted year by 60.
@@ -83,7 +75,7 @@ extension DateComponents {
     }
     return adjustedYear % 60
   }
-  
+
   /// The Chinese era number computed from the Gregorian year.
   ///
   /// This value represents the number of complete 60‑year cycles that have passed.
@@ -93,4 +85,18 @@ extension DateComponents {
     }
     return adjustedYear / 60
   }
+
+  // MARK: Private
+
+  /// Computes the adjusted year by adding the offset between the Gregorian year and the Chinese cyclic calendar.
+  ///
+  /// - Note: The offset of 2697 is used to align the Gregorian year with the Chinese 60‑year cycle.
+  private var adjustedYear: Int? {
+    guard let year else {
+      return nil
+    }
+    // If `year` is nil, default to 0.
+    return year + 2697
+  }
+
 }
