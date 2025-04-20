@@ -59,6 +59,12 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   }
 }
 
+public extension Date {
+  var jieqi: Jieqi? {
+    Jieqi(rawValue: Int(currentSolarTerm(for: self)))
+  }
+}
+
 // MARK: DizhiConvertable
 
 extension Jieqi: DizhiConvertable {
