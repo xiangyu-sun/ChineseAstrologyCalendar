@@ -1,4 +1,5 @@
 import Foundation
+import Astral
 
 // MARK: - Jieqi
 
@@ -37,6 +38,10 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   case dahan
 
   // MARK: Public
+  
+  public static var current: Jieqi? {
+    self.init(rawValue: Int(floor(currentSolarTerm())))
+  }
 
   public var qi: Bool {
     rawValue.isMultiple(of: 2)

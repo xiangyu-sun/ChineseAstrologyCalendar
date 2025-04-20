@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Astral",
+        "repositoryURL": "git@github.com:xiangyu-sun/Astral.git",
+        "state": {
+          "branch": "main",
+          "revision": "23f40ee44fe095e9d17238cc2196ca6e2558d90a",
+          "version": null
+        }
+      },
+      {
         "package": "Bagua",
         "repositoryURL": "git@github.com:xiangyu-sun/BaGua.git",
         "state": {
