@@ -38,6 +38,12 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   case jingzhe
 
   // MARK: Public
+  
+  
+  /// Returns the case name as a String
+  public var stringValue: String {
+    return String(describing: self)
+  }
 
   public static var current: Jieqi? {
     self.init(rawValue: Int(floor(currentSolarTerm())))
