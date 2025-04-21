@@ -54,15 +54,16 @@ public enum Jieqi: Int, CaseIterable, Equatable {
   }
 
   public var celestialLongitude: Int {
-    (300 + (15 * rawValue)) % 360
+    (15 * rawValue)
   }
   
   /// Returns the Gregorian month (1 = January … 12 = December) corresponding to this solar term’s celestial longitude.
   /// Uses the convention that 0° Aries (spring equinox) maps to March.
   public var monthFromCelestialLongitude: Int {
-      // Each 30-degree segment maps to a month: [0,30)→0, [30,60)→1, … [330,360)→11
-      // Offset by 2 so 0°→3 (March), wrap modulo 12, then +1 to get 1-based.
-      return ((celestialLongitude / 30 + 2) % 12) + 1
+      // Each solar term spans a 30° band; offset by 15° to center the band.
+      // [0,30)→March, [30,60)→April, …, [330,360)→February.
+      let index = (celestialLongitude + 15) / 30
+      return ((index + 2) % 12) + 1
   }
 
 
