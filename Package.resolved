@@ -1,52 +1,50 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Astral",
-        "repositoryURL": "git@github.com:xiangyu-sun/Astral.git",
-        "state": {
-          "branch": "main",
-          "revision": "9bb7f1131dbbcc7eb81a165825a1338ce94888fc",
-          "version": null
-        }
-      },
-      {
-        "package": "Bagua",
-        "repositoryURL": "git@github.com:xiangyu-sun/BaGua.git",
-        "state": {
-          "branch": "main",
-          "revision": "a14862efb07ff7383c04ba214ea891abca68d795",
-          "version": null
-        }
-      },
-      {
-        "package": "AirbnbSwift",
-        "repositoryURL": "https://github.com/airbnb/swift",
-        "state": {
-          "branch": null,
-          "revision": "c7e833face3f893b8defde66eecb66f24b55ca35",
-          "version": "1.0.8"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser",
-        "state": {
-          "branch": null,
-          "revision": "41982a3656a71c768319979febd796c6fd111d5c",
-          "version": "1.5.0"
-        }
-      },
-      {
-        "package": "swift-numerics",
-        "repositoryURL": "https://github.com/apple/swift-numerics",
-        "state": {
-          "branch": null,
-          "revision": "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
-          "version": "1.0.3"
-        }
+  "pins" : [
+    {
+      "identity" : "astral",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:xiangyu-sun/Astral.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f8b9c0914bacfea3973290eee9faa66858b2ec46"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "bagua",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:xiangyu-sun/BaGua.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "831d1b978b58bb1d890df27c11811c97c00475d2"
+      }
+    },
+    {
+      "identity" : "swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/swift",
+      "state" : {
+        "revision" : "c7e833face3f893b8defde66eecb66f24b55ca35",
+        "version" : "1.0.8"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
 }

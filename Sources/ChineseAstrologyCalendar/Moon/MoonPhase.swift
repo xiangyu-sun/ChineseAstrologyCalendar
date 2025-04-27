@@ -50,6 +50,27 @@ extension MoonPhase {
       return .gen
     }
   }
+  
+  public var gua64: HexagramSymbol? {
+    switch self {
+    case .new:
+      return .坤
+    case .waxingCrescent:
+      return .臨
+    case .firstQuarter:
+      return .大壯
+    case .waxingGibbous:
+      return nil
+    case .full:
+      return .乾
+    case .waningGibbous:
+      return nil
+    case .lastQuarter:
+      return .遯
+    case .waningCrescent:
+      return .觀
+    }
+  }
 
   public func moonPhase(day: Day) -> ChineseMoonPhase {
     switch self {
