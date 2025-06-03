@@ -34,6 +34,9 @@ final class DateComponentsMonthTests: XCTestCase {
 
     comps.month = -3
     XCTAssertNil(comps.yueZhi, "yueZhi should be nil for a negative month")
+
+    comps.month = 13
+    XCTAssertNil(comps.yueZhi, "yueZhi should be nil for month greater than 12")
   }
 
   // MARK: - yueGan Tests
