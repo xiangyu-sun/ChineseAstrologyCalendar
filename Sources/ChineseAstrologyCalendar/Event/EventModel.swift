@@ -29,7 +29,7 @@ extension EventModel {
 
   private static var enToChNumberFormatter: NumberFormatter {
     let formatter = NumberFormatter()
-    formatter.locale = tranditonalChineseLocal
+    formatter.locale = traditionalChineseLocale
     formatter.numberStyle = .spellOut
     return formatter
   }

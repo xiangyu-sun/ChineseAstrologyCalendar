@@ -306,7 +306,7 @@ extension Dizhi: TimeExpressible {
 
   static var monthFormatter: DateFormatter = {
     let dfm = DateFormatter()
-    dfm.locale = tranditonalChineseLocal
+    dfm.locale = traditionalChineseLocale
     dfm.dateFormat = "MMMM"
     return dfm
   }()
