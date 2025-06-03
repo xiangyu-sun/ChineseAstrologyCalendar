@@ -70,6 +70,21 @@ class DayConverterTests: XCTestCase {
       ])
   }
 
+  func testRangeExceedingTwelveMonths() throws {
+    let monthsHasSanshi = dateConverter.find(days: [.sanshi], inNextMonths: 14, from: calendar.date(from: testDate)!)
+      .map { formatter.string(from: $0.date) }
+
+    XCTAssertEqual(monthsHasSanshi, [
+      "3/2/22",
+      "4/30/22",
+      "6/28/22",
+      "7/28/22",
+      "9/25/22",
+      "11/23/22",
+      "1/21/23",
+    ])
+  }
+
   func testOneDateAndMonthEarlierThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
