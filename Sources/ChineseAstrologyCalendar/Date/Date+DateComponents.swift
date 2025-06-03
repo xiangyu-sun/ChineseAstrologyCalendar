@@ -10,7 +10,7 @@ extension Date {
     Calendar.current.dateComponents([.era, .year, .month, .day, .hour, .minute, .second, .nanosecond], from: self)
   }
 
-  /// Chinese calendar date components while without covert the year to mode 60
+  /// Chinese calendar date components without converting the year to modulo 60.
   public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
     Date.chineseENDateFormatter.timeZone = calendar.timeZone
     let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")
