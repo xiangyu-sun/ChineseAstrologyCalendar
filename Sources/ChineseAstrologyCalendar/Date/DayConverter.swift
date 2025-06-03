@@ -18,11 +18,10 @@ public final class DayConverter {
       for d in days {
         var copy = components
 
-        let newMonth = (copy.month! + month)
-        let newYear: Float = (Float(newMonth) / 13.0).rounded(.towardZero)
-
-        copy.month = newMonth <= 12 ? newMonth : newMonth - 12
-        copy.year! += Int(newYear)
+        let newMonth = copy.month! + month
+        let newYear = (newMonth - 1) / 12
+        copy.month = ((newMonth - 1) % 12) + 1
+        copy.year! += newYear
         copy.day = d.rawValue
 
         guard
