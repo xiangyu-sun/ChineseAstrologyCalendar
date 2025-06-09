@@ -1,6 +1,7 @@
 
 import Foundation
 
+/// Generates the 60 combinations of Heavenly Stems and Earthly Branches.
 public func getJiazhi() -> [Ganzhi] {
   let dizhiCount = Dizhi.allCases.count
   let tianganCount = Tiangan.allCases.count

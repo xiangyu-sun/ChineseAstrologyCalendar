@@ -30,6 +30,7 @@ extension ChineseMoonPhase {
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 extension MoonPhase {
+  /// Eight-trigram symbol associated with the phase, if any.
   public var gua: Trigram? {
     switch self {
     case .new:
@@ -110,6 +111,7 @@ extension MoonPhase {
 
 // MARK: - ChineseMoonPhase
 
+/// Lunar phases expressed with traditional Chinese names.
 public enum ChineseMoonPhase: String, CaseIterable {
 
   /// The disk is unlit where the moon is not visible.
@@ -161,10 +163,12 @@ public enum ChineseMoonPhase: String, CaseIterable {
     }
   }
 
+  /// Historical Chinese name for the phase.
   public func acientChineseName(_: Day) -> String {
     rawValue
   }
 
+  /// Modern Chinese name for the phase.
   public func modernChineseName(_: Day) -> String {
     switch self {
     case .朔:

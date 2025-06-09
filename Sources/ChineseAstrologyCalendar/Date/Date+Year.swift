@@ -5,6 +5,7 @@
 import Foundation
 
 extension Date {
+  /// Chinese day and month string in the current time zone.
   public var chineseDate: String {
     let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
     guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
@@ -13,12 +14,14 @@ extension Date {
     return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
   }
 
+  /// Chinese year, month and day string in the current time zone.
   public var chineseYearMonthDate: String {
     let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
 
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
 
+  /// Year-month-date string with zodiac animal inserted.
   public var displayStringOfChineseYearMonthDateWithZodiac: String {
     var result = chineseYearMonthDate
 
@@ -33,6 +36,7 @@ extension Date {
     return result
   }
 
+  /// Chinese date string using China Standard Time.
   public var chineseDateGTM8: String {
     let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
     guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
@@ -41,12 +45,14 @@ extension Date {
     return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
   }
 
+  /// Chinese year-month-date string using China Standard Time.
   public var chineseYearMonthDateGTM8: String {
     let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
 
     return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
   }
 
+  /// Year-month-date string with zodiac using China Standard Time.
   public var displayStringOfChineseYearMonthDateWithZodiacGTM8: String {
     var result = chineseYearMonthDateGTM8
 

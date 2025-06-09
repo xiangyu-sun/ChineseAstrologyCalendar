@@ -1,6 +1,7 @@
 
 import Foundation
 
+/// Seasons mapped to their corresponding five elements.
 public enum Season: CaseIterable, WuxingConvertable {
   case spring
   case summer
@@ -9,6 +10,7 @@ public enum Season: CaseIterable, WuxingConvertable {
 
   // MARK: Public
 
+  /// Chinese character representation of the season.
   public var chineseDescription: String {
     switch self {
     case .spring:
@@ -22,6 +24,7 @@ public enum Season: CaseIterable, WuxingConvertable {
     }
   }
 
+  /// ``Wuxing`` element corresponding to the season.
   public var wuxing: Wuxing {
     switch self {
     case .spring:
@@ -35,6 +38,7 @@ public enum Season: CaseIterable, WuxingConvertable {
     }
   }
 
+  /// Cardinal direction associated with the season.
   public var fangwei: FangWei {
     switch self {
     case .spring:
@@ -48,6 +52,7 @@ public enum Season: CaseIterable, WuxingConvertable {
     }
   }
 
+  /// Earthly branches occurring during this season.
   public var dizhi: [Dizhi] {
     switch self {
     case .spring:

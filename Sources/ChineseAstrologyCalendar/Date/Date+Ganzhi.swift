@@ -9,8 +9,10 @@ import Foundation
 
 // MARK: - GanzhiDateConverter
 
+/// Accessors for Heavenly Stem and Earthly Branch combinations.
 extension DateComponents {
 
+  /// ``Ganzhi`` for the year pillar.
   public var nian: Ganzhi? {
     guard let t = nianGan else { return nil }
     guard let d = nianZhi else { return nil }
@@ -18,6 +20,7 @@ extension DateComponents {
     return Ganzhi(gan: t, zhi: d)
   }
 
+  /// ``Ganzhi`` for the month pillar.
   public var yue: Ganzhi? {
     guard let t = yueGan else { return nil }
     guard let d = yueZhi else { return nil }
@@ -25,6 +28,7 @@ extension DateComponents {
     return Ganzhi(gan: t, zhi: d)
   }
 
+  /// Zodiac animal derived from the year pillar.
   public var zodiac: Zodiac? {
     if let d = nianZhi {
       return Zodiac(d)
@@ -35,6 +39,7 @@ extension DateComponents {
 }
 
 extension Date {
+  /// ``Shichen`` calculated using China Standard Time.
   public var shichenGTM8: Shichen? {
     let calendar = Calendar.chineseCalendarGTM8
 
@@ -45,6 +50,7 @@ extension Date {
     return Shichen(dizhi: Dizhi(hourOfDay: hour), date: self)
   }
 
+  /// ``Shichen`` calculated using the current time zone.
   public var shichen: Shichen? {
     let calendar = Calendar.chineseCalendar
 

@@ -1,3 +1,4 @@
+/// Represents the days of a traditional Chinese lunar month.
 public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
   case chuyi = 1
   case chuer
@@ -32,10 +33,12 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
 
   // MARK: Public
 
+  /// Numeric identifier for the day.
   public var id: Int {
     rawValue
   }
 
+  /// Chinese textual representation for the day.
   public var name: String {
     switch self {
     case .chuyi:
@@ -101,6 +104,7 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
     }
   }
 
+  /// Associated moon phase for the day.
   public var moonPhase: ChineseMoonPhase {
     switch self {
     case .chuyi:
@@ -124,6 +128,7 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
     }
   }
 
+  /// Provides ordering support for ``Day`` values.
   public static func <(lhs: Day, rhs: Day) -> Bool {
     lhs.rawValue < rhs.rawValue
   }

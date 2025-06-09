@@ -1,6 +1,7 @@
 
 import Foundation
 
+/// Helpers for extracting ``DateComponents`` in different calendars.
 extension Date {
 
   // MARK: Public

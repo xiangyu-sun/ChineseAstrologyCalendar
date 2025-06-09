@@ -3,7 +3,9 @@ import Foundation
 
 // MARK: - YinYangIdentifiable
 
+/// Types that can indicate whether they are Yin or Yang based on their raw value.
 public protocol YinYangIdentifiable {
+  /// Returns ``true`` if the value represents Yin.
   var yin: Bool { get }
 }
 

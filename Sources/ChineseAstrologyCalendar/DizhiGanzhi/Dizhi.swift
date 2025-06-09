@@ -9,26 +9,35 @@ import Foundation
 
 // MARK: - TimeExpressible
 
+/// Types that can express time using the traditional Chinese system.
 public protocol TimeExpressible {
+  /// Creates an instance from a 24‑hour based hour value.
   init(hourOfDay: Int)
+  /// Chinese character associated with the time unit.
   var chineseCharactor: String { get }
+  /// Displayable text representing the hour.
   var displayHourText: String { get }
 }
 
 // MARK: - MonthExpressible
 
+/// Types that can provide a textual representation for a month.
 public protocol MonthExpressible {
+  /// Text for displaying the month value.
   var displayMonthText: String { get }
 }
 
 // MARK: - DizhiConvertable
 
+/// Types that can be converted to an Earthly Branch (``Dizhi``).
 public protocol DizhiConvertable {
+  /// The associated ``Dizhi`` value if available.
   var dizhi: Dizhi? { get }
 }
 
 // MARK: - Dizhi
 
+/// The twelve Earthly Branches used for traditional Chinese time keeping.
 public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, Codable {
   case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
@@ -51,24 +60,29 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     .xu,
   ]
 
+  /// Numeric identifier for the earthly branch.
   public var id: Int {
     rawValue
   }
 
+  /// The solar term marking the beginning of the branch's month.
   public var jie: Jieqi {
     let base = monthIndex * 2 - 1
     return Jieqi(rawValue: base) ?? .lichun
   }
 
+  /// The solar term marking the midpoint of the branch's month.
   public var qi: Jieqi {
     let base = monthIndex * 2
     return Jieqi(rawValue: base) ?? .lichun
   }
 
+  /// Index of the month represented by the branch.
   public var monthIndex: Int {
     (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
   }
 
+  /// Chinese character representation of the branch.
   public var chineseCharactor: String {
     switch self {
     case .zi:
@@ -98,6 +112,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     }
   }
 
+  /// Alternate historic name for the time period represented by the branch.
   public var aliasName: String {
     switch self {
     case .zi:
@@ -127,6 +142,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     }
   }
 
+  /// Traditional organ association used in Chinese medicine.
   public var organReference: String {
     switch self {
     case .zi:
@@ -156,6 +172,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     }
   }
 
+  /// Five element associated with the branch.
   public var wuxing: Wuxing {
     switch self {
     case .yin, .mao:
@@ -171,6 +188,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     }
   }
 
+  /// Next branch in sequence.
   public var next: Dizhi {
     guard let nextDizhi = Dizhi(rawValue: rawValue + 1) else {
       return .zi
@@ -178,6 +196,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     return nextDizhi
   }
 
+  /// Previous branch in sequence.
   public var previous: Dizhi {
     guard let previousDizhi = Dizhi(rawValue: rawValue - 1) else {
       return .hai
@@ -185,6 +204,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     return previousDizhi
   }
 
+  /// Ordering support for ``Dizhi``.
   public static func <(lhs: Dizhi, rhs: Dizhi) -> Bool {
     lhs.rawValue < rhs.rawValue
   }
@@ -192,6 +212,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
 
 // MARK: - HourInterval
 
+/// Represents an interval of hours in a day.
 public struct HourInterval<T> where T: Comparable {
   let start: T
   let end: T
@@ -203,6 +224,7 @@ extension Dizhi: TimeExpressible {
 
   // MARK: Lifecycle
 
+  /// Creates a ``Dizhi`` value from the given hour of day (0–23).
   public init(hourOfDay: Int) {
     switch hourOfDay {
     case 23, 0:
@@ -236,6 +258,7 @@ extension Dizhi: TimeExpressible {
 
   // MARK: Public
 
+  /// Start and end hours for this branch.
   public var hourInterval: HourInterval<Int> {
     switch self {
     case .zi:
@@ -265,6 +288,7 @@ extension Dizhi: TimeExpressible {
     }
   }
 
+  /// Localized text describing the two-hour range.
   public var formattedHourRange: String? {
     guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date())
     else { return nil }
@@ -272,6 +296,7 @@ extension Dizhi: TimeExpressible {
     return Dizhi.dateIntervalFormatter.string(from: DateInterval(start: date, duration: 60 * 60 * 2))
   }
 
+  /// Short version of ``formattedHourRange``.
   public var formattedShortHourRange: String? {
     guard let date = Calendar.current.date(bySettingHour: hourInterval.start, minute: 0, second: 0, of: Date())
     else { return nil }
@@ -279,13 +304,16 @@ extension Dizhi: TimeExpressible {
     return Dizhi.hourIntervalFormatter.string(from: DateInterval(start: date, duration: 60 * 60 * 2))
   }
 
+  /// Localized month name for this branch.
   public var formattedMonth: String {
     let date = Calendar.current.date(bySetting: .month, value: monthIndex, of: Date()) ?? Date()
     return Dizhi.monthFormatter.string(from: date)
   }
 
+  /// Chinese character plus "時" used for displaying hours.
   public var displayHourText: String { chineseCharactor + "時" }
 
+  /// Chinese calendar month name derived from this branch.
   public var chineseCalendarMonthName: String {
     chineseCharactor + "月"
   }
