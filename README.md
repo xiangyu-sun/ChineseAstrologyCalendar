@@ -30,6 +30,10 @@ Discuss the Five Elements theory and its relevance to Chinese astrology.
 
 - [五味 - 百度百科](https://baike.baidu.com/item/五味/1269566)
 
+
+### 建除十二神
+https://zh.wikipedia.org/wiki/%E5%BB%BA%E9%99%A4%E5%8D%81%E4%BA%8C%E7%A5%9E
+
 ## Usage
 Instructions on how to use the ChineseAstrologyCalendar. Include examples or screenshots if possible.
 

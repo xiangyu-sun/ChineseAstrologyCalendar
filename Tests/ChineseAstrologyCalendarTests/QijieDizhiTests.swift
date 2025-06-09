@@ -11,8 +11,6 @@ final class QijieDizhiTests: XCTestCase {
     XCTAssertEqual(
       Dizhi.orderedMonthAlCases.map(\.jie),
       [
-        ChineseAstrologyCalendar.Jieqi.lichun,
-        ChineseAstrologyCalendar.Jieqi.jingzhe,
         ChineseAstrologyCalendar.Jieqi.qingming,
         ChineseAstrologyCalendar.Jieqi.lixia,
         ChineseAstrologyCalendar.Jieqi.mangzhong,
@@ -23,12 +21,13 @@ final class QijieDizhiTests: XCTestCase {
         ChineseAstrologyCalendar.Jieqi.lidong,
         ChineseAstrologyCalendar.Jieqi.daxue,
         ChineseAstrologyCalendar.Jieqi.xiaohan,
+        ChineseAstrologyCalendar.Jieqi.lichun,
+        ChineseAstrologyCalendar.Jieqi.jingzhe,
       ])
 
     XCTAssertEqual(
       Dizhi.orderedMonthAlCases.map(\.qi),
       [
-        ChineseAstrologyCalendar.Jieqi.yushui,
         ChineseAstrologyCalendar.Jieqi.chunfen,
         ChineseAstrologyCalendar.Jieqi.guyu,
         ChineseAstrologyCalendar.Jieqi.xiaoman,
@@ -40,6 +39,7 @@ final class QijieDizhiTests: XCTestCase {
         ChineseAstrologyCalendar.Jieqi.xiaoxue,
         ChineseAstrologyCalendar.Jieqi.dongzhi,
         ChineseAstrologyCalendar.Jieqi.dahan,
+        ChineseAstrologyCalendar.Jieqi.yushui
       ])
   }
 

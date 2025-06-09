@@ -41,6 +41,19 @@ final class RiZhuTests: XCTestCase {
     // Expected month pillar for this date should be "甲寅" as per your algorithm.
     XCTAssertEqual(component.yue?.description, "甲寅", "The month pillar for 2023-01-23 should be 甲寅")
   }
+  
+  func test_monthPillar_for2025_06_09() throws {
+    let date = try XCTUnwrap(Calendar.current.date(from: DateComponents(calendar: .current, year: 2025, month: 06, day: 09)))
+    let component = date.dateComponentsFromChineseCalendar()
+    
+    XCTAssertEqual(component.yue?.description, "壬午", "The month pillar for 2025-06-09 should be 壬午")
+  }
+  
+  func test_yearPillar_for2025_06_09() throws {
+    let component = DateComponents(calendar: .current, year: 2025, month: 06, day: 09)
+    XCTAssertEqual(component.nian?.description, "乙巳", "The month pillar for 2025-06-09 should be 乙巳")
+  }
+
 
   // MARK: - Hour Pillar Tests
 
@@ -78,13 +91,9 @@ final class RiZhuTests: XCTestCase {
     // Create a component with a date that yields a base value near the modulo boundaries.
     let component = DateComponents(calendar: .current, year: 1999, month: 12, day: 29, hour: 23, minute: 59, second: 59)
 
-    // The actual expected values depend on your algorithm.
-    // For demonstration, suppose we expect:
-    // Day pillar: "癸亥", Month pillar: "己丑", Hour pillar: "壬子"
-    // (Adjust these expected values according to your correct algorithm.)
-    XCTAssertEqual(component.riZhu?.description, "壬辰", "Day pillar should wrap correctly at the modulo boundary")
-    XCTAssertEqual(component.yue?.description, "戊寅", "Month pillar should wrap correctly at the modulo boundary")
-    XCTAssertEqual(component.shiZhu?.description, "壬子", "Hour pillar should wrap correctly at the modulo boundary")
+    XCTAssertEqual(component.riZhu?.description, "己亥", "Day pillar should wrap correctly at the modulo boundary")
+    XCTAssertEqual(component.yue?.description, "丁丑", "Month pillar should wrap correctly at the modulo boundary")
+    XCTAssertEqual(component.shiZhu?.description, "乙子", "Hour pillar should wrap correctly at the modulo boundary")
   }
 
   /// Test consistency across different calendars (if applicable).

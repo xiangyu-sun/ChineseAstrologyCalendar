@@ -73,7 +73,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
 
   /// The solar term marking the midpoint of the branch's month.
   public var qi: Jieqi {
-    let base = monthIndex * 2
+    let base = (monthIndex - 1) * 2
     return Jieqi(rawValue: base) ?? .lichun
   }
 
