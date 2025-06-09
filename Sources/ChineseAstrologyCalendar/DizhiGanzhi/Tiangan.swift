@@ -7,11 +7,13 @@
 
 import Foundation
 
+/// The ten Heavenly Stems used in the traditional calendar.
 public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
   case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
 
   // MARK: Public
 
+  /// Chinese character representation of the stem.
   public var chineseCharactor: String {
     switch self {
     case .jia:

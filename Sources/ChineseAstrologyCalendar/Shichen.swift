@@ -1,10 +1,12 @@
 
 import Foundation
 
+/// Represents a traditional two-hour period of the day.
 public struct Shichen: Codable {
 
   // MARK: Lifecycle
 
+  /// Creates a ``Shichen`` for the given earthly branch and date.
   public init(dizhi: Dizhi, date: Date) {
     self.dizhi = dizhi
     self.date = date
@@ -12,15 +14,20 @@ public struct Shichen: Codable {
 
   // MARK: Public
 
+  /// Earthly branch associated with the period.
   public let dizhi: Dizhi
+  /// Reference date used for calculations.
   public let date: Date
 
+  /// Length of one ``ke`` in seconds.
   public var ke: Double { 15 * 60 }
 
+  /// ``ke`` index within this ``Shichen`` based on ``date``.
   public var currentKe: Int {
     Int((date.timeIntervalSince1970 - startDate.timeIntervalSince1970) / ke)
   }
 
+  /// Start date for this ``Shichen``.
   public var startDate: Date {
     let startHour = dizhi.hourInterval.start
 
@@ -40,6 +47,7 @@ public struct Shichen: Codable {
     return Calendar.current.date(from: startDP) ?? Date()
   }
 
+  /// End date for this ``Shichen``.
   public var endDate: Date {
     let endHour = dizhi.hourInterval.end
 
@@ -56,6 +64,7 @@ public struct Shichen: Codable {
     return Calendar.current.date(from: endDP) ?? Date()
   }
 
+  /// Start date of the next ``Shichen``.
   public var nextStartDate: Date {
     let startHour = dizhi.next.hourInterval.start
 

@@ -2,6 +2,7 @@
 import Foundation
 
 extension DateComponents {
+  /// Constructs a ``Date`` from Chinese calendar components.
   public static func getDate(year: Int, month: Int, day: Day) -> Date? {
     let adjustedYear = year + 2697
     let chineseEra = Int(adjustedYear / 60)

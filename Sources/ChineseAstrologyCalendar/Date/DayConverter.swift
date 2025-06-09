@@ -1,15 +1,18 @@
 import Foundation
 
+/// Utility for locating specific lunar days within a range of dates.
 public final class DayConverter {
 
   // MARK: Lifecycle
 
+  /// Creates a converter using the specified calendar.
   public init(calendar: Calendar = .chineseCalendar) {
     self.calendar = calendar
   }
 
   // MARK: Public
 
+  /// Finds upcoming occurrences of the given days in the next number of months.
   public func find(days: [Day], inNextMonths: Int, from date: Date = Date()) -> [EventModel] {
     let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
 
@@ -37,6 +40,7 @@ public final class DayConverter {
     }
   }
 
+  /// Finds future occurrences of a specific day and month over several years.
   public func find(day: Day, month: Dizhi, inNextYears: Int, from date: Date = Date()) -> [EventModel] {
     let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1
@@ -58,6 +62,7 @@ public final class DayConverter {
     }
   }
 
+  /// Finds events for the provided days in a fixed month of the current year.
   public func find(days: [Day], month: Dizhi, from date: Date = Date()) -> [EventModel] {
     let components = calendar.dateComponents([.era, .year, .month, .day], from: date)
     let monthConverted = (Dizhi.orderedMonthAlCases.firstIndex(of: month) ?? 0) + 1

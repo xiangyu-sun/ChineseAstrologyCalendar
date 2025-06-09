@@ -9,17 +9,21 @@ import Foundation
 
 // MARK: - DizhiConvertible
 
+/// Types that can be created from an Earthly Branch.
 public protocol DizhiConvertible {
+  /// Initializes an instance from ``Dizhi``.
   init(_ dizhi: Dizhi)
 }
 
 // MARK: - Zodiac
 
+/// The twelve animals of the Chinese zodiac.
 public enum Zodiac: String, DizhiConvertible {
   case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 雞, 狗, 猪
 
   // MARK: Lifecycle
 
+  /// Converts the given ``Dizhi`` into its zodiac animal.
   public init(_ dizhi: Dizhi) {
     switch dizhi {
     case .zi:
@@ -51,6 +55,7 @@ public enum Zodiac: String, DizhiConvertible {
 
   // MARK: Public
 
+  /// Emoji representation of the zodiac animal.
   public var emoji: String {
     switch self {
     case .兔:

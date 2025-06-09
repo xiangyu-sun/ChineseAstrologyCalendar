@@ -1,6 +1,7 @@
 
 import Foundation
 
+/// Cardinal directions used with the five elements.
 public enum FangWei: CaseIterable, WuxingConvertable {
 
   case dong
@@ -11,6 +12,7 @@ public enum FangWei: CaseIterable, WuxingConvertable {
 
   // MARK: Public
 
+  /// Chinese character representation of the direction.
   public var chineseCharactor: String {
     switch self {
     case .dong:
@@ -26,6 +28,7 @@ public enum FangWei: CaseIterable, WuxingConvertable {
     }
   }
 
+  /// ``Wuxing`` element corresponding to the direction.
   public var wuxing: Wuxing {
     switch self {
     case .dong:
