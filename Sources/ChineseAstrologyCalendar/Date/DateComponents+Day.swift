@@ -3,8 +3,6 @@
 
 import Foundation
 
-import Foundation
-
 extension DateComponents {
 
   // MARK: Public

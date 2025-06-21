@@ -31,22 +31,4 @@ public enum TwelveGods: Int, CaseIterable {
     case .bi: return "閉"
     }
   }
-
-  /// 根据地支获取值日神
-  public init(from branch: Dizhi) {
-    switch branch {
-    case .yin:  self = .jian
-    case .mao:  self = .chu
-    case .chen: self = .man
-    case .si:   self = .ping
-    case .wu:   self = .ding
-    case .wei:  self = .zhi
-    case .shen: self = .po
-    case .you:  self = .wei
-    case .xu:   self = .cheng
-    case .hai:  self = .shou
-    case .zi:   self = .kai
-    case .chou: self = .bi
-    }
-  }
 }

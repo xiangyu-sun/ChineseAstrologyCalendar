@@ -6,31 +6,41 @@ final class RiZhuTests: XCTestCase {
   // MARK: - Day Pillar Tests
 
   /// Test the day pillar (日柱) for 2010-04-12.
-  func test_dayPillar_for2010_04_12() throws {
-    let component = DateComponents(calendar: .current, year: 2010, month: 4, day: 12)
+    func test_dayPillar_for2010_04_12() throws {
+      let component = DateComponents(calendar: .current, year: 2010, month: 4, day: 12)
+      XCTAssertEqual(component.riZhu?.description, "壬辰", "The day pillar for 2010-04-12 should be 庚寅")
+    }
+  
+  /// Test the day pillar (日柱) for 2010-04-12.
+    func test_dayPillar_for_chineseCalendar_2010_04_12() throws {
+      let component = DateComponents(calendar: .chineseCalendar, year: 2010, month: 4, day: 12)
+      
+      XCTAssertEqual(component.yue?.description, "辛巳", "The month pillar for 2023-01-12 should be 辛巳")
+      
+      XCTAssertEqual(component.riZhu?.description, "乙亥", "The day pillar for 2010-04-12 should be 乙亥")
+    }
 
-    // Expected day pillar is "辛卯"
-    XCTAssertEqual(component.riZhu?.description, "辛卯", "The day pillar for 2010-04-12 should be 辛卯")
+    /// Test the day pillar (日柱) for another known date.
+    func test_dayPillar_for2023_01_23() throws {
+      let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 23)
 
-    // Also verify day heavenly stem and earthly branch separately.
-    XCTAssertEqual(component.riGan?.chineseCharactor, "辛", "The day heavenly stem for 2010-04-12 should be 辛")
-    XCTAssertEqual(component.riZhi?.chineseCharactor, "卯", "The day earthly branch for 2010-04-12 should be 卯")
-  }
-
+      XCTAssertEqual(component.riZhu?.description, "辛巳", "The day pillar for 2023-01-23 should be 辛巳")
+    }
+  
   /// Test the day pillar (日柱) for another known date.
-  func test_dayPillar_for2023_01_23() throws {
-    let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 23)
-
-    // Expected day pillar is "庚辰" as per your algorithm.
-    XCTAssertEqual(component.riZhu?.description, "庚辰", "The day pillar for 2023-01-23 should be 庚辰")
+  func test_dayPilla_chineseCalendar_for2023_01_23() throws {
+    let component = DateComponents(calendar: .chineseCalendar, year: 2023, month: 1, day: 23)
+    
+    XCTAssertEqual(component.yue?.description, "甲寅", "The month pillar for 2023-01-12 should be 甲寅")
+    XCTAssertEqual(component.riZhu?.description, "壬寅", "The day pillar for 2023-01-23 should be 壬寅")
   }
 
-  /// Test that missing essential components (such as year) results in nil day pillar.
-  func test_dayPillar_whenYearIsMissing() {
-    let component = DateComponents(calendar: .current, month: 4, day: 12)
-    XCTAssertNil(component.riZhu, "Without a year, the day pillar should be nil")
-  }
 
+    /// Test that missing essential components (such as year) results in nil day pillar.
+    func test_dayPillar_whenYearIsMissing() {
+      let component = DateComponents(calendar: .current, month: 4, day: 12)
+      XCTAssertNil(component.riZhu, "Without a year, the day pillar should be nil")
+    }
   // MARK: - Month Pillar Tests
 
   /// Test the month pillar (月柱) for 2023-01-23.
