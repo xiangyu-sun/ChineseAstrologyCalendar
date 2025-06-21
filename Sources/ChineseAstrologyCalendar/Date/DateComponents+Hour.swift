@@ -19,7 +19,7 @@ extension DateComponents {
 
     // Calculate the hour stem index in the range 1...10.
     // If preliminaryValue % 10 == 0, we consider it as 10.
-    let hourStemIndex = preliminaryValue % 10 == 0 ? 10 : preliminaryValue % 10
+    let hourStemIndex = (preliminaryValue - 1) % 10 + 1
 
     return Tiangan(rawValue: hourStemIndex)
   }

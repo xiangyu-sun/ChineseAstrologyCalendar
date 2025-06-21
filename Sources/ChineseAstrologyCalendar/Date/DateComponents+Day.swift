@@ -9,24 +9,20 @@ extension DateComponents {
 
   /// 日干：根据 base 计算
   public var riGan: Tiangan? {
-    guard let base else {
+    guard let index = cycleIndex else {
       return nil
     }
-    // Compute the heavenly stem from the base value.
-    // Depending on your Tiangan enum, you might need to remap a 0 value to 10.
-    let index = base % 10 == 0 ? 10 : base % 10
-    return Tiangan(rawValue: index)
+    let stemIndex = (index - 1) % 10 + 1
+    return Tiangan(rawValue: stemIndex)
   }
 
   /// 日支：根据 base 计算
   public var riZhi: Dizhi? {
-    guard let base else {
+    guard let index = cycleIndex else {
       return nil
     }
-    // Compute the earthly branch from the base value.
-    // As above, adjust for a 0 result if your Dizhi enum requires 1...12.
-    let index = base % 12 == 0 ? 12 : base % 12
-    return Dizhi(rawValue: index)
+    let branchIndex = (index - 1) % 12 + 1
+    return Dizhi(rawValue: branchIndex)
   }
 
   /// 日柱：天干与地支的组合
@@ -39,40 +35,22 @@ extension DateComponents {
 
   // MARK: - Internal Computation
 
-  /// Computes a base value used for determining the day stem and branch.
-  /// - Note: The algorithm works as follows:
-  ///   1. Take the last two digits of the year (`yearInCentury`).
-  ///   2. Compute an intermediate value using the formula:
-  ///      `((yearInCentury + 7) * 5 + 15 + (yearInCentury + 19) / 4) % 60`
-  ///   3. Use January 1 of the current year as a baseline and add the day difference.
-  ///   4. Return the sum modulo 60.
-  var base: Int? {
-    guard let year = year else {
+  /// Sexagenary cycle index for the day (1...60), where 1 is Jia-Zi.
+  private var cycleIndex: Int? {
+    let calendar = Calendar(identifier: .gregorian)
+    guard
+      let date = calendar.date(from: self)
+    else {
       return nil
     }
-
-    // 1. Compute the last two digits of the year.
-    let yearInCentury = year % 100
-
-    // 2. Compute the intermediate base value.
-    let baseValue = ((yearInCentury + 7) * 5 + 15 + (yearInCentury + 19) / 4) % 60
-
-    // 3. Use January 1 as the baseline date.
-    let januaryFirst = DateComponents(year: year, month: 1, day: 1)
-    let calendar = Calendar(identifier: .gregorian)
-
-    // Convert DateComponents to Date.
-    guard
-      let startDate = calendar.date(from: januaryFirst),
-      let currentDate = calendar.date(from: self)
-    else {
-      return baseValue
+    // Reference date: December 22, 1899 is a Jia-Zi day.
+    let referenceComponents = DateComponents(year: 1899, month: 12, day: 22)
+    guard let referenceDate = calendar.date(from: referenceComponents) else {
+      return nil
     }
-
-    // Compute the day difference between January 1 and the current date.
-    let dayDifference = calendar.dateComponents([.day], from: startDate, to: currentDate).day ?? 0
-
-    // 4. Return the adjusted base value modulo 60.
-    return (baseValue + dayDifference) % 60
+    let dayDifference = calendar.dateComponents([.day], from: referenceDate, to: date).day ?? 0
+    // Compute cycle index in 1...60
+    let index = (dayDifference % 60 + 60) % 60 + 1
+    return index
   }
 }
