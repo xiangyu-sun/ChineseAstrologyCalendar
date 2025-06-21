@@ -72,8 +72,10 @@ public struct Shichen: Codable {
       [.year, .month, .day, .hour, .minute, .second, .nanosecond],
       from: date)
 
-    if startHour == 23, startDP.hour == 0 {
-      startDP.day = startDP.day! - 1
+    // If the next start hour is earlier than or equal to the current hour,
+    // it belongs to the next day.
+    if let currentHour = startDP.hour, startHour <= currentHour {
+      startDP.day = (startDP.day ?? 0) + 1
     }
 
     startDP.hour = startHour
