@@ -1,24 +1,28 @@
-name: Swift
+name: Swift CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    types: [opened, reopened, synchronize]
 
 jobs:
-  build:
-    runs-on: macOS-latest
+  test:
+    name: Run Swift Tests
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Swift
-      uses: maxim-lobanov/setup-swift@v1
-      with:
-        swift-version: '5.6'
+      # 1. Check out the PR’s code
+      - uses: actions/checkout@v3
 
-    - name: Build
-      run: swift build
+      # 2. Set up the Swift toolchain (adjust version as needed)
+      - name: Set up Swift
+        uses: actions/setup-swift@v1
+        with:
+          swift-version: '6.1'
 
-    - name: Run tests
-      run: swift test
+      # 3. Build the package
+      - name: Build
+        run: swift build
+
+      # 4. Run the test suite
+      - name: Test
+        run: swift test
