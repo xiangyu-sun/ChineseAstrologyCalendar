@@ -19,8 +19,8 @@ public final class DayConverter {
         var copy = components
 
         let newMonth = copy.month! + month
-        let newYear = (newMonth - 1) / 12
-        copy.month = ((newMonth - 1) % 12) + 1
+        let (newYear, adjustedMonth) = calculateYearAndMonth(fromMonth: copy.month!, offset: month)
+        copy.month = adjustedMonth
         copy.year! += newYear
         copy.day = d.rawValue
 
