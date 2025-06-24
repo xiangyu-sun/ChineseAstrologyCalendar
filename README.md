@@ -54,6 +54,12 @@ More examples can be found in the unit tests inside the `Tests` directory.
 swift test
 ```
 
+## Releases
+
+Pushing a tag that matches `v*` automatically triggers the release workflow.
+The workflow builds the package, creates a GitHub release and uploads a
+`ChineseAstrologyCalendar.zip` archive containing the release build.
+
 ## License
 
 Licensed under the [MIT License](LICENSE.md).
