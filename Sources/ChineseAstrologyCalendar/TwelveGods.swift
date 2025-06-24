@@ -47,9 +47,11 @@ extension Date {
     guard let monthBranch = Dizhi(rawValue: monthBranchRaw) else { return nil }
     
     // 2) find the first day in that lunar month whose riZhi == monthBranch (the “建”日)
-    let firstOfLunarMonth = chin.date(from: DateComponents(year: lunarComp.year,
+    guard let firstOfLunarMonth = chin.date(from: DateComponents(year: lunarComp.year,
                                                            month: lunarComp.month,
-                                                           day: 1))!
+                                                                 day: 1)) else {
+      return nil
+    }
     var buildDate: Date? = nil
     for offset in 0..<30 {
       let candidate = greg.date(byAdding: .day, value: offset, to: firstOfLunarMonth)!
@@ -63,19 +65,26 @@ extension Date {
     
     // 2b) if that jian-day lies after self, roll back to previous month’s jian-day
     let effectiveJianDate: Date
-    if jianDate > self {
+    if let year = lunarComp.year, jianDate > self {
       // previous lunar month/year
       let prevMonth = lunarMonth > 1 ? lunarMonth - 1 : 12
-      let prevYear  = lunarMonth > 1 ? lunarComp.year!     : lunarComp.year! - 1
-      let firstOfPrev = chin.date(from: DateComponents(year: prevYear,
+      let prevYear  = lunarMonth > 1 ? year : year - 1
+      
+      guard let firstOfPrev = chin.date(from: DateComponents(year: prevYear,
                                                        month: prevMonth,
-                                                       day: 1))!
+                                                             day: 1)) else {
+        return nil
+      }
+      
       // map and find previous month’s jian
       let prevBranchRaw = ((prevMonth + 1) % 12) + 1
       guard let prevBranch = Dizhi(rawValue: prevBranchRaw) else { return nil }
       var prevBuild: Date? = nil
       for offset in 0..<30 {
-        let candidate = greg.date(byAdding: .day, value: offset, to: firstOfPrev)!
+        guard let candidate = greg.date(byAdding: .day, value: offset, to: firstOfPrev) else {
+          break
+        }
+        
         if let branch = greg.dateComponents([.year, .month, .day], from: candidate).riZhi,
            branch == prevBranch {
           prevBuild = candidate
@@ -89,7 +98,10 @@ extension Date {
     }
     
     // 3) days difference mod 12 → god index
-    let days = greg.dateComponents([.day], from: effectiveJianDate, to: self).day!
+    guard let days = greg.dateComponents([.day], from: effectiveJianDate, to: self).day else {
+      return nil
+    }
+    
     let idx  = (days % 12 + 12) % 12  // ensure 0…11
     return TwelveGods(rawValue: idx)
   }
