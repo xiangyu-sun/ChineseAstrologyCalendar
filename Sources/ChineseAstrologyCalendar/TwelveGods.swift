@@ -15,6 +15,23 @@ public enum TwelveGods: Int, CaseIterable {
   case kai
   case bi
   
+  public var pinYinWithoutAccent: String {
+    switch self {
+    case .jian: return "jian"
+    case .chu: return "chu"
+    case .man: return "man"
+    case .ping: return "ping"
+    case .ding: return "ding"
+    case .zhi: return "zhi"
+    case .po: return "po"
+    case .wei: return "wei"
+    case .cheng: return "cheng"
+    case .shou: return "shou"
+    case .kai: return "kai"
+    case .bi: return "bi"
+    }
+  }
+  
   public var chinese: String {
     switch self {
     case .jian: return "建"
@@ -100,7 +117,7 @@ public extension Date {
     
     // 2) find the first day in that lunar month whose riZhi == monthBranch (the “建”日)
     guard let firstOfLunarMonth = chin.date(from: DateComponents(year: lunarComp.year,
-                                                           month: lunarComp.month,
+                                                                 month: lunarComp.month,
                                                                  day: 1)) else {
       return nil
     }
@@ -123,7 +140,7 @@ public extension Date {
       let prevYear  = lunarMonth > 1 ? year : year - 1
       
       guard let firstOfPrev = chin.date(from: DateComponents(year: prevYear,
-                                                       month: prevMonth,
+                                                             month: prevMonth,
                                                              day: 1)) else {
         return nil
       }
