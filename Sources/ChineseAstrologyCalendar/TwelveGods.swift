@@ -33,7 +33,7 @@ public enum TwelveGods: Int, CaseIterable {
   }
 }
 
-extension Date {
+public extension Date {
   /// Returns the “建除十二神” for this date.
   func twelveGod() -> TwelveGods? {
     let greg = Calendar(identifier: .gregorian)
