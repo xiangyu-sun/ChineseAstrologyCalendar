@@ -31,6 +31,58 @@ public enum TwelveGods: Int, CaseIterable {
     case .bi: return "閉"
     }
   }
+  
+  public var meaning: String {
+    switch self {
+    case .jian:   return "象徵新的開始、創造和生長的力量。"
+    case .chu:    return "象徵去除、清理與清掃的意義，適合除舊布新。"
+    case .man:    return "象徵圓滿、完成與滿足，吉利之意。"
+    case .ping:   return "象徵平和、穩定與調和，利於平安合和。"
+    case .ding:   return "象徵安定、確立與決定，利於定契立約。"
+    case .zhi:    return "象徵執著、約束與收攏，適合收拾、收斂。"
+    case .po:     return "象徵破除、毀壞與決裂，利於破土、拆卸。"
+    case .wei:    return "象徵危險、試煉與挑戰，適合冒險行事。"
+    case .cheng:  return "象徵成就、成功與收穫，吉利之日。"
+    case .shou:   return "象徵收藏、收取與集中，利於搬移收納。"
+    case .kai:    return "象徵開啟、開放與始動，適合開工開業。"
+    case .bi:     return "象徵閉合、結束與封藏，利於安葬與結束儀式。"
+    }
+  }
+  
+  public var `do`: String {
+    switch self {
+    case .jian:   return "開業、啟動計畫、嫁娶、安床。"
+    case .chu:    return "除舊布新、掃除、裁衣、伐木。"
+    case .man:    return "收割、交易、納財、祭祀。"
+    case .ping:   return "市場交易、討價還價、調解、合約簽訂。"
+    case .ding:   return "立約、定金、安葬、修造。"
+    case .zhi:    return "收稅、執法、收賦、討債。"
+    case .po:     return "拆卸、破土、動工、伐木。"
+    case .wei:    return "冒險、試驗、競賽、體育活動。"
+    case .cheng:  return "完成、成就、收成、婚慶。"
+    case .shou:   return "收納、搬家、納畜、納穀。"
+    case .kai:    return "開市、開業、旅行、動土。"
+    case .bi:     return "閉門、結束會議、安葬、藏品封存。"
+    }
+  }
+  
+  public var dontDo: String {
+    switch self {
+    case .jian:   return "不宜葬禮、破土、搬家。"
+    case .chu:    return "不宜婚嫁、開市、安門。"
+    case .man:    return "不宜開業、開工、出行。"
+    case .ping:   return "不宜動土、破土、開渠。"
+    case .ding:   return "不宜嫁娶、出行、開張。"
+    case .zhi:    return "不宜嫁娶、出行、動土。"
+    case .po:     return "不宜婚嫁、入宅、開工。"
+    case .wei:    return "不宜安葬、納財、開業。"
+    case .cheng:  return "不宜動土、安葬、搬家。"
+    case .shou:   return "不宜開市、開工、嫁娶。"
+    case .kai:    return "不宜閉合、安門、安葬。"
+    case .bi:     return "不宜開市、入宅、作灶。"
+    }
+  }
+  
 }
 
 public extension Date {
