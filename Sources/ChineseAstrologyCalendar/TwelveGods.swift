@@ -49,6 +49,35 @@ public enum TwelveGods: Int, CaseIterable {
     }
   }
   
+  public var xiongjiL: String {
+    switch self {
+    case .jian:
+      "黑道"
+    case .chu:
+      "黃道"
+    case .man:
+      "黑道"
+    case .ping:
+      "黑道"
+    case .ding:
+      "黃道"
+    case .zhi:
+      "黃道"
+    case .po:
+      "大凶"
+    case .wei:
+      "黃道"
+    case .cheng:
+      "平日"
+    case .shou:
+      "黑道"
+    case .kai:
+      "平日"
+    case .bi:
+      "大凶"
+    }
+  }
+  
   public var meaning: String {
     switch self {
     case .jian:   return "象徵新的開始、創造和生長的力量。"
@@ -68,35 +97,35 @@ public enum TwelveGods: Int, CaseIterable {
   
   public var `do`: String {
     switch self {
-    case .jian:   return "開業、啟動計畫、嫁娶、安床。"
-    case .chu:    return "除舊布新、掃除、裁衣、伐木。"
-    case .man:    return "收割、交易、納財、祭祀。"
-    case .ping:   return "市場交易、討價還價、調解、合約簽訂。"
-    case .ding:   return "立約、定金、安葬、修造。"
-    case .zhi:    return "收稅、執法、收賦、討債。"
-    case .po:     return "拆卸、破土、動工、伐木。"
-    case .wei:    return "冒險、試驗、競賽、體育活動。"
-    case .cheng:  return "完成、成就、收成、婚慶。"
-    case .shou:   return "收納、搬家、納畜、納穀。"
-    case .kai:    return "開市、開業、旅行、動土。"
-    case .bi:     return "閉門、結束會議、安葬、藏品封存。"
+    case .jian:   return "祈福、祈禱、求嗣、破土、安葬、修造、上樑、求財、置業、入學、考試、結婚、動土、簽約、交涉、出行"
+    case .chu:    return "祭祀、祈福、嫁娶、出行、入伙、搬遷、出貨、動土、求医、交易"
+    case .man:    return "祈福、移徙、開市、交易、求財、立契、祭祀、出行、牧養"
+    case .ping:   return "嫁娶、修造、破土、安葬、牧養、開市、安床、動土、求嗣"
+    case .ding:   return "祭祀、祈福、嫁娶、造屋、裝修、修路、開市、入學、上任、入伙"
+    case .zhi:    return "造屋、裝修、嫁娶、收納、立契、祭祀"
+    case .po:     return "破土、拆卸、求医"
+    case .wei:    return "祭祀、祈福、安床、拆卸、破土"
+    case .cheng:  return "結婚、開市、修造、動土、安床、安葬、搬遷、交易、求財、出行、立契"
+    case .shou:   return "祈福、求嗣、赴任、嫁娶、安床、修造、動土、求学、開市、交易、買賣、立契"
+    case .kai:    return "祭祀、祈福、入學、上任、修造、動土、開市、安床、交易、出行"
+    case .bi:     return "祭祀、祈福、筑堤、造葬、填井、修屋"
     }
   }
   
   public var dontDo: String {
     switch self {
-    case .jian:   return "不宜葬禮、破土、搬家。"
-    case .chu:    return "不宜婚嫁、開市、安門。"
-    case .man:    return "不宜開業、開工、出行。"
-    case .ping:   return "不宜動土、破土、開渠。"
-    case .ding:   return "不宜嫁娶、出行、開張。"
-    case .zhi:    return "不宜嫁娶、出行、動土。"
-    case .po:     return "不宜婚嫁、入宅、開工。"
-    case .wei:    return "不宜安葬、納財、開業。"
-    case .cheng:  return "不宜動土、安葬、搬家。"
-    case .shou:   return "不宜開市、開工、嫁娶。"
-    case .kai:    return "不宜閉合、安門、安葬。"
-    case .bi:     return "不宜開市、入宅、作灶。"
+    case .jian:   return "動土、開倉、掘井、乘船、新險下水、新車下地、維修電器"
+    case .chu:    return "結婚、赴任、遠行、簽約"
+    case .man:    return "造葬、赴任、求医、嫁娶"
+    case .ping:   return "祈福、求嗣、赴任、嫁娶、開市、安葬"
+    case .ding:   return "訴訟、出行、交涉"
+    case .zhi:    return "開市、求財、出行、搬遷"
+    case .po:     return "娶嫁，簽約，交涉，出行，搬遷"
+    case .wei:    return "登山、乘船、出行、嫁娶、造葬、征徙"
+    case .cheng:  return "訴訟"
+    case .shou:   return "放債、新險下水、新車下地、破土、安葬"
+    case .kai:    return "放債、訴訟、安葬"
+    case .bi:     return "開市、出行、求医、手术、嫁娶"
     }
   }
   
