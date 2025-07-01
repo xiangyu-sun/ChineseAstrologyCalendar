@@ -98,17 +98,17 @@ public enum TwelveGods: Int, CaseIterable {
   public var `do`: String {
     switch self {
     case .jian:   return "祈福、祈禱、求嗣、破土、安葬、修造、上樑、求財、置業、入學、考試、結婚、動土、簽約、交涉、出行"
-    case .chu:    return "祭祀、祈福、嫁娶、出行、入伙、搬遷、出貨、動土、求医、交易"
+    case .chu:    return "祭祀、祈福、嫁娶、出行、入伙、搬遷、出貨、動土、求醫、交易"
     case .man:    return "祈福、移徙、開市、交易、求財、立契、祭祀、出行、牧養"
     case .ping:   return "嫁娶、修造、破土、安葬、牧養、開市、安床、動土、求嗣"
     case .ding:   return "祭祀、祈福、嫁娶、造屋、裝修、修路、開市、入學、上任、入伙"
     case .zhi:    return "造屋、裝修、嫁娶、收納、立契、祭祀"
-    case .po:     return "破土、拆卸、求医"
+    case .po:     return "破土、拆卸、求醫"
     case .wei:    return "祭祀、祈福、安床、拆卸、破土"
     case .cheng:  return "結婚、開市、修造、動土、安床、安葬、搬遷、交易、求財、出行、立契"
-    case .shou:   return "祈福、求嗣、赴任、嫁娶、安床、修造、動土、求学、開市、交易、買賣、立契"
+    case .shou:   return "祈福、求嗣、赴任、嫁娶、安床、修造、動土、求學、開市、交易、買賣、立契"
     case .kai:    return "祭祀、祈福、入學、上任、修造、動土、開市、安床、交易、出行"
-    case .bi:     return "祭祀、祈福、筑堤、造葬、填井、修屋"
+    case .bi:     return "祭祀、祈福、築堤、造葬、填井、修屋"
     }
   }
   
@@ -116,7 +116,7 @@ public enum TwelveGods: Int, CaseIterable {
     switch self {
     case .jian:   return "動土、開倉、掘井、乘船、新險下水、新車下地、維修電器"
     case .chu:    return "結婚、赴任、遠行、簽約"
-    case .man:    return "造葬、赴任、求医、嫁娶"
+    case .man:    return "造葬、赴任、求醫、嫁娶"
     case .ping:   return "祈福、求嗣、赴任、嫁娶、開市、安葬"
     case .ding:   return "訴訟、出行、交涉"
     case .zhi:    return "開市、求財、出行、搬遷"
@@ -125,7 +125,7 @@ public enum TwelveGods: Int, CaseIterable {
     case .cheng:  return "訴訟"
     case .shou:   return "放債、新險下水、新車下地、破土、安葬"
     case .kai:    return "放債、訴訟、安葬"
-    case .bi:     return "開市、出行、求医、手术、嫁娶"
+    case .bi:     return "開市、出行、求醫、手術、嫁娶"
     }
   }
   
