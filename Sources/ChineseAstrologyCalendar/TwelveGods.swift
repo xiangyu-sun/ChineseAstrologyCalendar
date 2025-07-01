@@ -144,22 +144,24 @@ public extension Date {
     let monthBranchRaw = ((lunarMonth + 1) % 12) + 1
     guard let monthBranch = Dizhi(rawValue: monthBranchRaw) else { return nil }
     
-    // 2) find the first day in that lunar month whose riZhi == monthBranch (the “建”日)
+    // 2) find the “建” day in that lunar month: collect all riZhi == monthBranch dates, pick second if available
     guard let firstOfLunarMonth = chin.date(from: DateComponents(year: lunarComp.year,
                                                                  month: lunarComp.month,
                                                                  day: 1)) else {
       return nil
     }
-    var buildDate: Date? = nil
+    var buildDates: [Date] = []
     for offset in 0..<30 {
-      let candidate = greg.date(byAdding: .day, value: offset, to: firstOfLunarMonth)!
-      if let branch = greg.dateComponents([.year, .month, .day], from: candidate).riZhi,
-         branch == monthBranch {
-        buildDate = candidate
+      guard let candidate = greg.date(byAdding: .day, value: offset, to: firstOfLunarMonth) else {
         break
       }
+      if let branch = greg.dateComponents([.year, .month, .day], from: candidate).riZhi,
+         branch == monthBranch {
+        buildDates.append(candidate)
+      }
     }
-    guard let jianDate = buildDate else { return nil }
+    guard !buildDates.isEmpty else { return nil }
+    let jianDate = buildDates.count > 1 ? buildDates[1] : buildDates[0]
     
     // 2b) if that jian-day lies after self, roll back to previous month’s jian-day
     let effectiveJianDate: Date
@@ -167,29 +169,28 @@ public extension Date {
       // previous lunar month/year
       let prevMonth = lunarMonth > 1 ? lunarMonth - 1 : 12
       let prevYear  = lunarMonth > 1 ? year : year - 1
-      
+
       guard let firstOfPrev = chin.date(from: DateComponents(year: prevYear,
                                                              month: prevMonth,
                                                              day: 1)) else {
         return nil
       }
-      
-      // map and find previous month’s jian
+
+      // map and find previous month’s jian: collect all matches, pick second if available
       let prevBranchRaw = ((prevMonth + 1) % 12) + 1
       guard let prevBranch = Dizhi(rawValue: prevBranchRaw) else { return nil }
-      var prevBuild: Date? = nil
+      var prevBuildDates: [Date] = []
       for offset in 0..<30 {
         guard let candidate = greg.date(byAdding: .day, value: offset, to: firstOfPrev) else {
           break
         }
-        
         if let branch = greg.dateComponents([.year, .month, .day], from: candidate).riZhi,
            branch == prevBranch {
-          prevBuild = candidate
-          break
+          prevBuildDates.append(candidate)
         }
       }
-      guard let prevJian = prevBuild else { return nil }
+      guard !prevBuildDates.isEmpty else { return nil }
+      let prevJian = prevBuildDates.count > 1 ? prevBuildDates[1] : prevBuildDates[0]
       effectiveJianDate = prevJian
     } else {
       effectiveJianDate = jianDate

@@ -36,4 +36,31 @@ class NextFiveDaysTwelveGodTests: XCTestCase {
     let date5 = df.date(from: "2025-06-28")!
     XCTAssertEqual(date5.twelveGod(), .kai, "2025-06-28 should be 開")
   }
+  
+  
+  func testTwelveGodsForNextFiveDays_july() {
+    let df = DateFormatter()
+    df.calendar = Calendar(identifier: .gregorian)
+    df.dateFormat = "yyyy-MM-dd"
+    
+
+    let date1 = df.date(from: "2025-07-01")!
+    XCTAssertEqual(date1.twelveGod(), .chu)
+    
+  
+    let date2 = df.date(from: "2025-07-02")!
+    XCTAssertEqual(date2.twelveGod(), .man)
+    
+  
+    let date3 = df.date(from: "2025-07-03")!
+    XCTAssertEqual(date3.twelveGod(), .ping)
+    
+ 
+    let date4 = df.date(from: "2025-07-04")!
+    XCTAssertEqual(date4.twelveGod(), .ding)
+    
+
+    let date5 = df.date(from: "2025-07-05")!
+    XCTAssertEqual(date5.twelveGod(), .zhi)
+  }
 }
