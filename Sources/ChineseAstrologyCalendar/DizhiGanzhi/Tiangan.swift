@@ -12,6 +12,16 @@ public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
   case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
 
   // MARK: Public
+  
+  
+  // MARK: - Five Elements (Wuxing) Mapping
+
+  /// Converts a Heavenly Stem to its corresponding Five Element (Wuxing).
+  public var wuxing: Wuxing {
+    // rawValue 1–10 maps in pairs to Wuxing rawValue 0–4: (rawValue-1)/2
+    return Wuxing(rawValue: (self.rawValue - 1) / 2) ?? .tu
+  }
+  
 
   /// Chinese character representation of the stem.
   public var chineseCharactor: String {
