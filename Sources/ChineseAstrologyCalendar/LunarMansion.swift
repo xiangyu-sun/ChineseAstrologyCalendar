@@ -46,7 +46,7 @@ public enum LunarMansion: String, CaseIterable {
   /// Maps the Moon's true ecliptic longitude to one of the 28 lunar mansions (二十八宿).
   /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
   /// - Returns: The name of the lunar mansion.
-  func lunarMansion(date: Date) -> LunarMansion {
+  public static func lunarMansion(date: Date) -> LunarMansion {
     
     let rev = moon_true_longitude(jd2000: date.toJC2000)
     // Convert revolution fraction to an index 0...27
