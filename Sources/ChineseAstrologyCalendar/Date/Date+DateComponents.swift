@@ -16,8 +16,24 @@ extension Date {
     Date.chineseENDateFormatter.timeZone = calendar.timeZone
     let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")
     let day = Int(elements[1])
-    let month = Int(elements[0])
+    let month: Int?
     let year = Int(elements[2])
+    
+    var isLeapMonth = false
+
+    if elements[0].contains("bis") {
+        isLeapMonth = true
+        // Extract numeric part before "bis"
+        if let number = Int(elements[0].replacingOccurrences(of: "bis", with: "")) {
+            month = number
+        } else {
+          month = nil
+        }
+    } else if let number = Int(elements[0]) {
+        month = number
+    }else {
+      month = nil
+    }
 
     let orginalDateComponents = dateComponentsFromCurrentCalendar
 
@@ -30,7 +46,7 @@ extension Date {
     dp.minute = orginalDateComponents.minute
     dp.second = orginalDateComponents.second
     dp.nanosecond = orginalDateComponents.nanosecond
-
+    dp.isLeapMonth = isLeapMonth
     return dp
   }
 
