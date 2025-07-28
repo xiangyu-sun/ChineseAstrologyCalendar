@@ -32,6 +32,6 @@ final class ChineseAstrologyCalendarTests: XCTestCase {
   }
 
   func testYueGanToNotBeNil() {
-    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().yueZhi)
+    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().yueGan)
   }
 }

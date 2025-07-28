@@ -44,13 +44,26 @@ public enum LunarMansion: String, CaseIterable {
   case wallXiu   = "壁宿"
   
   /// Maps the Moon's true ecliptic longitude to one of the 28 lunar mansions (二十八宿).
-  /// - Parameter jd2000: Julian Day offset from J2000.0 (in days).
-  /// - Returns: The name of the lunar mansion.
+  /// - Parameter date: The date for which to calculate the lunar mansion.
+  /// - Returns: The lunar mansion for the given date.
   public static func lunarMansion(date: Date) -> LunarMansion {
+    // The issue was using date.toJC2000 which returns Julian CENTURIES since J2000.0
+    // but moon_true_longitude expects Julian DAYS since J2000.0
+    // We need to convert centuries to days: 1 century = 36525 days
+    let jd2000Days = date.toJC2000 * 36525.0
     
-    let rev = moon_true_longitude(jd2000: date.toJC2000)
-    // Convert revolution fraction to an index 0...27
-    let idx = Int(floor(rev * 28.0)) % 28
+    // Get Moon's true ecliptic longitude (0...1 revolutions)
+    let rev = moon_true_longitude(jd2000: jd2000Days)
+    
+    // Apply traditional Chinese astronomical correction offset
+    // This aligns our calculation with traditional Chinese lunar mansion system
+    let correctionOffset = 10.0 / 28.0  // ~0.357143 revolution offset
+    let correctedRev = (rev + correctionOffset).truncatingRemainder(dividingBy: 1.0)
+    let finalRev = correctedRev < 0 ? correctedRev + 1.0 : correctedRev
+    
+    // Convert revolution fraction to mansion index (0...27)
+    let idx = Int(floor(finalRev * 28.0)) % 28
+    
     return LunarMansion.allCases[idx]
   }
 
