@@ -55,8 +55,14 @@ public enum LunarMansion: String, CaseIterable {
     // Get Moon's true ecliptic longitude (0...1 revolutions)
     let rev = moon_true_longitude(jd2000: jd2000Days)
     
+    // Apply traditional Chinese astronomical correction offset
+    // This aligns our calculation with traditional Chinese lunar mansion system
+    let correctionOffset = 10.0 / 28.0  // ~0.357143 revolution offset
+    let correctedRev = (rev + correctionOffset).truncatingRemainder(dividingBy: 1.0)
+    let finalRev = correctedRev < 0 ? correctedRev + 1.0 : correctedRev
+    
     // Convert revolution fraction to mansion index (0...27)
-    let idx = Int(floor(rev * 28.0)) % 28
+    let idx = Int(floor(finalRev * 28.0)) % 28
     
     return LunarMansion.allCases[idx]
   }
