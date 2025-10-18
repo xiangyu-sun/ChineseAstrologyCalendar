@@ -12,6 +12,28 @@ extension Date {
   }
 
   /// Chinese calendar date components without converting the year to modulo 60.
+  ///
+  /// This method extracts date components from the Chinese calendar system, including
+  /// support for leap months. The components are extracted using the provided calendar
+  /// (defaults to Chinese calendar with current timezone).
+  ///
+  /// - Parameter calendar: The calendar to use for conversion (defaults to Chinese calendar)
+  /// - Returns: DateComponents with Chinese calendar values including day, month, year, and leap month status
+  ///
+  /// - Note: The returned DateComponents will have `isLeapMonth` set to `true` for leap months.
+  ///         Month values will be `nil` if parsing fails.
+  ///
+  /// Example:
+  /// ```swift
+  /// let date = Date()
+  /// let components = date.dateComponentsFromChineseCalendar()
+  /// if let month = components.month, let day = components.day {
+  ///     print("Chinese date: Month \(month), Day \(day)")
+  ///     if components.isLeapMonth == true {
+  ///         print("This is a leap month")
+  ///     }
+  /// }
+  /// ```
   public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
     Date.chineseENDateFormatter.timeZone = calendar.timeZone
     let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")

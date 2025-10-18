@@ -14,7 +14,7 @@ public struct Ganzhi: CustomStringConvertible, Equatable, YinYangIdentifiable, H
 
   /// String value of the stem and branch combined.
   public var description: String {
-    gan.chineseCharactor + zhi.chineseCharactor
+    gan.chineseCharacter + zhi.chineseCharacter
   }
 }
 

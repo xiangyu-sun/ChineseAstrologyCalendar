@@ -33,10 +33,10 @@ extension EventModel {
 
   // MARK: Private
 
-  private static var enToChNumberFormatter: NumberFormatter {
+  private static let enToChNumberFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.locale = traditionalChineseLocale
     formatter.numberStyle = .spellOut
     return formatter
-  }
+  }()
 }

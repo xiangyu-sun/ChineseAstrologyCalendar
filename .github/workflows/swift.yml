@@ -23,6 +23,17 @@ jobs:
       - name: Build
         run: swift build
 
-      # 4. Run the test suite
+      # 4. Run the test suite with code coverage
       - name: Test
-        run: swift test
+        run: swift test --enable-code-coverage
+
+      # 5. Generate code coverage report
+      - name: Generate Coverage Report
+        run: xcrun llvm-cov export -format="lcov" .build/debug/ChineseAstrologyCalendarPackageTests.xctest/Contents/MacOS/ChineseAstrologyCalendarPackageTests -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
+
+      # 6. Upload coverage to Codecov (optional)
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.lcov
+          fail_ci_if_error: false

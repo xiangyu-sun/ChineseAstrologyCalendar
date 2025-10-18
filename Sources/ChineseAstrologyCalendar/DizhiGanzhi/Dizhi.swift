@@ -14,7 +14,7 @@ public protocol TimeExpressible {
   /// Creates an instance from a 24‑hour based hour value.
   init(hourOfDay: Int)
   /// Chinese character associated with the time unit.
-  var chineseCharactor: String { get }
+  var chineseCharacter: String { get }
   /// Displayable text representing the hour.
   var displayHourText: String { get }
 }
@@ -83,7 +83,7 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   }
 
   /// Chinese character representation of the branch.
-  public var chineseCharactor: String {
+  public var chineseCharacter: String {
     switch self {
     case .zi:
       return "子"
@@ -110,6 +110,12 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     case .hai:
       return "亥"
     }
+  }
+
+  /// Chinese character representation of the branch.
+  @available(*, deprecated, renamed: "chineseCharacter", message: "Use chineseCharacter instead (spelling corrected)")
+  public var chineseCharactor: String {
+    chineseCharacter
   }
 
   /// Alternate historic name for the time period represented by the branch.
@@ -311,28 +317,28 @@ extension Dizhi: TimeExpressible {
   }
 
   /// Chinese character plus "時" used for displaying hours.
-  public var displayHourText: String { chineseCharactor + "時" }
+  public var displayHourText: String { chineseCharacter + "時" }
 
   /// Chinese calendar month name derived from this branch.
   public var chineseCalendarMonthName: String {
-    chineseCharactor + "月"
+    chineseCharacter + "月"
   }
 
   // MARK: Internal
 
-  static var dateIntervalFormatter: DateIntervalFormatter = {
+  static let dateIntervalFormatter: DateIntervalFormatter = {
     let fm = DateIntervalFormatter()
     fm.dateTemplate = "jm"
     return fm
   }()
 
-  static var hourIntervalFormatter: DateIntervalFormatter = {
+  static let hourIntervalFormatter: DateIntervalFormatter = {
     let fm = DateIntervalFormatter()
     fm.dateTemplate = "HH:mm"
     return fm
   }()
 
-  static var monthFormatter: DateFormatter = {
+  static let monthFormatter: DateFormatter = {
     let dfm = DateFormatter()
     dfm.locale = traditionalChineseLocale
     dfm.dateFormat = "MMMM"

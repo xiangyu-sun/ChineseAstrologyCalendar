@@ -13,7 +13,7 @@ public enum FangWei: CaseIterable, WuxingConvertable {
   // MARK: Public
 
   /// Chinese character representation of the direction.
-  public var chineseCharactor: String {
+  public var chineseCharacter: String {
     switch self {
     case .dong:
       return "東"
@@ -26,6 +26,12 @@ public enum FangWei: CaseIterable, WuxingConvertable {
     case .zhong:
       return "中"
     }
+  }
+
+  /// Chinese character representation of the direction.
+  @available(*, deprecated, renamed: "chineseCharacter", message: "Use chineseCharacter instead (spelling corrected)")
+  public var chineseCharactor: String {
+    chineseCharacter
   }
 
   /// ``Wuxing`` element corresponding to the direction.

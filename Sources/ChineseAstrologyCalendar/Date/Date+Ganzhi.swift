@@ -51,6 +51,24 @@ extension Date {
   }
 
   /// ``Shichen`` calculated using the current time zone.
+  ///
+  /// Returns the traditional Chinese 2-hour time period (时辰) for this date.
+  /// Each shichen corresponds to one of the 12 Earthly Branches (地支).
+  ///
+  /// - Returns: The `Shichen` for this date, or `nil` if the hour component cannot be extracted
+  ///
+  /// - Note: Returns `nil` when the hour component is unavailable from the date.
+  ///         Use the current timezone for calculation.
+  ///
+  /// Example:
+  /// ```swift
+  /// let date = Date()
+  /// if let shichen = date.shichen {
+  ///     print("Current period: \(shichen.dizhi.chineseCharacter)")
+  ///     print("Started: \(shichen.startDate)")
+  ///     print("Ends: \(shichen.endDate)")
+  /// }
+  /// ```
   public var shichen: Shichen? {
     let calendar = Calendar.chineseCalendar
 

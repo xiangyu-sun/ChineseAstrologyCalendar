@@ -24,7 +24,7 @@ public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
   
 
   /// Chinese character representation of the stem.
-  public var chineseCharactor: String {
+  public var chineseCharacter: String {
     switch self {
     case .jia:
       return "甲"
@@ -47,5 +47,11 @@ public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
     case .kui:
       return "癸"
     }
+  }
+
+  /// Chinese character representation of the stem.
+  @available(*, deprecated, renamed: "chineseCharacter", message: "Use chineseCharacter instead (spelling corrected)")
+  public var chineseCharactor: String {
+    chineseCharacter
   }
 }

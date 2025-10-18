@@ -14,7 +14,9 @@
       "Bash(gh pr create:*)",
       "Bash(swift:*)",
       "WebFetch(domain:en.calc-site.com)",
-      "WebFetch(domain:www.yourchineseastrology.com)"
+      "WebFetch(domain:www.yourchineseastrology.com)",
+      "Bash(cp:*)",
+      "Bash(git tag:*)"
     ],
     "deny": []
   }
