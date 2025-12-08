@@ -38,7 +38,7 @@ final class FourAnimalsTest: XCTestCase {
         print("\n=== Four Symbol Mapping ===")
         
         let expectedMapping = [
-            ("Azure Dragon (青龙)", [LunarMansion.jiaoXiu, .kangXiu, .diXiu, .fangXiu, .xinXiu, .tailXiu, .jiXiu]),
+            ("Azure Dragon (青龍)", [LunarMansion.jiaoXiu, .kangXiu, .diXiu, .fangXiu, .xinXiu, .tailXiu, .jiXiu]),
             ("Vermillion Bird (朱雀)", [LunarMansion.jingXiu, .guiXiu, .liuXiu, .xingXiu, .zhangXiu, .yiXiu, .zhenXiu]),
             ("White Tiger (白虎)", [LunarMansion.kuiXiu, .louXiu, .wei4Xiu, .maoXiu, .biXiu, .ziXiu, .shenXiu]),
             ("Black Tortoise (玄武)", [LunarMansion.douXiu, .niuXiu, .nuXiu, .xuXiu, .wei1Xiu, .shiXiu, .wallXiu])

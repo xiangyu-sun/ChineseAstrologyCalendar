@@ -59,7 +59,7 @@ final class LunarMansionOffsetTest: XCTestCase {
         print("Our current order:")
         
         let groups = [
-            ("Azure Dragon (青龙)", 0..<7),
+            ("Azure Dragon (青龍)", 0..<7),
             ("Vermillion Bird (朱雀)", 7..<14), 
             ("White Tiger (白虎)", 14..<21),
             ("Black Tortoise (玄武)", 21..<28)
