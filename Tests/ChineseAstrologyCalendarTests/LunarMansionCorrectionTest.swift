@@ -44,7 +44,7 @@ final class LunarMansionCorrectionTest: XCTestCase {
         
         let testDates = [
             (2025, 7, 28, "女宿"), // User's expectation for today
-            (2025, 7, 29, "虚宿"), // Should be next mansion
+            (2025, 7, 29, "虛宿"), // Should be next mansion
             (2025, 7, 30, "危宿"), // Should continue progression
         ]
         

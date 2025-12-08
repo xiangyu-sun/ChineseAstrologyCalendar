@@ -4,7 +4,7 @@ import Astral
 
 /// Represents the Four Symbols (四象) corresponding to groups of lunar mansions.
 public enum FourSymbol: String {
-    case azureDragon   = "青龙"
+    case azureDragon   = "青龍"
     case vermilionBird = "朱雀"
     case whiteTiger    = "白虎"
     case blackTortoise = "玄武"
@@ -26,19 +26,19 @@ public enum LunarMansion: String, CaseIterable {
   case guiXiu    = "鬼宿"
   case liuXiu    = "柳宿"
   case xingXiu   = "星宿"
-  case zhangXiu  = "张宿"
+  case zhangXiu  = "張宿"
   case yiXiu     = "翼宿"
   case zhenXiu   = "轸宿"
   case kuiXiu    = "奎宿"
-  case louXiu    = "娄宿"
+  case louXiu    = "婁宿"
   case maoXiu    = "昴宿"
-  case biXiu     = "毕宿"
+  case biXiu     = "畢宿"
   case ziXiu     = "觜宿"
-  case shenXiu   = "参宿"
+  case shenXiu   = "參宿"
   case douXiu    = "斗宿"
   case niuXiu    = "牛宿"
   case nuXiu     = "女宿"
-  case xuXiu     = "虚宿"
+  case xuXiu     = "虛宿"
   case wei1Xiu   = "危宿"   // 危宿, wēi xiù (1st tone)
   case shiXiu    = "室宿"
   case wallXiu   = "壁宿"

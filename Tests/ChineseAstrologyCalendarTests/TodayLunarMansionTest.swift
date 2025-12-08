@@ -53,13 +53,13 @@ final class TodayLunarMansionTest: XCTestCase {
     func testSpecificDateMansions() {
         // Test some specific dates to verify our calculation
         let testCases = [
-            (2025, 7, 28, "张宿"), // Based on our previous test results
+            (2025, 7, 28, "張宿"), // Based on our previous test results
             (2025, 7, 29, "翼宿"),
             (2025, 7, 30, "轸宿"),
             (2025, 7, 31, "奎宿"),
-            (2025, 8, 1, "娄宿"),
+            (2025, 8, 1, "婁宿"),
             (2025, 8, 2, "昴宿"),
-            (2025, 8, 3, "毕宿")
+            (2025, 8, 3, "畢宿")
         ]
         
         print("\nVerifying specific dates:")

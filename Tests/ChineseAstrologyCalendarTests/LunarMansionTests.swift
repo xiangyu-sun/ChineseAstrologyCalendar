@@ -345,24 +345,24 @@ final class LunarMansion7DayTests: XCTestCase {
             .guiXiu: .vermilionBird,  // 鬼宿
             .liuXiu: .vermilionBird,  // 柳宿
             .xingXiu: .vermilionBird, // 星宿
-            .zhangXiu: .vermilionBird,// 张宿
+            .zhangXiu: .vermilionBird,// 張宿
             .yiXiu: .vermilionBird,   // 翼宿
             .zhenXiu: .vermilionBird, // 轸宿
             
-            // White Tiger (Western) - 7 mansions  
+            // White Tiger (Western) - 7 mansions
             .kuiXiu: .whiteTiger,     // 奎宿
-            .louXiu: .whiteTiger,     // 娄宿
+            .louXiu: .whiteTiger,     // 婁宿
             .wei4Xiu: .whiteTiger,    // 胃宿
             .maoXiu: .whiteTiger,     // 昴宿
-            .biXiu: .whiteTiger,      // 毕宿
+            .biXiu: .whiteTiger,      // 畢宿
             .ziXiu: .whiteTiger,      // 觜宿
-            .shenXiu: .whiteTiger,    // 参宿
+            .shenXiu: .whiteTiger,    // 參宿
             
             // Black Tortoise (Northern) - 7 mansions
             .douXiu: .blackTortoise,  // 斗宿
             .niuXiu: .blackTortoise,  // 牛宿
             .nuXiu: .blackTortoise,   // 女宿
-            .xuXiu: .blackTortoise,   // 虚宿
+            .xuXiu: .blackTortoise,   // 虛宿
             .wei1Xiu: .blackTortoise, // 危宿
             .shiXiu: .blackTortoise,  // 室宿
             .wallXiu: .blackTortoise  // 壁宿
