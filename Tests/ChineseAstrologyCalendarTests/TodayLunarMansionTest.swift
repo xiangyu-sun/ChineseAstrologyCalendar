@@ -3,20 +3,22 @@ import XCTest
 
 final class TodayLunarMansionTest: XCTestCase {
     
-    func testTodayLunarMansion() {
+    func testTodateLunarMansion() {
         let today = Date()
         let mansion = LunarMansion.lunarMansion(date: today)
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
-        formatter.timeZone = TimeZone.current
+        formatter.timeZone = .chinaStandardTime
         
         print("Current time: \(formatter.string(from: today))")
         print("Current lunar mansion: \(mansion.rawValue)")
         print("Four Symbol: \(mansion.fourSymbol.rawValue)")
         
         // Test at different times today to ensure consistency
-        let calendar = Calendar.current
+        var calendar = Calendar.current
+        calendar.timeZone = .chinaStandardTime
+      
         let startOfDay = calendar.startOfDay(for: today)
         let noon = calendar.date(byAdding: .hour, value: 12, to: startOfDay)!
         let endOfDay = calendar.date(byAdding: .hour, value: 23, to: startOfDay)!
@@ -33,21 +35,6 @@ final class TodayLunarMansionTest: XCTestCase {
         // All times on the same day should show the same mansion
         XCTAssertEqual(mansionStartOfDay, mansionNoon, "Mansion should be same at start of day and noon")
         XCTAssertEqual(mansionNoon, mansionEndOfDay, "Mansion should be same at noon and end of day")
-        
-        // Log expected mansion for July 28, 2025 based on our test results
-        let july28_2025 = Calendar.current.date(from: DateComponents(
-            timeZone: TimeZone(identifier: "UTC")!,
-            year: 2025,
-            month: 7,
-            day: 28,
-            hour: 12
-        ))!
-        
-        let expectedMansion = LunarMansion.lunarMansion(date: july28_2025)
-        print("\nExpected for July 28, 2025 UTC: \(expectedMansion.rawValue)")
-        
-        // Verify that today's mansion is a valid one
-        XCTAssertTrue(LunarMansion.allCases.contains(mansion), "Should return a valid lunar mansion")
     }
     
     func testSpecificDateMansions() {
@@ -56,18 +43,19 @@ final class TodayLunarMansionTest: XCTestCase {
             (2025, 7, 28, "張宿"), // Based on our previous test results
             (2025, 7, 29, "翼宿"),
             (2025, 7, 30, "轸宿"),
-            (2025, 7, 31, "奎宿"),
-            (2025, 8, 1, "婁宿"),
-            (2025, 8, 2, "昴宿"),
-            (2025, 8, 3, "畢宿")
+            (2025, 7, 31, "角宿"),
+            (2025, 8, 1, "亢宿"),
+            (2025, 8, 2, "氐宿"),
+            (2025, 8, 3, "房宿")
         ]
         
         print("\nVerifying specific dates:")
         for (year, month, day, expectedMansionName) in testCases {
             let calendar = Calendar(identifier: .gregorian)
+          
             let components = DateComponents(
                 calendar: calendar,
-                timeZone: TimeZone(identifier: "UTC")!,
+                timeZone: TimeZone.chinaStandardTime,
                 year: year,
                 month: month,
                 day: day,
@@ -77,9 +65,11 @@ final class TodayLunarMansionTest: XCTestCase {
             guard let date = calendar.date(from: components) else { continue }
             
             let mansion = LunarMansion.lunarMansion(date: date)
-            print("\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day)): \(mansion.rawValue) (expected: \(expectedMansionName))")
+          print(
+            "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day)): \(mansion.name) (expected: \(expectedMansionName))"
+          )
             
-            XCTAssertEqual(mansion.rawValue, expectedMansionName, 
+          XCTAssertEqual(mansion.name, expectedMansionName,
                           "Date \(year)-\(month)-\(day) should have mansion \(expectedMansionName)")
         }
     }

@@ -223,7 +223,8 @@ final class LunarMansionValidationTests: XCTestCase {
             .xingXiu,   // 星 - Star
             .zhangXiu,  // 张 - Extended Net
             .yiXiu,     // 翼 - Wings
-            .zhenXiu    // 轸 - Chariot
+            .zhenXiu,    // 轸 - Chariot
+    
         ]
         
         // Verify our implementation has all 28 mansions in the expected order

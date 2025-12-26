@@ -10,6 +10,6 @@ final class EventModelTitleTests: XCTestCase {
     components.day = 1
     let event = EventModel(date: Date(timeIntervalSinceReferenceDate: 0), name: .chuyi, dateComponents: components)
 
-    XCTAssertEqual(event.title, "Optional(\"一\") 初一")
+    XCTAssertEqual(event.title, "一 初一")
   }
 }

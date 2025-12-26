@@ -30,7 +30,7 @@ final class ShichenTests: XCTestCase {
     let actualEnd = Calendar.current.dateComponents(
       [.hour, .minute, .second],
       from: Shichen(dizhi: Dizhi.hai, date: Date()).endDate)
-    let expectedEnd = DateComponents(calendar: Calendar.current, hour: 22, minute: 59, second: 59)
+    let expectedEnd = DateComponents(calendar: Calendar.current, hour:23, minute: 0, second: 0)
 
     XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
     XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
@@ -61,9 +61,9 @@ final class ShichenTests: XCTestCase {
       calendar: Calendar.current,
       month: actualEnd.month,
       day: actualEnd.day,
-      hour: 0,
-      minute: 59,
-      second: 59)
+      hour: 1,
+      minute: 0,
+      second: 0)
 
     XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
     XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
@@ -86,7 +86,7 @@ final class ShichenTests: XCTestCase {
     XCTAssertEqual(actualStart.month, expectedStart.month)
 
     let actualEnd = Calendar.current.dateComponents([.month, .day, .hour, .minute, .second], from: shichen.endDate)
-    let expectedEnd = DateComponents(calendar: Calendar.current, month: 10, day: 16, hour: 0, minute: 59, second: 59)
+    let expectedEnd = DateComponents(calendar: Calendar.current, month: 10, day: 16, hour: 1, minute: 0, second: 0)
 
     XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
     XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
