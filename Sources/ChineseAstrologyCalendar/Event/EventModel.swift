@@ -30,13 +30,4 @@ extension EventModel {
     let month = NSNumber(value: dateComponents.month ?? 1)
     return "\(String(describing: EventModel.enToChNumberFormatter.string(from: month))) \(day.name)"
   }
-
-  // MARK: Private
-
-  private static let enToChNumberFormatter: NumberFormatter = {
-    let formatter = NumberFormatter()
-    formatter.locale = traditionalChineseLocale
-    formatter.numberStyle = .spellOut
-    return formatter
-  }()
 }

@@ -14,34 +14,39 @@ public enum FourSymbol: String {
 
 /// Represents one of the 28 lunar mansions (二十八宿).
 public enum LunarMansion: String, CaseIterable {
-  case jiaoXiu   = "角宿"
-  case kangXiu   = "亢宿"
-  case diXiu     = "氐宿"
-  case fangXiu   = "房宿"
-  case xinXiu    = "心宿"
-  case wei4Xiu   = "胃宿"   // 胃宿, wèi xiù (4th tone)
-  case tailXiu   = "尾宿"
-  case jiXiu     = "箕宿"
-  case jingXiu   = "井宿"
-  case guiXiu    = "鬼宿"
-  case liuXiu    = "柳宿"
-  case xingXiu   = "星宿"
-  case zhangXiu  = "張宿"
-  case yiXiu     = "翼宿"
-  case zhenXiu   = "轸宿"
-  case kuiXiu    = "奎宿"
-  case louXiu    = "婁宿"
-  case maoXiu    = "昴宿"
-  case biXiu     = "畢宿"
-  case ziXiu     = "觜宿"
-  case shenXiu   = "參宿"
-  case douXiu    = "斗宿"
-  case niuXiu    = "牛宿"
-  case nuXiu     = "女宿"
-  case xuXiu     = "虛宿"
-  case wei1Xiu   = "危宿"   // 危宿, wēi xiù (1st tone)
-  case shiXiu    = "室宿"
-  case wallXiu   = "壁宿"
+  case jiaoXiu   = "角"
+  case kangXiu   = "亢"
+  case diXiu     = "氐"
+  case fangXiu   = "房"
+  case xinXiu    = "心"
+  case wei4Xiu   = "胃"   // 胃, wèi (4th tone)
+  case tailXiu   = "尾"
+  case jiXiu     = "箕"
+  case jingXiu   = "井"
+  case guiXiu    = "鬼"
+  case liuXiu    = "柳"
+  case xingXiu   = "星"
+  case zhangXiu  = "張"
+  case yiXiu     = "翼"
+  case zhenXiu   = "轸"
+  case kuiXiu    = "奎"
+  case louXiu    = "婁"
+  case maoXiu    = "昴"
+  case biXiu     = "畢"
+  case ziXiu     = "觜"
+  case shenXiu   = "參"
+  case douXiu    = "斗"
+  case niuXiu    = "牛"
+  case nuXiu     = "女"
+  case xuXiu     = "虛"
+  case wei1Xiu   = "危"   // 危, wēi  (1st tone)
+  case shiXiu    = "室"
+  case wallXiu   = "壁"
+  
+  
+  public var name: String {
+    return self.rawValue + "宿"
+  }
   
   /// Maps the Moon's true ecliptic longitude to one of the 28 lunar mansions (二十八宿).
   /// - Parameter date: The date for which to calculate the lunar mansion.
