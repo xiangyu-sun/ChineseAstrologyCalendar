@@ -59,6 +59,12 @@ public struct Shichen: Codable {
     let elapsed = date.timeIntervalSince1970 - startDate.timeIntervalSince1970
     return max(0, min(7, Int(elapsed / Self.keLength)))
   }
+  
+  static let keMapping = ["初", "二", "三", "四", "五", "六", "七", "末"]
+  
+  public var currentKeSpellOut: String {
+    return Self.keMapping[currentKe]
+  }
 
   /// Start date for this ``Shichen``.
   ///
