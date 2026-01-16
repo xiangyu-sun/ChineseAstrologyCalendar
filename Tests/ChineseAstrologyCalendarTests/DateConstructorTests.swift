@@ -1,3 +1,4 @@
+import Foundation
 //
 //  DateConstructorTests.swift
 //
@@ -5,29 +6,21 @@
 //  Created by Xiangyu Sun on 24/12/22.
 //
 
-import XCTest
+import Testing
 
-final class DateConstructorTests: XCTestCase {
+@Suite struct DateConstructorTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func testConstuctor() throws {
-    let date = try XCTUnwrap(DateComponents.getDate(year: 2023, month: 1, day: .chuyi))
+  @Test func constructor() throws {
+    let date = try #require(DateComponents.getDate(year: 2023, month: 1, day: .chuyi))
 
     let components = date.dateComponentsFromCurrentCalendar
 
-    XCTAssertEqual(components.year, 2023)
-    XCTAssertEqual(components.month, 1)
-    XCTAssertEqual(components.day, 22)
-    XCTAssertEqual(components.hour, 0)
-    XCTAssertEqual(components.minute, 0)
-    XCTAssertEqual(components.second, 0)
+    #expect(components.year == 2023)
+    #expect(components.month == 1)
+    #expect(components.day == 22)
+    #expect(components.hour == 0)
+    #expect(components.minute == 0)
+    #expect(components.second == 0)
   }
 
 }

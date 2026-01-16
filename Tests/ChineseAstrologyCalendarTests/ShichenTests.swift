@@ -5,41 +5,34 @@
 //  Created by Xiangyu Sun on 23/6/22.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class ShichenTests: XCTestCase {
+@Suite struct ShichenTests {
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func testStartAndEnd() throws {
+  @Test func startAndEnd() throws {
     let actualStart = Calendar.current.dateComponents(
       [.hour, .minute, .second],
       from: Shichen(dizhi: Dizhi.hai, date: Date()).startDate)
     let expectedStart = DateComponents(calendar: Calendar.current, hour: 21, minute: 0, second: 0)
-    XCTAssertEqual(actualStart.hour, expectedStart.hour)
-    XCTAssertEqual(actualStart.minute, expectedStart.minute)
-    XCTAssertEqual(actualStart.second, expectedStart.second)
+    #expect(actualStart.hour == expectedStart.hour)
+    #expect(actualStart.minute == expectedStart.minute)
+    #expect(actualStart.second == expectedStart.second)
 
     let actualEnd = Calendar.current.dateComponents(
       [.hour, .minute, .second],
       from: Shichen(dizhi: Dizhi.hai, date: Date()).endDate)
     let expectedEnd = DateComponents(calendar: Calendar.current, hour:23, minute: 0, second: 0)
 
-    XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
-    XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
-    XCTAssertEqual(actualEnd.second, expectedEnd.second)
+    #expect(actualEnd.hour == expectedEnd.hour)
+    #expect(actualEnd.minute == expectedEnd.minute)
+    #expect(actualEnd.second == expectedEnd.second)
   }
 
-  func testStartAndEndWithDayAndMonth() throws {
-    let shichen = try XCTUnwrap(Date(timeIntervalSince1970: 1665872877.2155929).shichen)
-    XCTAssertEqual(shichen.dizhi, .zi)
+  @Test func startAndEndWithDayAndMonth() throws {
+    let shichen = try #require(Date(timeIntervalSince1970: 1665872877.2155929).shichen)
+    #expect(shichen.dizhi == .zi)
 
     let actualStart = Calendar.current.dateComponents([.month, .day, .hour, .minute, .second], from: shichen.startDate)
     let expectedStart = DateComponents(
@@ -50,11 +43,11 @@ final class ShichenTests: XCTestCase {
       minute: 0,
       second: 0)
 
-    XCTAssertEqual(actualStart.hour, expectedStart.hour)
-    XCTAssertEqual(actualStart.minute, expectedStart.minute)
-    XCTAssertEqual(actualStart.second, expectedStart.second)
-    XCTAssertEqual(actualStart.day, expectedStart.day)
-    XCTAssertEqual(actualStart.month, expectedStart.month)
+    #expect(actualStart.hour == expectedStart.hour)
+    #expect(actualStart.minute == expectedStart.minute)
+    #expect(actualStart.second == expectedStart.second)
+    #expect(actualStart.day == expectedStart.day)
+    #expect(actualStart.month == expectedStart.month)
 
     let actualEnd = Calendar.current.dateComponents([.month, .day, .hour, .minute, .second], from: shichen.endDate)
     let expectedEnd = DateComponents(
@@ -65,34 +58,34 @@ final class ShichenTests: XCTestCase {
       minute: 0,
       second: 0)
 
-    XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
-    XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
-    XCTAssertEqual(actualEnd.second, expectedEnd.second)
-    XCTAssertEqual(actualEnd.day, expectedEnd.day)
-    XCTAssertEqual(actualEnd.month, expectedEnd.month)
+    #expect(actualEnd.hour == expectedEnd.hour)
+    #expect(actualEnd.minute == expectedEnd.minute)
+    #expect(actualEnd.second == expectedEnd.second)
+    #expect(actualEnd.day == expectedEnd.day)
+    #expect(actualEnd.month == expectedEnd.month)
   }
 
-  func testStartAndEndWithDayAndMonthBefore12() throws {
-    let shichen = try XCTUnwrap(Date(timeIntervalSince1970: 1665869364.8679671).shichen)
-    XCTAssertEqual(shichen.dizhi, .zi)
+  @Test func startAndEndWithDayAndMonthBefore12() throws {
+    let shichen = try #require(Date(timeIntervalSince1970: 1665869364.8679671).shichen)
+    #expect(shichen.dizhi == .zi)
 
     let actualStart = Calendar.current.dateComponents([.month, .day, .hour, .minute, .second], from: shichen.startDate)
     let expectedStart = DateComponents(calendar: Calendar.current, month: 10, day: 15, hour: 23, minute: 0, second: 0)
 
-    XCTAssertEqual(actualStart.hour, expectedStart.hour)
-    XCTAssertEqual(actualStart.minute, expectedStart.minute)
-    XCTAssertEqual(actualStart.second, expectedStart.second)
-    XCTAssertEqual(actualStart.day, expectedStart.day)
-    XCTAssertEqual(actualStart.month, expectedStart.month)
+    #expect(actualStart.hour == expectedStart.hour)
+    #expect(actualStart.minute == expectedStart.minute)
+    #expect(actualStart.second == expectedStart.second)
+    #expect(actualStart.day == expectedStart.day)
+    #expect(actualStart.month == expectedStart.month)
 
     let actualEnd = Calendar.current.dateComponents([.month, .day, .hour, .minute, .second], from: shichen.endDate)
     let expectedEnd = DateComponents(calendar: Calendar.current, month: 10, day: 16, hour: 1, minute: 0, second: 0)
 
-    XCTAssertEqual(actualEnd.hour, expectedEnd.hour)
-    XCTAssertEqual(actualEnd.minute, expectedEnd.minute)
-    XCTAssertEqual(actualEnd.second, expectedEnd.second)
-    XCTAssertEqual(actualEnd.day, expectedEnd.day)
-    XCTAssertEqual(actualEnd.month, expectedEnd.month)
+    #expect(actualEnd.hour == expectedEnd.hour)
+    #expect(actualEnd.minute == expectedEnd.minute)
+    #expect(actualEnd.second == expectedEnd.second)
+    #expect(actualEnd.day == expectedEnd.day)
+    #expect(actualEnd.month == expectedEnd.month)
   }
 
 }

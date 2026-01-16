@@ -1,9 +1,10 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class DayMoonPhaseTests: XCTestCase {
+@Suite struct DayMoonPhaseTests {
 
-  func testMoonPhaseMapping() {
+  @Test func moonPhaseMapping() {
     let mappings: [(Day, ChineseMoonPhase)] = [
       (.chuyi, .朔),
       (.chuwu, .蛾眉月),
@@ -16,7 +17,7 @@ final class DayMoonPhaseTests: XCTestCase {
       (.sanshi, .晦)
     ]
     for (day, phase) in mappings {
-      XCTAssertEqual(day.moonPhase, phase, "Expected \(phase) for \(day)")
+      #expect(day.moonPhase == phase, "Expected \(phase) for \(day)")
     }
   }
 }
