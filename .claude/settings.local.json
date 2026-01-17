@@ -16,7 +16,14 @@
       "WebFetch(domain:en.calc-site.com)",
       "WebFetch(domain:www.yourchineseastrology.com)",
       "Bash(cp:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Skill(swift-testing)",
+      "Skill(swift-testing:*)",
+      "Bash(for file in DateComponentsMonthTests_25.swift QijieDizhiTests.swift ShiZhuTests.swift DayMoonPhaseTests.swift DizhiAdditionalTests.swift WuxingAdditionalTests.swift RiZhuTests.swift NextFiveDaysTwelveGodTests.swift DebugLunarMansionTest.swift LunarMansionOffsetTest.swift LunarMansionTests.swift ShichenAdditionalTests.swift EventModelTitleTests.swift ShichenTests.swift LunarMansionValidationTests.swift LunarMansionCorrectionTest.swift FourAnimalsTest.swift TodayLunarMansionTest.swift)",
+      "Bash(do head -3 \"$file\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

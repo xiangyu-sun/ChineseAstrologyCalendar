@@ -33,8 +33,7 @@ let package = Package(
         .testTarget(
             name: "ChineseAstrologyCalendarTests",
             dependencies: [
-              "ChineseAstrologyCalendar",
-              .product(name: "Testing", package: "swift-testing")
+              "ChineseAstrologyCalendar"
             ]),
     ]
 )
