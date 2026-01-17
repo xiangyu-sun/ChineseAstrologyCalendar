@@ -1,3 +1,4 @@
+import Foundation
 //
 //  DayConverterTests.swift
 //
@@ -5,11 +6,11 @@
 //  Created by 孙翔宇 on 1/2/22.
 //
 
-import XCTest
+import Testing
 
 @testable import ChineseAstrologyCalendar
 
-class DayConverterTests: XCTestCase {
+@Suite struct DayConverterTests {
   let calendar = Calendar.current
   let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 5, hour: 11, minute: 7)
 
@@ -22,27 +23,19 @@ class DayConverterTests: XCTestCase {
     return formatter
   }()
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func testOneDate() throws {
+  @Test func oneDate() throws {
     let monthsHasSanshi = dateConverter.find(days: [.sanshi], inNextMonths: 12, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
-    XCTAssertEqual(monthsHasSanshi, ["3/2/22", "4/30/22", "6/28/22", "7/28/22", "9/25/22", "11/23/22"])
+    #expect(monthsHasSanshi == ["3/2/22", "4/30/22", "6/28/22", "7/28/22", "9/25/22", "11/23/22"])
   }
 
-  func testTwoDate() throws {
+  @Test func twoDate() throws {
     let monthsHasSanshi = dateConverter.find(days: [.chuyi, .shiwu], inNextMonths: 12, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
-    XCTAssertEqual(
-      monthsHasSanshi,
+    #expect(
+      monthsHasSanshi ==
       [
         "1/17/22",
         "2/1/22",
@@ -70,33 +63,33 @@ class DayConverterTests: XCTestCase {
       ])
   }
 
-  func testOneDateAndMonthEarlierThanNow() throws {
+  @Test func oneDateAndMonthEarlierThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
     let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
 
-    XCTAssertTrue(days.isEmpty)
+    #expect(days.isEmpty)
   }
 
-  func testOneDateAndMonthLaterThanNow() throws {
+  @Test func oneDateAndMonthLaterThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
     let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
-    XCTAssertEqual(days, ["1/30/22"])
+    #expect(days == ["1/30/22"])
   }
 
-  func testOneDateAndMonthFiveYearsLaterThanNow() throws {
+  @Test func oneDateAndMonthFiveYearsLaterThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
     let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 4, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
-    XCTAssertEqual(days, ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
+    #expect(days == ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
   }
 
-  func testNewYear() throws {
+  @Test func newYear() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
 
     let expectedDate = DateComponents(calendar: Calendar.current, year: 2023, month: 1, day: 22, hour: 0, minute: 0)
@@ -104,11 +97,11 @@ class DayConverterTests: XCTestCase {
     let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
       .map(\.date)
 
-    XCTAssertEqual(days, [calendar.date(from: expectedDate)!])
+    #expect(days == [calendar.date(from: expectedDate)!])
   }
 
-  func testNewYearWithCST() throws {
-    dateConverter = DayConverter(calendar: .chineseCalendarGTM8)
+  @Test func newYearWithCST() throws {
+    var converter = DayConverter(calendar: .chineseCalendarGTM8)
 
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 11, day: 2, hour: 0, minute: 0)
 
@@ -120,9 +113,9 @@ class DayConverterTests: XCTestCase {
       hour: 0,
       minute: 0)
 
-    let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+    let days = converter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
       .map(\.date)
 
-    XCTAssertEqual(days, [Calendar.chineseCalendarGTM8.date(from: expectedDate)!])
+    #expect(days == [Calendar.chineseCalendarGTM8.date(from: expectedDate)!])
   }
 }

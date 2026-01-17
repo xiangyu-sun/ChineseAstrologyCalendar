@@ -1,15 +1,12 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class QijieDizhiTests: XCTestCase {
+@Suite struct QijieDizhiTests {
 
-  static var allTests = [
-    ("testYin", testJieQiPairs),
-  ]
-
-  func testJieQiPairs() {
-    XCTAssertEqual(
-      Dizhi.orderedMonthAlCases.map(\.jie),
+  @Test func jieQiPairs() {
+    #expect(
+      Dizhi.orderedMonthAlCases.map(\.jie) ==
       [
         ChineseAstrologyCalendar.Jieqi.qingming,
         ChineseAstrologyCalendar.Jieqi.lixia,
@@ -25,8 +22,8 @@ final class QijieDizhiTests: XCTestCase {
         ChineseAstrologyCalendar.Jieqi.jingzhe,
       ])
 
-    XCTAssertEqual(
-      Dizhi.orderedMonthAlCases.map(\.qi),
+    #expect(
+      Dizhi.orderedMonthAlCases.map(\.qi) ==
       [
         ChineseAstrologyCalendar.Jieqi.chunfen,
         ChineseAstrologyCalendar.Jieqi.guyu,

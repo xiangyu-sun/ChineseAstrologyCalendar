@@ -1,3 +1,4 @@
+import Foundation
 //
 //  DateComponentsFromChineseCalendarTests.swift
 //  ChineseAstrologyCalendar
@@ -5,16 +6,11 @@
 //  Created by Xiangyu Sun on 1/2/25.
 //
 
-import XCTest
+import Testing
 
-// If your project module is named, for example, "ChineseAstrologyCalendar", you may need to import it:
-// @testable import ChineseAstrologyCalendar
+@Suite struct DateComponentsFromChineseCalendarTests {
 
-class DateComponentsFromChineseCalendarTests: XCTestCase {
-
-  /// Test conversion for a known Gregorian date.
-  /// The expected Chinese date components are computed using a direct conversion via Calendar(identifier: .chinese).
-  func testDateComponentsForKnownGregorianDate() {
+  @Test func dateComponentsForKnownGregorianDate() throws {
     // Create a known Gregorian date: January 1, 2000 at 12:00:00 GMT.
     let gregorianCalendar = Calendar(identifier: .gregorian)
     var gregorianComponents = DateComponents()
@@ -26,10 +22,7 @@ class DateComponentsFromChineseCalendarTests: XCTestCase {
     gregorianComponents.second = 0
     gregorianComponents.timeZone = TimeZone(secondsFromGMT: 0)
 
-    guard let date = gregorianCalendar.date(from: gregorianComponents) else {
-      XCTFail("Failed to create date from Gregorian components")
-      return
-    }
+    let date = try #require(gregorianCalendar.date(from: gregorianComponents))
 
     // Use our extension method to get Chinese calendar components.
     let resultComponents = date.dateComponentsFromChineseCalendar()
@@ -39,21 +32,20 @@ class DateComponentsFromChineseCalendarTests: XCTestCase {
     let expectedComponents = chineseCalendar.dateComponents([.year, .month, .day, .era], from: date)
 
     // Validate the Chinese date components.
-    XCTAssertEqual(resultComponents.year, 1999, "Year component mismatch")
-    XCTAssertEqual(resultComponents.month, expectedComponents.month, "Month component mismatch")
-    XCTAssertEqual(resultComponents.day, expectedComponents.day, "Day component mismatch")
-    XCTAssertEqual(resultComponents.era, expectedComponents.era, "Era component mismatch")
+    #expect(resultComponents.year == 1999)
+    #expect(resultComponents.month == expectedComponents.month)
+    #expect(resultComponents.day == expectedComponents.day)
+    #expect(resultComponents.era == expectedComponents.era)
 
     // Also validate that the time components are carried over from the Gregorian date.
     let originalTimeComponents = gregorianCalendar.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
-    XCTAssertEqual(resultComponents.hour, originalTimeComponents.hour, "Hour component mismatch")
-    XCTAssertEqual(resultComponents.minute, originalTimeComponents.minute, "Minute component mismatch")
-    XCTAssertEqual(resultComponents.second, originalTimeComponents.second, "Second component mismatch")
-    XCTAssertEqual(resultComponents.nanosecond, originalTimeComponents.nanosecond, "Nanosecond component mismatch")
+    #expect(resultComponents.hour == originalTimeComponents.hour)
+    #expect(resultComponents.minute == originalTimeComponents.minute)
+    #expect(resultComponents.second == originalTimeComponents.second)
+    #expect(resultComponents.nanosecond == originalTimeComponents.nanosecond)
   }
 
-  /// Test conversion when using a Chinese calendar with a custom time zone.
-  func testDateComponentsWithCustomTimeZone() {
+  @Test func dateComponentsWithCustomTimeZone() throws {
     // Create a Chinese calendar with GMT+8 (typical for mainland China)
     var customChineseCalendar = Calendar(identifier: .chinese)
     customChineseCalendar.timeZone = TimeZone(secondsFromGMT: 8 * 3600)!
@@ -69,24 +61,20 @@ class DateComponentsFromChineseCalendarTests: XCTestCase {
     dateComponents.second = 30
     dateComponents.timeZone = TimeZone(secondsFromGMT: 0)
 
-    guard let date = gregorianCalendar.date(from: dateComponents) else {
-      XCTFail("Failed to create date from Gregorian components")
-      return
-    }
+    let date = try #require(gregorianCalendar.date(from: dateComponents))
 
     // Get Chinese calendar components using the custom calendar.
     let resultComponents = date.dateComponentsFromChineseCalendar(customChineseCalendar)
 
     // Compute expected Chinese components using the custom calendar directly.
     let expectedComponents = customChineseCalendar.dateComponents([.year, .month, .day, .era], from: date)
-    XCTAssertEqual(resultComponents.year, 2020, "Year component mismatch with custom time zone")
-    XCTAssertEqual(resultComponents.month, expectedComponents.month, "Month component mismatch with custom time zone")
-    XCTAssertEqual(resultComponents.day, expectedComponents.day, "Day component mismatch with custom time zone")
-    XCTAssertEqual(resultComponents.era, expectedComponents.era, "Era component mismatch with custom time zone")
+    #expect(resultComponents.year == 2020)
+    #expect(resultComponents.month == expectedComponents.month)
+    #expect(resultComponents.day == expectedComponents.day)
+    #expect(resultComponents.era == expectedComponents.era)
   }
 
-  /// Test conversion for a date at midnight.
-  func testDateComponentsForDateAtMidnight() {
+  @Test func dateComponentsForDateAtMidnight() throws {
     // Create a Gregorian date for December 31, 2022 at midnight GMT.
     let gregorianCalendar = Calendar(identifier: .gregorian)
     var components = DateComponents()
@@ -99,23 +87,20 @@ class DateComponentsFromChineseCalendarTests: XCTestCase {
     components.second = 0
     components.timeZone = TimeZone(secondsFromGMT: 0)
 
-    guard let date = gregorianCalendar.date(from: components) else {
-      XCTFail("Failed to create midnight date")
-      return
-    }
+    let date = try #require(gregorianCalendar.date(from: components))
 
     let resultComponents = date.dateComponentsFromChineseCalendar()
 
     // Validate that the time components are zero as expected.
-    XCTAssertEqual(resultComponents.hour, 1, "Hour component should be 1 at midnight")
-    XCTAssertEqual(resultComponents.minute, 0, "Minute component should be 0 at midnight")
-    XCTAssertEqual(resultComponents.second, 0, "Second component should be 0 at midnight")
+    #expect(resultComponents.hour == 1)
+    #expect(resultComponents.minute == 0)
+    #expect(resultComponents.second == 0)
 
     // Ensure that the Chinese calendar date components are non-nil.
-    XCTAssertNotNil(resultComponents.day, "Day component should not be nil")
-    XCTAssertNotNil(resultComponents.month, "Month component should not be nil")
-    XCTAssertNotNil(resultComponents.year, "Year component should not be nil")
-    XCTAssertNotNil(resultComponents.era, "Era component should not be nil")
+    #expect(resultComponents.day != nil)
+    #expect(resultComponents.month != nil)
+    #expect(resultComponents.year != nil)
+    #expect(resultComponents.era != nil)
   }
 
 }

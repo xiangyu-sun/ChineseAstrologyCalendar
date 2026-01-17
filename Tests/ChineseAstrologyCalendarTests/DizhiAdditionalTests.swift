@@ -1,25 +1,26 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class DizhiAdditionalTests: XCTestCase {
+@Suite struct DizhiAdditionalTests {
 
-  func testAliasAndOrgan() {
-    XCTAssertEqual(Dizhi.zi.aliasName, "夜半")
-    XCTAssertEqual(Dizhi.wu.organReference, "心")
+  @Test func aliasAndOrgan() {
+    #expect(Dizhi.zi.aliasName == "夜半")
+    #expect(Dizhi.wu.organReference == "心")
   }
 
-  func testNextAndPrevious() {
-    XCTAssertEqual(Dizhi.hai.next, .zi)
-    XCTAssertEqual(Dizhi.zi.previous, .hai)
+  @Test func nextAndPrevious() {
+    #expect(Dizhi.hai.next == .zi)
+    #expect(Dizhi.zi.previous == .hai)
   }
 
-  func testHourInterval() {
+  @Test func hourInterval() {
     let interval = Dizhi.wu.hourInterval
-    XCTAssertEqual(interval.start, 11)
-    XCTAssertEqual(interval.end, 12)
+    #expect(interval.start == 11)
+    #expect(interval.end == 12)
   }
 
-  func testFormattedMonthName() {
-    XCTAssertEqual(Dizhi.yin.chineseCalendarMonthName, "寅月")
+  @Test func formattedMonthName() {
+    #expect(Dizhi.yin.chineseCalendarMonthName == "寅月")
   }
 }

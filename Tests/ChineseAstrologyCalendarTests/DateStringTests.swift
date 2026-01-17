@@ -1,7 +1,8 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class DateStringTests: XCTestCase {
+@Suite struct DateStringTests {
 
   var event: EventModel {
     let component = DateComponents(calendar: .current, year: 2023, month: 6, day: 7, hour: 17)
@@ -11,74 +12,66 @@ final class DateStringTests: XCTestCase {
     return DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1, from: date!).first!
   }
 
-  override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
-
-  func test_chineseYearMonthDate() throws {
+  @Test func chineseYearMonthDate() throws {
     let component = DateComponents(calendar: .current, year: 2022, month: 6, day: 7, hour: 17)
 
     let date = Calendar.current.date(from: component)
 
-    XCTAssertEqual(date?.chineseYearMonthDate, "壬寅年五月初九")
+    #expect(date?.chineseYearMonthDate == "壬寅年五月初九")
   }
 
-  func test_chineseYearMonthDateZodia() throws {
+  @Test func chineseYearMonthDateZodiac() throws {
     let component = DateComponents(calendar: .current, year: 2022, month: 6, day: 7, hour: 17)
 
     let date = Calendar.current.date(from: component)
 
-    XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiac, "壬寅虎年五月初九")
+    #expect(date?.displayStringOfChineseYearMonthDateWithZodiac == "壬寅虎年五月初九")
   }
 
-  func test_chineseYearMonthDateZodiaGTM8() throws {
+  @Test func chineseYearMonthDateZodiacGTM8() throws {
     let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 22, hour: 0)
 
     let date = Calendar.current.date(from: component)
 
-    XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiacGTM8, "癸卯兔年正月初一")
+    #expect(date?.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "癸卯兔年正月初一")
   }
 
-  func test_chineseYearMonthDateZodiac() throws {
+  @Test func chineseYearMonthDateZodiacCurrentCalendar() throws {
     let component = DateComponents(calendar: .current, year: 2023, month: 1, day: 22, hour: 0)
 
     let date = Calendar.current.date(from: component)
 
-    XCTAssertEqual(date?.displayStringOfChineseYearMonthDateWithZodiac, "癸卯兔年正月初一")
+    #expect(date?.displayStringOfChineseYearMonthDateWithZodiac == "癸卯兔年正月初一")
   }
 
-  func test_chineseYearMonthDateZodiaGTM8WithEventModel() throws {
+  @Test func chineseYearMonthDateZodiacGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
 
-    XCTAssertEqual(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8, "甲辰龙年正月初一")
+    #expect(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "甲辰龙年正月初一")
   }
 
-  func test_chineseMonth() throws {
+  @Test func chineseMonth() throws {
     let dizhi = Dizhi.you
 
     let component2 = DateComponents(calendar: .current, year: 2022, month: 8, day: 10, hour: 17)
 
     let date2 = Calendar.current.date(from: component2)
 
-    XCTAssertEqual(dizhi.formattedMonth, Dizhi.monthFormatter.string(from: date2!))
+    #expect(dizhi.formattedMonth == Dizhi.monthFormatter.string(from: date2!))
   }
 
-  func test_chineseMonthandDate() throws {
+  @Test func chineseMonthAndDate() throws {
     let component = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
 
     let date = Calendar.current.date(from: component)
-    XCTAssertEqual(date!.chineseYearMonthDate, "壬寅年十月初八")
+    #expect(date!.chineseYearMonthDate == "壬寅年十月初八")
   }
 
-  func test_chineseMonthandDateGTM8() throws {
+  @Test func chineseMonthAndDateGTM8() throws {
     let component = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
 
     let date = Calendar.current.date(from: component)
-    XCTAssertEqual(date!.chineseYearMonthDateGTM8, "壬寅年十月初九")
+    #expect(date!.chineseYearMonthDateGTM8 == "壬寅年十月初九")
   }
 
 }

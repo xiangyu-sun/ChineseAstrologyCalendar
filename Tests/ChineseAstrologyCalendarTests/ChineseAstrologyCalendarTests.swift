@@ -1,37 +1,34 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class ChineseAstrologyCalendarTests: XCTestCase {
+@Suite struct ChineseAstrologyCalendarTests {
 
-  static var allTests = [
-    ("testNianGanToNotbeNil", testNianGanToNotbeNil),
-  ]
-
-  func testNianGanToNotbeNil() {
-    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().nianGan)
+  @Test func nianGanIsNotNil() {
+    #expect(Date().dateComponentsFromChineseCalendar().nianGan != nil)
   }
 
-  func testNianGanListHasTenElements() {
+  @Test func nianGanListHasTenElements() {
     for i in 1...10 {
-      XCTAssertNotNil(Tiangan(rawValue: i))
+      #expect(Tiangan(rawValue: i) != nil)
     }
   }
 
-  func testNianZhiToNotbeNil() {
-    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().nianZhi)
+  @Test func nianZhiIsNotNil() {
+    #expect(Date().dateComponentsFromChineseCalendar().nianZhi != nil)
   }
 
-  func testNianZhiListHasTwelveElements() {
+  @Test func nianZhiListHasTwelveElements() {
     for i in 1...12 {
-      XCTAssertNotNil(Dizhi(rawValue: i))
+      #expect(Dizhi(rawValue: i) != nil)
     }
   }
 
-  func testYuezhiToNotBeNil() {
-    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().yueZhi)
+  @Test func yueZhiIsNotNil() {
+    #expect(Date().dateComponentsFromChineseCalendar().yueZhi != nil)
   }
 
-  func testYueGanToNotBeNil() {
-    XCTAssertNotNil(Date().dateComponentsFromChineseCalendar().yueGan)
+  @Test func yueGanIsNotNil() {
+    #expect(Date().dateComponentsFromChineseCalendar().yueGan != nil)
   }
 }

@@ -1,24 +1,25 @@
-import XCTest
+import Foundation
+import Testing
 @testable import ChineseAstrologyCalendar
 
-final class WuxingAdditionalTests: XCTestCase {
+@Suite struct WuxingAdditionalTests {
 
-  func testShengCycle() {
-    XCTAssertEqual(Wuxing.mu.sheng, .huo)
-    XCTAssertEqual(Wuxing.huo.sheng, .tu)
-    XCTAssertEqual(Wuxing.tu.sheng, .jin)
-    XCTAssertEqual(Wuxing.jin.sheng, .shui)
-    XCTAssertEqual(Wuxing.shui.sheng, .mu)
+  @Test func shengCycle() {
+    #expect(Wuxing.mu.sheng == .huo)
+    #expect(Wuxing.huo.sheng == .tu)
+    #expect(Wuxing.tu.sheng == .jin)
+    #expect(Wuxing.jin.sheng == .shui)
+    #expect(Wuxing.shui.sheng == .mu)
   }
 
-  func testColorsAndFlavors() {
-    XCTAssertEqual(Wuxing.mu.colorDescription, "青")
-    XCTAssertEqual(Wuxing.jin.colorDescription, "白")
-    XCTAssertEqual(Wuxing.huo.fiveFlavor, "苦")
+  @Test func colorsAndFlavors() {
+    #expect(Wuxing.mu.colorDescription == "青")
+    #expect(Wuxing.jin.colorDescription == "白")
+    #expect(Wuxing.huo.fiveFlavor == "苦")
   }
 
-  func testFangWei() {
-    XCTAssertEqual(Wuxing.mu.fangwei, .dong)
-    XCTAssertEqual(Wuxing.tu.fangwei, .zhong)
+  @Test func fangWei() {
+    #expect(Wuxing.mu.fangwei == .dong)
+    #expect(Wuxing.tu.fangwei == .zhong)
   }
 }
