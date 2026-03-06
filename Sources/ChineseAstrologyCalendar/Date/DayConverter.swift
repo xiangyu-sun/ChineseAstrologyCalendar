@@ -157,6 +157,48 @@ public final class DayConverter {
     }
   }
 
+  /// Returns the date of the next Chinese New Year (Spring Festival) on or after the given date.
+  ///
+  /// Chinese New Year falls on the first day of the first lunar month (初一 of 寅月).
+  ///
+  /// Example:
+  /// ```swift
+  /// let converter = DayConverter()
+  /// if let cny = converter.nextChineseNewYear(from: Date()) {
+  ///     print("Next Chinese New Year: \(cny)")
+  /// }
+  /// ```
+  ///
+  /// - Parameter date: The reference date. Defaults to the current date.
+  /// - Returns: The Gregorian date of the next Chinese New Year, or `nil` if it cannot be determined.
+  public func nextChineseNewYear(from date: Date = Date()) -> Date? {
+    find(day: .chuyi, month: .yin, inNextYears: 1, from: date).first?.date
+  }
+
+  /// Returns whether the given date falls within the specified number of calendar months
+  /// before the next Chinese New Year.
+  ///
+  /// This is useful for showing countdown UI, promotions, or cultural reminders
+  /// leading up to the Spring Festival.
+  ///
+  /// Example:
+  /// ```swift
+  /// let converter = DayConverter()
+  /// if converter.isWithinMonths(3, beforeChineseNewYearFrom: Date()) {
+  ///     print("Chinese New Year is coming soon!")
+  /// }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - months: The number of calendar months to look back from Chinese New Year.
+  ///   - date: The date to check. Defaults to the current date.
+  /// - Returns: `true` if `date` is within `months` calendar months before the next Chinese New Year.
+  public func isWithinMonths(_ months: Int, beforeChineseNewYearFrom date: Date = Date()) -> Bool {
+    guard let cny = nextChineseNewYear(from: date) else { return false }
+    guard let windowStart = Calendar.current.date(byAdding: .month, value: -months, to: cny) else { return false }
+    return date >= windowStart && date < cny
+  }
+
   // MARK: Internal
 
   /// Validates that the constructed date matches the expected components.
