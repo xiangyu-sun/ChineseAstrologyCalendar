@@ -8,7 +8,7 @@ import Foundation
 
 import Testing
 
-@testable import ChineseAstrologyCalendar
+import ChineseAstrologyCalendar
 
 @Suite struct DayConverterTests {
   let calendar = Calendar.current

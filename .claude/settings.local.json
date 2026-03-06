@@ -16,7 +16,9 @@
       "WebFetch(domain:en.calc-site.com)",
       "WebFetch(domain:www.yourchineseastrology.com)",
       "Bash(cp:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Bash(ls -la /Users/xiangyu.sun/Documents/GitHub/ChineseAstrologyCalendar/ | grep -E \"\\\\.\\(md|txt\\)$\")",
+      "Bash(wc -l /Users/xiangyu.sun/Documents/GitHub/ChineseAstrologyCalendar/Tests/ChineseAstrologyCalendarTests/*.swift | tail -5)"
     ],
     "deny": []
   }
