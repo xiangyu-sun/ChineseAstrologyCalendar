@@ -72,7 +72,7 @@ extension EventModel {
     
     let monthValue = dateComponents.month ?? 1
     let monthNumber = NSNumber(value: monthValue)
-    let monthString = NumberFormatter.enToChNumberFormatter.string(from: monthNumber) ?? "\(monthValue)"
+    let monthString = NumberFormatter.traditionalChineseNumberFormatter.string(from: monthNumber) ?? "\(monthValue)"
     
     return "\(monthString) \(day.name)"
   }

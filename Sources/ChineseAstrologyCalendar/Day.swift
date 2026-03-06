@@ -1,5 +1,5 @@
 /// Represents the days of a traditional Chinese lunar month.
-public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable {
+public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable, Sendable {
   case chuyi = 1
   case chuer
   case chusan

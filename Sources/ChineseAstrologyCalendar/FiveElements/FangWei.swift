@@ -2,7 +2,7 @@
 import Foundation
 
 /// Cardinal directions used with the five elements.
-public enum FangWei: CaseIterable, WuxingConvertable {
+public enum FangWei: CaseIterable, WuxingConvertable, Sendable {
 
   case dong
   case nan

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The ten Heavenly Stems used in the traditional calendar.
-public enum Tiangan: Int, CaseIterable, YinYangIdentifiable {
+public enum Tiangan: Int, CaseIterable, YinYangIdentifiable, Sendable {
   case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
 
   // MARK: Public

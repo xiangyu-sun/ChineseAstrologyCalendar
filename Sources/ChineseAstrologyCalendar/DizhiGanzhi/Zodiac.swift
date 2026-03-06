@@ -18,7 +18,7 @@ public protocol DizhiConvertible {
 // MARK: - Zodiac
 
 /// The twelve animals of the Chinese zodiac.
-public enum Zodiac: String, DizhiConvertible {
+public enum Zodiac: String, DizhiConvertible, Sendable {
   case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 雞, 狗, 猪
 
   // MARK: Lifecycle

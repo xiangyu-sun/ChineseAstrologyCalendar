@@ -2,7 +2,7 @@
 import Foundation
 
 /// The five elements used throughout Chinese philosophy.
-public enum Wuxing: Int, CaseIterable {
+public enum Wuxing: Int, CaseIterable, Sendable {
 
   case mu
   case huo

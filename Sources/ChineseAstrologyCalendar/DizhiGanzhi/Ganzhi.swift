@@ -4,7 +4,7 @@ import Foundation
 // MARK: - Ganzhi
 
 /// Represents a combination of a Heavenly Stem and an Earthly Branch.
-public struct Ganzhi: CustomStringConvertible, Equatable, YinYangIdentifiable, Hashable {
+public struct Ganzhi: CustomStringConvertible, Equatable, YinYangIdentifiable, Hashable, Sendable {
   public var yin: Bool {
     gan.yin && zhi.yin
   }

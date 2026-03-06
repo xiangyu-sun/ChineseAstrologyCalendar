@@ -38,7 +38,7 @@ public protocol DizhiConvertable {
 // MARK: - Dizhi
 
 /// The twelve Earthly Branches used for traditional Chinese time keeping.
-public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, Codable {
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, Codable, Sendable {
   case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public

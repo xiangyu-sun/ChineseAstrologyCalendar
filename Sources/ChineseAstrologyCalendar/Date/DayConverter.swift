@@ -60,11 +60,12 @@ public final class DayConverter {
       for d in days {
         var copy = components
 
-        let newMonth = (copy.month! + month)
+        guard let currentMonth = copy.month, let currentYear = copy.year else { continue }
+        let newMonth = currentMonth + month
         let newYear: Float = (Float(newMonth) / 13.0).rounded(.towardZero)
 
         copy.month = newMonth <= 12 ? newMonth : newMonth - 12
-        copy.year! += Int(newYear)
+        copy.year = currentYear + Int(newYear)
         copy.day = d.rawValue
 
         guard
@@ -103,8 +104,9 @@ public final class DayConverter {
     return Array(0...inNextYears).reduce(into: [EventModel]()) { result, year in
 
       var copy = components
+      guard let currentYear = copy.year else { return }
       copy.month = monthConverted
-      copy.year! += Int(year)
+      copy.year = currentYear + Int(year)
       copy.day = day.rawValue
 
       guard

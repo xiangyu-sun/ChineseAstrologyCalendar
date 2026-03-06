@@ -2,7 +2,7 @@
 import Foundation
 
 /// Seasons mapped to their corresponding five elements.
-public enum Season: CaseIterable, WuxingConvertable {
+public enum Season: CaseIterable, WuxingConvertable, Sendable {
   case spring
   case summer
   case fall
@@ -60,7 +60,7 @@ public enum Season: CaseIterable, WuxingConvertable {
     case .summer:
       return [.si, .wu, .wei]
     case .fall:
-      return [.shen, .chou, .wu]
+      return [.shen, .you, .xu]
     case .winter:
       return [.hai, .zi, .chou]
     }

@@ -4,7 +4,7 @@ import Foundation
 // MARK: - Jieqi
 
 /// 太陽位於黃經角度
-public enum Jieqi: Int, CaseIterable, Equatable {
+public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
   case chunfen = 0
   case qingming
   case guyu
