@@ -70,6 +70,11 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
   }
 
 
+  /// The next solar term in the 24-term cycle.
+  public var next: Jieqi {
+    Jieqi(rawValue: (rawValue + 1) % 24) ?? .chunfen
+  }
+
   public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
     (0..<12).map { base in
       let value = base * 2
@@ -80,7 +85,8 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
 
 public extension Date {
   var jieqi: Jieqi? {
-    Jieqi(rawValue: Int(floor(currentSolarTerm(for: self) - 0.5)))
+    let raw = Int(floor(currentSolarTerm(for: self) - 0.5))
+    return Jieqi(rawValue: ((raw % 24) + 24) % 24)
   }
 }
 

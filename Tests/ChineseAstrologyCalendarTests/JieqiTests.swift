@@ -6,6 +6,7 @@ import Foundation
 //  Created by Xiangyu Sun on 24/12/22.
 //
 
+import Astral
 import Testing
 @testable import ChineseAstrologyCalendar
 
@@ -87,6 +88,24 @@ import Testing
     for jieqi in Jieqi.allCases {
       #expect(jieqi.dizhi != nil, "\(jieqi.stringValue) (rawValue \(jieqi.rawValue)) has nil dizhi")
     }
+  }
+
+  // MARK: - Jieqi.next
+
+  @Test func jieqiNext() {
+    #expect(Jieqi.jingzhe.next == .chunfen)
+    #expect(Jieqi.chunfen.next == .qingming)
+    #expect(Jieqi.dongzhi.next == .xiaohan)
+  }
+
+  /// `preciseNextSolarTermDate()` returns a date at the exact boundary.
+  /// Due to Newton iteration tolerance (±1e-4), the date can land
+  /// slightly before the crossing, causing `floor(result - 0.5)` to
+  /// evaluate to -1 at the chunfen boundary. The modulo fix must handle this.
+  @Test func dateJieqiAtBoundaryDate() {
+    let boundaryDate = preciseNextSolarTermDate(iterations: 10)
+    // The jieqi at a boundary date must never be nil.
+    #expect(boundaryDate.jieqi != nil)
   }
 
   /// Each consecutive pair of Jieqi (one jie + one qi) belongs to the same Dizhi month.
