@@ -46,7 +46,7 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
   }
 
   public static var current: Jieqi? {
-    self.init(rawValue: Int(floor(currentSolarTerm())))
+    self.init(rawValue: Int(floor(currentSolarTerm())) % 24)
   }
 
   public var qi: Bool {
@@ -70,14 +70,14 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
   public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
     (0..<12).map { base in
       let value = base * 2
-      return (Jieqi(rawValue: value + 1) ?? .lichun, Jieqi(rawValue: value + 2) ?? .lichun)
+      return (Jieqi(rawValue: value + 1) ?? .lichun, Jieqi(rawValue: (value + 2) % 24) ?? .lichun)
     }
   }
 }
 
 public extension Date {
   var jieqi: Jieqi? {
-    Jieqi(rawValue: Int(currentSolarTerm(for: self)))
+    Jieqi(rawValue: Int(currentSolarTerm(for: self)) % 24)
   }
 }
 
@@ -85,8 +85,7 @@ public extension Date {
 
 extension Jieqi: DizhiConvertable {
   public var dizhi: Dizhi? {
-    let base = (Double(rawValue) * 0.5).rounded(.up)
-    return Dizhi(rawValue: (Int(base) + 2) % 12)
+    Dizhi(rawValue: ((rawValue / 2 + 2) % 12) + 1)
   }
 }
 
