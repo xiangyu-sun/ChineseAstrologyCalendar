@@ -29,18 +29,20 @@ import Testing
 
   // MARK: - Date.jieqi
 
-  /// Regression test for the rawValue overflow bug.
-  /// When the sun is within 7.5° of the Spring Equinox (lon ~352.5°–360°),
-  /// `currentSolarTerm` returns a value in [24, 24.5), which must wrap to 0 (chunfen).
-  /// This window falls approximately March 12–20 each year.
+  /// Regression test for the near-equinox period bug.
+  /// `currentSolarTerm()` returns (normalizedLong + 7.5) / 15.  Applying floor()
+  /// directly gave the *nearest* solar term, not the *current period* — and could
+  /// overflow to 24 (nil).  Subtracting 0.5 before flooring yields
+  /// floor(normalizedLong / 15): the solar term period that most recently started.
   @Test func dateJieqiNearSpringEquinox() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
-    // March 16, 2026 is ~4 days before the Spring Equinox (~March 20).
-    // The formula rounds to chunfen at this longitude.
-    let date = cal.date(from: DateComponents(year: 2026, month: 3, day: 16))!
-    #expect(date.jieqi != nil)
-    #expect(date.jieqi == .chunfen)
+    // March 16, 2026: sun ~356°, still inside jingzhe (started ~March 6 at 345°).
+    let beforeEquinox = cal.date(from: DateComponents(year: 2026, month: 3, day: 16))!
+    #expect(beforeEquinox.jieqi == .jingzhe)
+    // March 21, 2026: sun ~1°, inside chunfen (Spring Equinox passed ~March 20 at 0°).
+    let afterEquinox = cal.date(from: DateComponents(year: 2026, month: 3, day: 21))!
+    #expect(afterEquinox.jieqi == .chunfen)
   }
 
   /// Verifies Date.jieqi never returns nil for a sample of dates throughout the year.

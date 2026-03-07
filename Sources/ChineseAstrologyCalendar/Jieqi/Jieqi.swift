@@ -46,7 +46,10 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
   }
 
   public static var current: Jieqi? {
-    self.init(rawValue: Int(floor(currentSolarTerm())) % 24)
+    // Subtract 0.5 before flooring to undo the +7.5° rounding offset in
+    // currentSolarTerm(), giving floor(normalizedLong / 15) — i.e. the
+    // solar term period that most recently started, not the nearest one.
+    self.init(rawValue: Int(floor(currentSolarTerm() - 0.5)))
   }
 
   public var qi: Bool {
@@ -77,7 +80,7 @@ public enum Jieqi: Int, CaseIterable, Equatable, Sendable {
 
 public extension Date {
   var jieqi: Jieqi? {
-    Jieqi(rawValue: Int(currentSolarTerm(for: self)) % 24)
+    Jieqi(rawValue: Int(floor(currentSolarTerm(for: self) - 0.5)))
   }
 }
 
