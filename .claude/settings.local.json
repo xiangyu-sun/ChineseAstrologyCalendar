@@ -18,7 +18,8 @@
       "Bash(cp:*)",
       "Bash(git tag:*)",
       "Bash(ls -la /Users/xiangyu.sun/Documents/GitHub/ChineseAstrologyCalendar/ | grep -E \"\\\\.\\(md|txt\\)$\")",
-      "Bash(wc -l /Users/xiangyu.sun/Documents/GitHub/ChineseAstrologyCalendar/Tests/ChineseAstrologyCalendarTests/*.swift | tail -5)"
+      "Bash(wc -l /Users/xiangyu.sun/Documents/GitHub/ChineseAstrologyCalendar/Tests/ChineseAstrologyCalendarTests/*.swift | tail -5)",
+      "Bash(python3 -c \"\ndates = [\n  \\('Mar 3 \\(before jingzhe\\)', 343.0\\),\n  \\('Mar 5 \\(jingzhe starts\\)', 345.0\\),\n  \\('Mar 7 \\(today\\)',          347.0\\),\n  \\('Mar 16 \\(before chunfen\\)', 356.0\\),\n  \\('Mar 20 \\(chunfen starts\\)',   0.1\\),\n]\nimport math\nprint\\(f'  Date                     lon     raw    old\\(Int\\)  new\\(floor-0.5\\)'\\)\nprint\\(f'  ----                     ---     ---    --------  --------------'\\)\nfor label, lon in dates:\n  result = \\(lon + 7.5\\) / 15\n  old = int\\(result\\) % 24\n  new = math.floor\\(result - 0.5\\)\n  print\\(f'  {label:<26} {lon:5.1f}°  {result:.3f}  {old:>2}        {new:>2}'\\)\n\")"
     ],
     "deny": []
   }
