@@ -49,4 +49,10 @@ public enum FangWei: CaseIterable, WuxingConvertable, Sendable {
       return .tu
     }
   }
+
+  /// The two ``Tiangan`` (Heavenly Stems) associated with this direction.
+  public var tiangan: (Tiangan, Tiangan) { wuxing.tiangan }
+
+  /// The ``Dizhi`` (Earthly Branches) associated with this direction.
+  public var dizhi: [Dizhi] { wuxing.dizhi }
 }

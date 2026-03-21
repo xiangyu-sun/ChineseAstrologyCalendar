@@ -3,11 +3,21 @@ import Foundation
 import Astral
 
 /// Represents the Four Symbols (四象) corresponding to groups of lunar mansions.
-public enum FourSymbol: String {
+public enum FourSymbol: String, FangWeiConvertible {
     case azureDragon   = "青龍"
     case vermilionBird = "朱雀"
     case whiteTiger    = "白虎"
     case blackTortoise = "玄武"
+
+    /// Cardinal direction associated with this symbol.
+    public var fangwei: FangWei {
+        switch self {
+        case .azureDragon:   return .dong
+        case .vermilionBird: return .nan
+        case .whiteTiger:    return .xi
+        case .blackTortoise: return .bei
+        }
+    }
 }
 
 // MARK: - Lunar Mansion (二十八宿)
@@ -81,7 +91,7 @@ public enum LunarMansion: String, CaseIterable {
 
 }
 
-extension LunarMansion {
+extension LunarMansion: FangWeiConvertible {
   /// Returns the FourSymbol (四象) associated with this lunar mansion.
   public var fourSymbol: FourSymbol {
     switch self {
@@ -95,4 +105,7 @@ extension LunarMansion {
       return .blackTortoise
     }
   }
+
+  /// Cardinal direction associated with this lunar mansion via its ``FourSymbol``.
+  public var fangwei: FangWei { fourSymbol.fangwei }
 }

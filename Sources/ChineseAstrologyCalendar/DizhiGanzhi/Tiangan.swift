@@ -8,7 +8,7 @@
 import Foundation
 
 /// The ten Heavenly Stems used in the traditional calendar.
-public enum Tiangan: Int, CaseIterable, YinYangIdentifiable, Sendable {
+public enum Tiangan: Int, CaseIterable, YinYangIdentifiable, FangWeiConvertible, Sendable {
   case jia = 1, yi, bing, ding, wu, ji, geng, xin, ren, kui
 
   // MARK: Public
@@ -21,6 +21,9 @@ public enum Tiangan: Int, CaseIterable, YinYangIdentifiable, Sendable {
     // rawValue 1–10 maps in pairs to Wuxing rawValue 0–4: (rawValue-1)/2
     return Wuxing(rawValue: (self.rawValue - 1) / 2) ?? .tu
   }
+
+  /// Cardinal direction associated with this stem via its ``Wuxing`` element.
+  public var fangwei: FangWei { wuxing.fangwei }
   
 
   /// Chinese character representation of the stem.
