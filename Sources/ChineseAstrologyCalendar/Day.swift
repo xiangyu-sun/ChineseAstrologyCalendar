@@ -1,35 +1,35 @@
 /// Represents the days of a traditional Chinese lunar month.
-public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable, Sendable {
-  case chuyi = 1
-  case chuer
-  case chusan
-  case chusi
-  case chuwu
-  case chulliu
-  case chuqi
-  case chuba
-  case chujiu
-  case chushi
-  case shiyi
-  case shier
-  case shisan
-  case shisi
-  case shiwu
-  case shiliu
-  case shiqi
-  case shiba
-  case shijiu
-  case ershi
-  case eryi
-  case erer
-  case ersan
-  case ersi
-  case erwu
-  case erliu
-  case erqi
-  case erba
-  case erjiu
-  case sanshi
+public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable, TraditionalChineseNaming, Sendable {
+  case day1  = 1
+  case day2
+  case day3
+  case day4
+  case day5
+  case day6
+  case day7
+  case day8
+  case day9
+  case day10
+  case day11
+  case day12
+  case day13
+  case day14
+  case day15
+  case day16
+  case day17
+  case day18
+  case day19
+  case day20
+  case day21
+  case day22
+  case day23
+  case day24
+  case day25
+  case day26
+  case day27
+  case day28
+  case day29
+  case day30
 
   // MARK: Public
 
@@ -38,93 +38,66 @@ public enum Day: Int, CaseIterable, Identifiable, Codable, Comparable, Sendable 
     rawValue
   }
 
-  /// Chinese textual representation for the day.
+  /// Traditional Chinese textual representation for the day.
   public var name: String {
     switch self {
-    case .chuyi:
-      return "初一"
-    case .chuer:
-      return "初二"
-    case .chusan:
-      return "初三"
-    case .chusi:
-      return "初四"
-    case .chuwu:
-      return "初五"
-    case .chulliu:
-      return "初六"
-    case .chuqi:
-      return "初七"
-    case .chuba:
-      return "初八"
-    case .chujiu:
-      return "初九"
-    case .chushi:
-      return "初十"
-    case .shiyi:
-      return "十一"
-    case .shier:
-      return "十二"
-    case .shisan:
-      return "十三"
-    case .shisi:
-      return "十四"
-    case .shiwu:
-      return "十五"
-    case .shiliu:
-      return "十六"
-    case .shiqi:
-      return "十七"
-    case .shiba:
-      return "十八"
-    case .shijiu:
-      return "十九"
-    case .ershi:
-      return "二十"
-    case .eryi:
-      return "廿一"
-    case .erer:
-      return "廿二"
-    case .ersan:
-      return "廿三"
-    case .ersi:
-      return "廿四"
-    case .erwu:
-      return "廿五"
-    case .erliu:
-      return "廿六"
-    case .erqi:
-      return "廿七"
-    case .erba:
-      return "廿八"
-    case .erjiu:
-      return "廿九"
-    case .sanshi:
-      return "三十"
+    case .day1:  return "初一"
+    case .day2:  return "初二"
+    case .day3:  return "初三"
+    case .day4:  return "初四"
+    case .day5:  return "初五"
+    case .day6:  return "初六"
+    case .day7:  return "初七"
+    case .day8:  return "初八"
+    case .day9:  return "初九"
+    case .day10: return "初十"
+    case .day11: return "十一"
+    case .day12: return "十二"
+    case .day13: return "十三"
+    case .day14: return "十四"
+    case .day15: return "十五"
+    case .day16: return "十六"
+    case .day17: return "十七"
+    case .day18: return "十八"
+    case .day19: return "十九"
+    case .day20: return "二十"
+    case .day21: return "廿一"
+    case .day22: return "廿二"
+    case .day23: return "廿三"
+    case .day24: return "廿四"
+    case .day25: return "廿五"
+    case .day26: return "廿六"
+    case .day27: return "廿七"
+    case .day28: return "廿八"
+    case .day29: return "廿九"
+    case .day30: return "三十"
     }
   }
+
+  /// Traditional Chinese character(s) for this day.
+  public var traditionalChineseName: String { name }
 
   /// Associated moon phase for the day.
   public var moonPhase: ChineseMoonPhase {
     switch self {
-    case .chuyi:
-      return .朔
-    case .chuer, .chusan, .chusi, .chuwu, .chulliu:
-      return .蛾眉月
-    case .chuqi, .chuba:
-      return .上弦月
-    case .chujiu, .chushi, .shiyi, .shier, .shisan, .shisi:
-      return .漸盈凸月
-    case .shiwu:
-      return .望
-    case .shiliu, .shiqi, .shiba, .shijiu, .ershi, .eryi:
-      return .漸虧凸月
-    case .erer, .ersan:
-      return .下弦月
-    case .ersi, .erwu, .erliu, .erqi, .erba, .erjiu:
-      return .殘月
-    case .sanshi:
-      return .晦
+    case .day1:
+      return .newMoon
+    case .day2, .day3, .day4, .day5, .day6:
+      return .waxingCrescent
+    case .day7, .day8:
+      return .firstQuarter
+    case .day9, .day10, .day11, .day12, .day13, .day14:
+      return .waxingGibbous
+    case .day15:
+      return .fullMoon
+    case .day16, .day17, .day18, .day19, .day20, .day21:
+      return .waningGibbous
+    case .day22, .day23:
+      return .lastQuarter
+    case .day24, .day25, .day26, .day27, .day28, .day29:
+      return .waningCrescent
+    case .day30:
+      return .darkMoon
     }
   }
 

@@ -57,7 +57,7 @@ import Testing
       shi:  Ganzhi(gan: .bing, zhi: .shen)
     )
     #expect(bazi.dayMaster == .jia)
-    #expect(bazi.dayMasterElement == .mu)
+    #expect(bazi.dayMasterElement == .wood)
   }
 
   // MARK: - Element counts
@@ -81,11 +81,11 @@ import Testing
       ri:   Ganzhi(gan: .geng, zhi: .shen), // jin + jin
       shi:  Ganzhi(gan: .ren, zhi: .zi)     // shui + shui
     )
-    #expect(bazi.missingElements.contains(.tu))
-    #expect(!bazi.missingElements.contains(.mu))
-    #expect(!bazi.missingElements.contains(.huo))
-    #expect(!bazi.missingElements.contains(.jin))
-    #expect(!bazi.missingElements.contains(.shui))
+    #expect(bazi.missingElements.contains(.earth))
+    #expect(!bazi.missingElements.contains(.wood))
+    #expect(!bazi.missingElements.contains(.fire))
+    #expect(!bazi.missingElements.contains(.metal))
+    #expect(!bazi.missingElements.contains(.water))
   }
 
   // MARK: - Dominant element
@@ -99,7 +99,7 @@ import Testing
       shi:  Ganzhi(gan: .wu, zhi: .zi)      // tu + shui
     )
     // mu appears 4 times (jia=mu, yin=mu, yi=mu, mao=mu)
-    #expect(bazi.dominantElement == .mu)
+    #expect(bazi.dominantElement == .wood)
   }
 
   // MARK: - Beneficial element
@@ -113,8 +113,8 @@ import Testing
       shi:  Ganzhi(gan: .bing, zhi: .shen)
     )
     // Water (shui) generates Wood (mu)
-    #expect(bazi.beneficialElement.sheng == .mu)
-    #expect(bazi.beneficialElement == .shui)
+    #expect(bazi.beneficialElement.sheng == .wood)
+    #expect(bazi.beneficialElement == .water)
   }
 
   // MARK: - Description

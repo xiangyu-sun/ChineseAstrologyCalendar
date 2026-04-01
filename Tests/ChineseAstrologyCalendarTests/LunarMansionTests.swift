@@ -333,40 +333,40 @@ import Testing
     @Test func allMansionFourSymbolAssignments() {
         let expectedAssignments: [LunarMansion: FourSymbol] = [
             // Azure Dragon (Eastern) - 7 mansions
-            .jiaoXiu: .azureDragon,   // 角宿
-            .kangXiu: .azureDragon,   // 亢宿
-            .diXiu: .azureDragon,     // 氐宿
-            .fangXiu: .azureDragon,   // 房宿
-            .xinXiu: .azureDragon,    // 心宿
-            .tailXiu: .azureDragon,   // 尾宿
-            .jiXiu: .azureDragon,     // 箕宿
+            .horn: .azureDragon,   // 角宿
+            .neck: .azureDragon,   // 亢宿
+            .root: .azureDragon,     // 氐宿
+            .room: .azureDragon,   // 房宿
+            .heart: .azureDragon,    // 心宿
+            .tail: .azureDragon,   // 尾宿
+            .winnowingBasket: .azureDragon,     // 箕宿
 
             // Vermillion Bird (Southern) - 7 mansions
-            .jingXiu: .vermilionBird, // 井宿
-            .guiXiu: .vermilionBird,  // 鬼宿
-            .liuXiu: .vermilionBird,  // 柳宿
-            .xingXiu: .vermilionBird, // 星宿
-            .zhangXiu: .vermilionBird,// 張宿
-            .yiXiu: .vermilionBird,   // 翼宿
-            .zhenXiu: .vermilionBird, // 轸宿
+            .well: .vermilionBird, // 井宿
+            .ghost: .vermilionBird,  // 鬼宿
+            .willow: .vermilionBird,  // 柳宿
+            .star: .vermilionBird, // 星宿
+            .extendedNet: .vermilionBird,// 張宿
+            .wings: .vermilionBird,   // 翼宿
+            .chariot: .vermilionBird, // 轸宿
 
             // White Tiger (Western) - 7 mansions
-            .kuiXiu: .whiteTiger,     // 奎宿
-            .louXiu: .whiteTiger,     // 婁宿
-            .wei4Xiu: .whiteTiger,    // 胃宿
-            .maoXiu: .whiteTiger,     // 昴宿
-            .biXiu: .whiteTiger,      // 畢宿
-            .ziXiu: .whiteTiger,      // 觜宿
-            .shenXiu: .whiteTiger,    // 參宿
+            .legs: .whiteTiger,     // 奎宿
+            .bond: .whiteTiger,     // 婁宿
+            .stomach: .whiteTiger,    // 胃宿
+            .pleiades: .whiteTiger,     // 昴宿
+            .net: .whiteTiger,      // 畢宿
+            .turtleBeak: .whiteTiger,      // 觜宿
+            .threeStars: .whiteTiger,    // 參宿
 
             // Black Tortoise (Northern) - 7 mansions
-            .douXiu: .blackTortoise,  // 斗宿
-            .niuXiu: .blackTortoise,  // 牛宿
-            .nuXiu: .blackTortoise,   // 女宿
-            .xuXiu: .blackTortoise,   // 虛宿
-            .wei1Xiu: .blackTortoise, // 危宿
-            .shiXiu: .blackTortoise,  // 室宿
-            .wallXiu: .blackTortoise  // 壁宿
+            .dipper: .blackTortoise,  // 斗宿
+            .ox: .blackTortoise,  // 牛宿
+            .girl: .blackTortoise,   // 女宿
+            .emptiness: .blackTortoise,   // 虛宿
+            .rooftop: .blackTortoise, // 危宿
+            .encampment: .blackTortoise,  // 室宿
+            .wall: .blackTortoise  // 壁宿
         ]
 
         for (mansion, expectedSymbol) in expectedAssignments {

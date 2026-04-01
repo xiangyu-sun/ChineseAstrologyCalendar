@@ -9,7 +9,7 @@ import Testing
 
     let date = Calendar.current.date(from: component)
 
-    return DayConverter(calendar: .chineseCalendarGTM8).find(day: .chuyi, month: .yin, inNextYears: 1, from: date!).first!
+    return DayConverter(calendar: .chineseCalendarGTM8).find(day: .day1, month: .yin, inNextYears: 1, from: date!).first!
   }
 
   @Test func chineseYearMonthDate() throws {

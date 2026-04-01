@@ -9,7 +9,7 @@ import Testing
     components.year = 2023
     components.month = 1
     components.day = 1
-    let event = EventModel(date: Date(timeIntervalSinceReferenceDate: 0), name: .chuyi, dateComponents: components)
+    let event = EventModel(date: Date(timeIntervalSinceReferenceDate: 0), name: .day1, dateComponents: components)
 
     #expect(event.title == "一 初一")
   }

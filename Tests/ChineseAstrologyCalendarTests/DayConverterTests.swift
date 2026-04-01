@@ -24,14 +24,14 @@ import ChineseAstrologyCalendar
   }()
 
   @Test func oneDate() throws {
-    let monthsHasSanshi = dateConverter.find(days: [.sanshi], inNextMonths: 12, from: calendar.date(from: testDate)!)
+    let monthsHasSanshi = dateConverter.find(days: [.day30], inNextMonths: 12, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     #expect(monthsHasSanshi == ["3/2/22", "4/30/22", "6/28/22", "7/28/22", "9/25/22", "11/23/22"])
   }
 
   @Test func twoDate() throws {
-    let monthsHasSanshi = dateConverter.find(days: [.chuyi, .shiwu], inNextMonths: 12, from: calendar.date(from: testDate)!)
+    let monthsHasSanshi = dateConverter.find(days: [.day1, .day15], inNextMonths: 12, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     #expect(
@@ -66,7 +66,7 @@ import ChineseAstrologyCalendar
   @Test func oneDateAndMonthEarlierThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
-    let days = dateConverter.find(day: .chuba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .day8, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
 
     #expect(days.isEmpty)
   }
@@ -74,7 +74,7 @@ import ChineseAstrologyCalendar
   @Test func oneDateAndMonthLaterThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
-    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .day28, month: .chou, inNextYears: 0, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     #expect(days == ["1/30/22"])
@@ -83,7 +83,7 @@ import ChineseAstrologyCalendar
   @Test func oneDateAndMonthFiveYearsLaterThanNow() throws {
     let testDate = DateComponents(calendar: Calendar.current, year: 2022, month: 1, day: 16, hour: 6, minute: 7)
 
-    let days = dateConverter.find(day: .erba, month: .chou, inNextYears: 4, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .day28, month: .chou, inNextYears: 4, from: calendar.date(from: testDate)!)
       .map { formatter.string(from: $0.date) }
 
     #expect(days == ["1/30/22", "1/19/23", "2/7/24", "1/27/25", "2/15/26"])
@@ -94,7 +94,7 @@ import ChineseAstrologyCalendar
 
     let expectedDate = DateComponents(calendar: Calendar.current, year: 2023, month: 1, day: 22, hour: 0, minute: 0)
 
-    let days = dateConverter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+    let days = dateConverter.find(day: .day1, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
       .map(\.date)
 
     #expect(days == [calendar.date(from: expectedDate)!])
@@ -113,7 +113,7 @@ import ChineseAstrologyCalendar
       hour: 0,
       minute: 0)
 
-    let days = converter.find(day: .chuyi, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
+    let days = converter.find(day: .day1, month: .yin, inNextYears: 1, from: calendar.date(from: testDate)!)
       .map(\.date)
 
     #expect(days == [Calendar.chineseCalendarGTM8.date(from: expectedDate)!])

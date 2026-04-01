@@ -48,7 +48,7 @@ import Astral
 
             print("Offset +\(String(format: "%.6f", offset)): rev=\(String(format: "%.6f", finalRev)), idx=\(idx), mansion=\(mansion.rawValue)")
 
-            if mansion == .nuXiu {
+            if mansion == .girl {
                 print("*** MATCH FOUND with offset \(offset) ***")
             }
         }

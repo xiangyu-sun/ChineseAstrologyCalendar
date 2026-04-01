@@ -30,7 +30,7 @@ import Testing
         print("Four Symbol: \(fourSymbolJuly28.rawValue)")
 
         // Check if 女宿 correctly maps to Black Tortoise
-      #expect(mansionJuly28 == .zhangXiu)
+      #expect(mansionJuly28 == .extendedNet)
         print("Expected Four Symbol for 女宿: 玄武 (Black Tortoise)")
         print("Actual Four Symbol: \(fourSymbolJuly28.rawValue)")
     }
@@ -39,10 +39,10 @@ import Testing
         print("\n=== Four Symbol Mapping ===")
 
         let expectedMapping = [
-            ("Azure Dragon (青龍)", [LunarMansion.jiaoXiu, .kangXiu, .diXiu, .fangXiu, .xinXiu, .tailXiu, .jiXiu]),
-            ("Vermillion Bird (朱雀)", [LunarMansion.jingXiu, .guiXiu, .liuXiu, .xingXiu, .zhangXiu, .yiXiu, .zhenXiu]),
-            ("White Tiger (白虎)", [LunarMansion.kuiXiu, .louXiu, .wei4Xiu, .maoXiu, .biXiu, .ziXiu, .shenXiu]),
-            ("Black Tortoise (玄武)", [LunarMansion.douXiu, .niuXiu, .nuXiu, .xuXiu, .wei1Xiu, .shiXiu, .wallXiu])
+            ("Azure Dragon (青龍)", [LunarMansion.horn, .neck, .root, .room, .heart, .tail, .winnowingBasket]),
+            ("Vermillion Bird (朱雀)", [LunarMansion.well, .ghost, .willow, .star, .extendedNet, .wings, .chariot]),
+            ("White Tiger (白虎)", [LunarMansion.legs, .bond, .stomach, .pleiades, .net, .turtleBeak, .threeStars]),
+            ("Black Tortoise (玄武)", [LunarMansion.dipper, .ox, .girl, .emptiness, .rooftop, .encampment, .wall])
         ]
 
         for (groupName, mansions) in expectedMapping {
@@ -54,7 +54,7 @@ import Testing
         }
 
         // Verify 女宿 specifically
-        let nuXiuSymbol = LunarMansion.nuXiu.fourSymbol
+        let nuXiuSymbol = LunarMansion.girl.fourSymbol
         print("\n*** 女宿 (Girl) maps to: \(nuXiuSymbol.rawValue) ***")
         #expect(nuXiuSymbol == .blackTortoise, "女宿 should map to Black Tortoise (玄武)")
     }

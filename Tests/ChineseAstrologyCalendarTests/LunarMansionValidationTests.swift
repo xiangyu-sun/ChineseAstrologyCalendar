@@ -191,40 +191,40 @@ import Testing
         // The traditional order of the 28 mansions
         let traditionalOrder: [LunarMansion] = [
             // Eastern Azure Dragon (東方青龍)
-            .jiaoXiu,   // 角 - Horn
-            .kangXiu,   // 亢 - Neck
-            .diXiu,     // 氐 - Root
-            .fangXiu,   // 房 - Room
-            .xinXiu,    // 心 - Heart
-            .tailXiu,   // 尾 - Tail
-            .jiXiu,     // 箕 - Winnowing Basket
+            .horn,   // 角 - Horn
+            .neck,   // 亢 - Neck
+            .root,     // 氐 - Root
+            .room,   // 房 - Room
+            .heart,    // 心 - Heart
+            .tail,   // 尾 - Tail
+            .winnowingBasket,     // 箕 - Winnowing Basket
 
             // Northern Black Tortoise (北方玄武)
-            .douXiu,    // 斗 - Dipper
-            .niuXiu,    // 牛 - Ox
-            .nuXiu,     // 女 - Girl
-            .xuXiu,     // 虚 - Emptiness
-            .wei1Xiu,   // 危 - Danger
-            .shiXiu,    // 室 - Room
-            .wallXiu,   // 壁 - Wall
+            .dipper,    // 斗 - Dipper
+            .ox,    // 牛 - Ox
+            .girl,     // 女 - Girl
+            .emptiness,     // 虚 - Emptiness
+            .rooftop,   // 危 - Danger
+            .encampment,    // 室 - Room
+            .wall,   // 壁 - Wall
 
             // Western White Tiger (西方白虎)
-            .kuiXiu,    // 奎 - Legs
-            .louXiu,    // 娄 - Bond
-            .wei4Xiu,   // 胃 - Stomach
-            .maoXiu,    // 昴 - Pleiades
-            .biXiu,     // 毕 - Net
-            .ziXiu,     // 觜 - Turtle Beak
-            .shenXiu,   // 参 - Three Stars
+            .legs,    // 奎 - Legs
+            .bond,    // 娄 - Bond
+            .stomach,   // 胃 - Stomach
+            .pleiades,    // 昴 - Pleiades
+            .net,     // 毕 - Net
+            .turtleBeak,     // 觜 - Turtle Beak
+            .threeStars,   // 参 - Three Stars
 
             // Southern Vermillion Bird (南方朱雀)
-            .jingXiu,   // 井 - Well
-            .guiXiu,    // 鬼 - Ghost
-            .liuXiu,    // 柳 - Willow
-            .xingXiu,   // 星 - Star
-            .zhangXiu,  // 张 - Extended Net
-            .yiXiu,     // 翼 - Wings
-            .zhenXiu,    // 轸 - Chariot
+            .well,   // 井 - Well
+            .ghost,    // 鬼 - Ghost
+            .willow,    // 柳 - Willow
+            .star,   // 星 - Star
+            .extendedNet,  // 张 - Extended Net
+            .wings,     // 翼 - Wings
+            .chariot,    // 轸 - Chariot
 
         ]
 

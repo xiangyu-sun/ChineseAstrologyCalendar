@@ -5,23 +5,23 @@ import WeatherKit
 extension ChineseMoonPhase {
   public var moonPhase: MoonPhase {
     switch self {
-    case .朔:
+    case .newMoon:
       return .new
-    case .蛾眉月:
+    case .waxingCrescent:
       return .waxingCrescent
-    case .上弦月:
+    case .firstQuarter:
       return .firstQuarter
-    case .漸盈凸月:
+    case .waxingGibbous:
       return .waxingGibbous
-    case .望:
+    case .fullMoon:
       return .full
-    case .漸虧凸月:
+    case .waningGibbous:
       return .waningGibbous
-    case .下弦月:
+    case .lastQuarter:
       return .lastQuarter
-    case .殘月:
+    case .waningCrescent:
       return .waningCrescent
-    case .晦:
+    case .darkMoon:
       return .new
     }
   }
@@ -33,32 +33,32 @@ extension MoonPhase {
   public func moonPhase(day: Day) -> ChineseMoonPhase {
     switch self {
     case .new:
-      if day == .sanshi {
-        return .晦
+      if day == .day30 {
+        return .darkMoon
       } else {
-        return .朔
+        return .newMoon
       }
 
     case .waxingCrescent:
-      return .蛾眉月
+      return .waxingCrescent
 
     case .firstQuarter:
-      return .上弦月
+      return .firstQuarter
 
     case .waxingGibbous:
-      return .漸盈凸月
+      return .waxingGibbous
 
     case .full:
-      return .望
+      return .fullMoon
 
     case .waningGibbous:
-      return .漸虧凸月
+      return .waningGibbous
 
     case .lastQuarter:
-      return .下弦月
+      return .lastQuarter
 
     case .waningCrescent:
-      return .殘月
+      return .waningCrescent
     }
   }
 
@@ -69,35 +69,38 @@ extension MoonPhase {
 // MARK: - ChineseMoonPhase
 
 /// Lunar phases expressed with traditional Chinese names.
-public enum ChineseMoonPhase: String, CaseIterable {
+public enum ChineseMoonPhase: String, CaseIterable, TraditionalChineseNaming {
 
   /// The disk is unlit where the moon is not visible.
-  case 朔
+  case newMoon        = "朔"
 
   /// The disk is partially lit as the moon is waxing.
-  case 蛾眉月
+  case waxingCrescent = "蛾眉月"
 
   /// The disk is half lit.
-  case 上弦月
+  case firstQuarter   = "上弦月"
 
   /// The disk is half lit as the moon is waxing.
-  case 漸盈凸月
+  case waxingGibbous  = "漸盈凸月"
 
   /// The disk is fully lit where the moon is visible.
-  case 望
+  case fullMoon       = "望"
 
   /// The disk is half lit as the moon is waning.
-  case 漸虧凸月
+  case waningGibbous  = "漸虧凸月"
 
   /// The disk is half lit.
-  case 下弦月
+  case lastQuarter    = "下弦月"
 
   /// The disk is partially lit as the moon is waning.
-  case 殘月
+  case waningCrescent = "殘月"
 
-  case 晦
+  /// The dark moon at the end of the lunar month.
+  case darkMoon       = "晦"
 
- 
+  /// Traditional Chinese character(s) for this phase.
+  /// This is identical to `rawValue` and is provided for consistent API access.
+  public var traditionalChineseName: String { rawValue }
 
   /// Historical Chinese name for the phase.
   public func acientChineseName(_: Day) -> String {
@@ -107,23 +110,23 @@ public enum ChineseMoonPhase: String, CaseIterable {
   /// Modern Chinese name for the phase.
   public func modernChineseName(_: Day) -> String {
     switch self {
-    case .朔:
+    case .newMoon:
       return "新月"
-    case .蛾眉月:
+    case .waxingCrescent:
       return "上蛾眉月"
-    case .上弦月:
+    case .firstQuarter:
       return "上弦月"
-    case .漸盈凸月:
+    case .waxingGibbous:
       return "漸盈凸月"
-    case .望:
+    case .fullMoon:
       return "滿月"
-    case .漸虧凸月:
+    case .waningGibbous:
       return "漸虧凸月"
-    case .下弦月:
+    case .lastQuarter:
       return "下弦月"
-    case .殘月:
+    case .waningCrescent:
       return "下蛾眉月"
-    case .晦:
+    case .darkMoon:
       return "晦"
     }
   }

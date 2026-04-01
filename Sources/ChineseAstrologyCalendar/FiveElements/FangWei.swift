@@ -2,31 +2,34 @@
 import Foundation
 
 /// Cardinal directions used with the five elements.
-public enum FangWei: CaseIterable, WuxingConvertable, Sendable {
+public enum FangWei: CaseIterable, WuxingConvertable, TraditionalChineseNaming, Sendable {
 
-  case dong
-  case nan
-  case xi
-  case bei
-  case zhong
+  case east
+  case south
+  case west
+  case north
+  case center
 
   // MARK: Public
 
   /// Chinese character representation of the direction.
   public var chineseCharacter: String {
     switch self {
-    case .dong:
+    case .east:
       return "東"
-    case .nan:
+    case .south:
       return "南"
-    case .xi:
+    case .west:
       return "西"
-    case .bei:
+    case .north:
       return "北"
-    case .zhong:
+    case .center:
       return "中"
     }
   }
+
+  /// Traditional Chinese character for this direction.
+  public var traditionalChineseName: String { chineseCharacter }
 
   /// Chinese character representation of the direction.
   @available(*, deprecated, renamed: "chineseCharacter", message: "Use chineseCharacter instead (spelling corrected)")
@@ -37,16 +40,16 @@ public enum FangWei: CaseIterable, WuxingConvertable, Sendable {
   /// ``Wuxing`` element corresponding to the direction.
   public var wuxing: Wuxing {
     switch self {
-    case .dong:
-      return .mu
-    case .nan:
-      return .huo
-    case .xi:
-      return .jin
-    case .bei:
-      return .shui
-    case .zhong:
-      return .tu
+    case .east:
+      return .wood
+    case .south:
+      return .fire
+    case .west:
+      return .metal
+    case .north:
+      return .water
+    case .center:
+      return .earth
     }
   }
 

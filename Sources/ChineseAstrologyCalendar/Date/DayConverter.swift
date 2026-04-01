@@ -13,7 +13,7 @@ import Foundation
 /// let converter = DayConverter()
 ///
 /// // Find next three months of new moons and full moons
-/// let events = converter.find(days: [.chuyi, .shiwu], inNextMonths: 3)
+/// let events = converter.find(days: [.day1, .day15], inNextMonths: 3)
 /// for event in events {
 ///     print("\(event.day.name): \(event.date)")
 /// }
@@ -44,7 +44,7 @@ public final class DayConverter {
   /// ```swift
   /// let converter = DayConverter()
   /// // Find all 15th days (full moons) in the next 6 months
-  /// let fullMoons = converter.find(days: [.shiwu], inNextMonths: 6)
+  /// let fullMoons = converter.find(days: [.day15], inNextMonths: 6)
   /// ```
   ///
   /// - Parameters:
@@ -89,7 +89,7 @@ public final class DayConverter {
   /// ```swift
   /// let converter = DayConverter()
   /// // Find next 5 occurrences of the Mid-Autumn Festival (15th day of 8th month)
-  /// let midAutumn = converter.find(day: .shiwu, month: .shen, inNextYears: 5)
+  /// let midAutumn = converter.find(day: .day15, month: .shen, inNextYears: 5)
   /// ```
   ///
   /// - Parameters:
@@ -128,7 +128,7 @@ public final class DayConverter {
   /// ```swift
   /// let converter = DayConverter()
   /// // Find the 1st and 15th days of the first lunar month
-  /// let springFestival = converter.find(days: [.chuyi, .shiwu], month: .yin)
+  /// let springFestival = converter.find(days: [.day1, .day15], month: .yin)
   /// ```
   ///
   /// - Parameters:
@@ -172,7 +172,7 @@ public final class DayConverter {
   /// - Parameter date: The reference date. Defaults to the current date.
   /// - Returns: The Gregorian date of the next Chinese New Year, or `nil` if it cannot be determined.
   public func nextChineseNewYear(from date: Date = Date()) -> Date? {
-    find(day: .chuyi, month: .yin, inNextYears: 1, from: date).first?.date
+    find(day: .day1, month: .yin, inNextYears: 1, from: date).first?.date
   }
 
   /// Returns whether the given date falls within the specified number of calendar months

@@ -11,7 +11,7 @@ import Testing
 @Suite struct DateConstructorTests {
 
   @Test func constructor() throws {
-    let date = try #require(DateComponents.getDate(year: 2023, month: 1, day: .chuyi))
+    let date = try #require(DateComponents.getDate(year: 2023, month: 1, day: .day1))
 
     let components = date.dateComponentsFromCurrentCalendar
 

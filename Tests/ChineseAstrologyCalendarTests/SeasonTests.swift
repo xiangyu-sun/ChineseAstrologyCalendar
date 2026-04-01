@@ -4,10 +4,10 @@ import Testing
 @Suite struct SeasonTests {
 
   @Test func wuxingMapping() {
-    #expect(Season.spring.wuxing == .mu)
-    #expect(Season.summer.wuxing == .huo)
-    #expect(Season.fall.wuxing == .jin)
-    #expect(Season.winter.wuxing == .shui)
+    #expect(Season.spring.wuxing == .wood)
+    #expect(Season.summer.wuxing == .fire)
+    #expect(Season.fall.wuxing == .metal)
+    #expect(Season.winter.wuxing == .water)
   }
 
   @Test func dizhiBranches() {
@@ -24,24 +24,24 @@ import Testing
   @Test func dizhiWuxingConsistency() {
     // Each season's branches should map to the same Wuxing as the season itself
     // (excluding the Earth transitional branches chen/wei/xu/chou)
-    let springMainBranches = Season.spring.dizhi.filter { $0.wuxing == .mu }
+    let springMainBranches = Season.spring.dizhi.filter { $0.wuxing == .wood }
     #expect(springMainBranches == [.yin, .mao])
 
-    let summerMainBranches = Season.summer.dizhi.filter { $0.wuxing == .huo }
+    let summerMainBranches = Season.summer.dizhi.filter { $0.wuxing == .fire }
     #expect(summerMainBranches == [.si, .wu])
 
-    let fallMainBranches = Season.fall.dizhi.filter { $0.wuxing == .jin }
+    let fallMainBranches = Season.fall.dizhi.filter { $0.wuxing == .metal }
     #expect(fallMainBranches == [.shen, .you])
 
-    let winterMainBranches = Season.winter.dizhi.filter { $0.wuxing == .shui }
+    let winterMainBranches = Season.winter.dizhi.filter { $0.wuxing == .water }
     #expect(winterMainBranches == [.hai, .zi])
   }
 
   @Test func fangweiMapping() {
-    #expect(Season.spring.fangwei == .dong)
-    #expect(Season.summer.fangwei == .nan)
-    #expect(Season.fall.fangwei == .xi)
-    #expect(Season.winter.fangwei == .bei)
+    #expect(Season.spring.fangwei == .east)
+    #expect(Season.summer.fangwei == .south)
+    #expect(Season.fall.fangwei == .west)
+    #expect(Season.winter.fangwei == .north)
   }
 
   @Test func chineseDescriptions() {

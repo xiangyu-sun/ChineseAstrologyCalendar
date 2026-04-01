@@ -37,7 +37,7 @@ import Astral
 
         // Check what user thinks it should be
         print("\nUser expectation: 女宿")
-        if let nuXiuIndex = LunarMansion.allCases.firstIndex(of: .nuXiu) {
+        if let nuXiuIndex = LunarMansion.allCases.firstIndex(of: .girl) {
             print("女宿 would require index: \(nuXiuIndex)")
             let expectedRev = Double(nuXiuIndex) / 28.0
             print("女宿 would require revolution: \(String(format: "%.6f", expectedRev)) to \(String(format: "%.6f", (Double(nuXiuIndex) + 1) / 28.0))")

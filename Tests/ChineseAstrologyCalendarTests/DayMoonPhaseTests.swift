@@ -6,15 +6,15 @@ import Testing
 
   @Test func moonPhaseMapping() {
     let mappings: [(Day, ChineseMoonPhase)] = [
-      (.chuyi, .朔),
-      (.chuwu, .蛾眉月),
-      (.chuqi, .上弦月),
-      (.shisi, .漸盈凸月),
-      (.shiwu, .望),
-      (.shiba, .漸虧凸月),
-      (.erer, .下弦月),
-      (.ersi, .殘月),
-      (.sanshi, .晦)
+      (.day1, .newMoon),
+      (.day5, .waxingCrescent),
+      (.day7, .firstQuarter),
+      (.day14, .waxingGibbous),
+      (.day15, .fullMoon),
+      (.day18, .waningGibbous),
+      (.day22, .lastQuarter),
+      (.day24, .waningCrescent),
+      (.day30, .darkMoon)
     ]
     for (day, phase) in mappings {
       #expect(day.moonPhase == phase, "Expected \(phase) for \(day)")

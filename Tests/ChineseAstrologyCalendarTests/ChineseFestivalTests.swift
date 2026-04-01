@@ -38,13 +38,13 @@ import Testing
   @Test func qingmingHasNilLunarDate() {
     #expect(ChineseFestival.qingming.lunarMonth == nil)
     #expect(ChineseFestival.qingming.lunarDay == nil)
-    #expect(ChineseFestival.qingming.jieqi == .qingming)
+    #expect(ChineseFestival.qingming.jieqi == .clearAndBright)
   }
 
   @Test func dongzhiHasNilLunarDate() {
     #expect(ChineseFestival.dongzhi.lunarMonth == nil)
     #expect(ChineseFestival.dongzhi.lunarDay == nil)
-    #expect(ChineseFestival.dongzhi.jieqi == .dongzhi)
+    #expect(ChineseFestival.dongzhi.jieqi == .winterSolstice)
   }
 
   // MARK: - Chinese names
@@ -96,11 +96,11 @@ import Testing
 
   // MARK: - Known festival dates
 
-  /// Spring Festival 2025 is January 29, 2025 (Gregorian).
+  /// Spring Festival 2025 is January 29, 2025 (Gregorian, CST UTC+8).
   @Test func springFestival2025() {
+    // Use CST (UTC+8) — the Chinese calendar operates in this timezone.
     var cal = Calendar(identifier: .gregorian)
-    cal.timeZone = TimeZone(identifier: "UTC")!
-    // Search from just before Spring Festival 2025
+    cal.timeZone = TimeZone(identifier: "Asia/Shanghai")!
     let start = cal.date(from: DateComponents(year: 2025, month: 1, day: 1))!
     let converter = DayConverter()
     let next = ChineseFestival.springFestival.nextDate(from: start, converter: converter)
@@ -114,10 +114,10 @@ import Testing
     #expect(components.day == 29)
   }
 
-  /// Mid-Autumn Festival 2025 is October 6, 2025.
+  /// Mid-Autumn Festival 2025 is October 6, 2025 (Gregorian, CST UTC+8).
   @Test func midAutumnFestival2025() {
     var cal = Calendar(identifier: .gregorian)
-    cal.timeZone = TimeZone(identifier: "UTC")!
+    cal.timeZone = TimeZone(identifier: "Asia/Shanghai")!
     let start = cal.date(from: DateComponents(year: 2025, month: 9, day: 1))!
     let converter = DayConverter()
     let next = ChineseFestival.midAutumn.nextDate(from: start, converter: converter)
@@ -131,10 +131,10 @@ import Testing
     #expect(components.day == 6)
   }
 
-  /// Dragon Boat Festival 2025 is May 31, 2025.
+  /// Dragon Boat Festival 2025 is May 31, 2025 (Gregorian, CST UTC+8).
   @Test func dragonBoatFestival2025() {
     var cal = Calendar(identifier: .gregorian)
-    cal.timeZone = TimeZone(identifier: "UTC")!
+    cal.timeZone = TimeZone(identifier: "Asia/Shanghai")!
     let start = cal.date(from: DateComponents(year: 2025, month: 5, day: 1))!
     let converter = DayConverter()
     let next = ChineseFestival.dragonBoat.nextDate(from: start, converter: converter)

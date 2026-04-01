@@ -38,7 +38,7 @@ public protocol DizhiConvertable {
 // MARK: - Dizhi
 
 /// The twelve Earthly Branches used for traditional Chinese time keeping.
-public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, FangWeiConvertible, Codable, Sendable {
+public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifiable, FangWeiConvertible, TraditionalChineseNaming, Codable, Sendable {
   case zi = 1, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai
 
   // MARK: Public
@@ -68,19 +68,22 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   /// The solar term marking the beginning of the branch's month.
   public var jie: Jieqi {
     let base = monthIndex * 2 - 1
-    return Jieqi(rawValue: base) ?? .lichun
+    return Jieqi(rawValue: base) ?? .startOfSpring
   }
 
   /// The solar term marking the midpoint of the branch's month.
   public var qi: Jieqi {
     let base = (monthIndex - 1) * 2
-    return Jieqi(rawValue: base) ?? .lichun
+    return Jieqi(rawValue: base) ?? .startOfSpring
   }
 
   /// Index of the month represented by the branch.
   public var monthIndex: Int {
     (Dizhi.orderedMonthAlCases.firstIndex(of: self) ?? 0) + 1
   }
+
+  /// Traditional Chinese character for this branch.
+  public var traditionalChineseName: String { chineseCharacter }
 
   /// Chinese character representation of the branch.
   public var chineseCharacter: String {
@@ -185,15 +188,15 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
   public var wuxing: Wuxing {
     switch self {
     case .yin, .mao:
-      return .mu
+      return .wood
     case .si, .wu:
-      return .huo
+      return .fire
     case .shen, .you:
-      return .jin
+      return .metal
     case .hai, .zi:
-      return .shui
+      return .water
     case .chen, .wei, .chou, .xu:
-      return .tu
+      return .earth
     }
   }
 

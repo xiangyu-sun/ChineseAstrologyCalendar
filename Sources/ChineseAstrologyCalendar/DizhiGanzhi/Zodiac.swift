@@ -18,8 +18,19 @@ public protocol DizhiConvertible {
 // MARK: - Zodiac
 
 /// The twelve animals of the Chinese zodiac.
-public enum Zodiac: String, DizhiConvertible, Sendable {
-  case 鼠, 牛, 虎, 兔, 龙, 蛇, 马, 羊, 猴, 雞, 狗, 猪
+public enum Zodiac: String, DizhiConvertible, TraditionalChineseNaming, Sendable {
+  case rat     = "鼠"
+  case ox      = "牛"
+  case tiger   = "虎"
+  case rabbit  = "兔"
+  case dragon  = "龙"
+  case snake   = "蛇"
+  case horse   = "马"
+  case goat    = "羊"
+  case monkey  = "猴"
+  case rooster = "雞"
+  case dog     = "狗"
+  case pig     = "猪"
 
   // MARK: Lifecycle
 
@@ -27,60 +38,64 @@ public enum Zodiac: String, DizhiConvertible, Sendable {
   public init(_ dizhi: Dizhi) {
     switch dizhi {
     case .zi:
-      self = .鼠
+      self = .rat
     case .chou:
-      self = .牛
+      self = .ox
     case .yin:
-      self = .虎
+      self = .tiger
     case .mao:
-      self = .兔
+      self = .rabbit
     case .chen:
-      self = .龙
+      self = .dragon
     case .si:
-      self = .蛇
+      self = .snake
     case .wu:
-      self = .马
+      self = .horse
     case .wei:
-      self = .羊
+      self = .goat
     case .shen:
-      self = .猴
+      self = .monkey
     case .you:
-      self = .雞
+      self = .rooster
     case .xu:
-      self = .狗
+      self = .dog
     case .hai:
-      self = .猪
+      self = .pig
     }
   }
 
   // MARK: Public
 
+  /// Traditional Chinese character for this zodiac animal.
+  /// This is identical to `rawValue` and is provided for consistent API access.
+  public var traditionalChineseName: String { rawValue }
+
   /// Emoji representation of the zodiac animal.
   public var emoji: String {
     switch self {
-    case .兔:
+    case .rabbit:
       return "🐇"
-    case .牛:
+    case .ox:
       return "🐂"
-    case .狗:
+    case .dog:
       return "🐕"
-    case .猪:
+    case .pig:
       return "🐖"
-    case .猴:
+    case .monkey:
       return "🐵"
-    case .羊:
+    case .goat:
       return "🐏"
-    case .虎:
+    case .tiger:
       return "🐅"
-    case .蛇:
+    case .snake:
       return "🐍"
-    case .雞:
+    case .rooster:
       return "🐓"
-    case .马:
+    case .horse:
       return "🐎"
-    case .鼠:
+    case .rat:
       return "🐀"
-    case .龙:
+    case .dragon:
       return "🐉"
     }
   }

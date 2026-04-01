@@ -16,7 +16,7 @@ import Foundation
 ///     print("Spring Festival: \(nextDate)")
 /// }
 /// ```
-public enum ChineseFestival: CaseIterable, Sendable {
+public enum ChineseFestival: CaseIterable, TraditionalChineseNaming, Sendable {
 
   // MARK: Fixed lunar-date festivals
 
@@ -46,6 +46,9 @@ public enum ChineseFestival: CaseIterable, Sendable {
   case littleNewYear
 
   // MARK: Public
+
+  /// Traditional Chinese name for this festival.
+  public var traditionalChineseName: String { chineseName }
 
   /// Chinese name of the festival.
   public var chineseName: String {
@@ -134,8 +137,8 @@ public enum ChineseFestival: CaseIterable, Sendable {
   /// The associated Jieqi for solar-term-based festivals, or `nil` for lunar-date festivals.
   public var jieqi: Jieqi? {
     switch self {
-    case .qingming: return .qingming
-    case .dongzhi:  return .dongzhi
+    case .qingming: return .clearAndBright
+    case .dongzhi:  return .winterSolstice
     default:        return nil
     }
   }

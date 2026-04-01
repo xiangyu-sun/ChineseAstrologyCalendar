@@ -5,21 +5,21 @@ import Testing
 @Suite struct WuxingAdditionalTests {
 
   @Test func shengCycle() {
-    #expect(Wuxing.mu.sheng == .huo)
-    #expect(Wuxing.huo.sheng == .tu)
-    #expect(Wuxing.tu.sheng == .jin)
-    #expect(Wuxing.jin.sheng == .shui)
-    #expect(Wuxing.shui.sheng == .mu)
+    #expect(Wuxing.wood.sheng == .fire)
+    #expect(Wuxing.fire.sheng == .earth)
+    #expect(Wuxing.earth.sheng == .metal)
+    #expect(Wuxing.metal.sheng == .water)
+    #expect(Wuxing.water.sheng == .wood)
   }
 
   @Test func colorsAndFlavors() {
-    #expect(Wuxing.mu.colorDescription == "青")
-    #expect(Wuxing.jin.colorDescription == "白")
-    #expect(Wuxing.huo.fiveFlavor == "苦")
+    #expect(Wuxing.wood.colorDescription == "青")
+    #expect(Wuxing.metal.colorDescription == "白")
+    #expect(Wuxing.fire.fiveFlavor == "苦")
   }
 
   @Test func fangWei() {
-    #expect(Wuxing.mu.fangwei == .dong)
-    #expect(Wuxing.tu.fangwei == .zhong)
+    #expect(Wuxing.wood.fangwei == .east)
+    #expect(Wuxing.earth.fangwei == .center)
   }
 }

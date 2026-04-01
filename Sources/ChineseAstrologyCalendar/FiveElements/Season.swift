@@ -2,7 +2,7 @@
 import Foundation
 
 /// Seasons mapped to their corresponding five elements.
-public enum Season: CaseIterable, WuxingConvertable, Sendable {
+public enum Season: CaseIterable, WuxingConvertable, TraditionalChineseNaming, Sendable {
   case spring
   case summer
   case fall
@@ -24,17 +24,20 @@ public enum Season: CaseIterable, WuxingConvertable, Sendable {
     }
   }
 
+  /// Traditional Chinese character for this season.
+  public var traditionalChineseName: String { chineseDescription }
+
   /// ``Wuxing`` element corresponding to the season.
   public var wuxing: Wuxing {
     switch self {
     case .spring:
-      return .mu
+      return .wood
     case .summer:
-      return .huo
+      return .fire
     case .fall:
-      return .jin
+      return .metal
     case .winter:
-      return .shui
+      return .water
     }
   }
 
@@ -42,13 +45,13 @@ public enum Season: CaseIterable, WuxingConvertable, Sendable {
   public var fangwei: FangWei {
     switch self {
     case .spring:
-      return .dong
+      return .east
     case .summer:
-      return .nan
+      return .south
     case .fall:
-      return .xi
+      return .west
     case .winter:
-      return .bei
+      return .north
     }
   }
 

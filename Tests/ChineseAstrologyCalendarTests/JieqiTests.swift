@@ -38,12 +38,12 @@ import Testing
   @Test func dateJieqiNearSpringEquinox() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
-    // March 16, 2026: sun ~356°, still inside jingzhe (started ~March 6 at 345°).
+    // March 16, 2026: sun ~356°, still inside awakeningOfInsects (started ~March 6 at 345°).
     let beforeEquinox = cal.date(from: DateComponents(year: 2026, month: 3, day: 16))!
-    #expect(beforeEquinox.jieqi == .jingzhe)
-    // March 21, 2026: sun ~1°, inside chunfen (Spring Equinox passed ~March 20 at 0°).
+    #expect(beforeEquinox.jieqi == .awakeningOfInsects)
+    // March 21, 2026: sun ~1°, inside springEquinox (Spring Equinox passed ~March 20 at 0°).
     let afterEquinox = cal.date(from: DateComponents(year: 2026, month: 3, day: 21))!
-    #expect(afterEquinox.jieqi == .chunfen)
+    #expect(afterEquinox.jieqi == .springEquinox)
   }
 
   /// Verifies Date.jieqi never returns nil for a sample of dates throughout the year.
@@ -63,15 +63,15 @@ import Testing
   /// Verifies all 12 jie-qi pairs are present and that the last pair wraps correctly.
   /// Bug: Jieqi(rawValue: 24) overflowed to nil before the % 24 fix.
   @Test func jieqiPairsCompleteness() {
-    let pairs = Jieqi.chunfen.jieqiPairs
+    let pairs = Jieqi.springEquinox.jieqiPairs
     #expect(pairs.count == 12)
-    // The last pair is (jingzhe, chunfen) — qi wraps around from rawValue 24 to 0.
-    #expect(pairs.last?.jie == .jingzhe)
-    #expect(pairs.last?.qi == .chunfen)
+    // The last pair is (awakeningOfInsects, springEquinox) — qi wraps around from rawValue 24 to 0.
+    #expect(pairs.last?.jie == .awakeningOfInsects)
+    #expect(pairs.last?.qi == .springEquinox)
   }
 
   @Test func jieqiPairsNoDuplicatesOrNilFallbacks() {
-    let pairs = Jieqi.chunfen.jieqiPairs
+    let pairs = Jieqi.springEquinox.jieqiPairs
     let allJie = pairs.map(\.jie)
     let allQi = pairs.map(\.qi)
     // All 24 solar terms must appear exactly once across the 12 pairs.
@@ -83,7 +83,7 @@ import Testing
   // MARK: - Jieqi.dizhi
 
   /// Every Jieqi must map to a non-nil Dizhi.
-  /// Bug: rawValues 19 (xiaohan) and 20 (dahan) produced Dizhi(rawValue: 0) = nil.
+  /// Bug: rawValues 19 (minorCold) and 20 (majorCold) produced Dizhi(rawValue: 0) = nil.
   @Test func jieqiDizhiNeverNil() {
     for jieqi in Jieqi.allCases {
       #expect(jieqi.dizhi != nil, "\(jieqi.stringValue) (rawValue \(jieqi.rawValue)) has nil dizhi")
@@ -93,15 +93,15 @@ import Testing
   // MARK: - Jieqi.next
 
   @Test func jieqiNext() {
-    #expect(Jieqi.jingzhe.next == .chunfen)
-    #expect(Jieqi.chunfen.next == .qingming)
-    #expect(Jieqi.dongzhi.next == .xiaohan)
+    #expect(Jieqi.awakeningOfInsects.next == .springEquinox)
+    #expect(Jieqi.springEquinox.next == .clearAndBright)
+    #expect(Jieqi.winterSolstice.next == .minorCold)
   }
 
   /// `preciseNextSolarTermDate()` returns a date at the exact boundary.
   /// Due to Newton iteration tolerance (±1e-4), the date can land
   /// slightly before the crossing, causing `floor(result - 0.5)` to
-  /// evaluate to -1 at the chunfen boundary. The modulo fix must handle this.
+  /// evaluate to -1 at the springEquinox boundary. The modulo fix must handle this.
   @Test func dateJieqiAtBoundaryDate() {
     let boundaryDate = preciseNextSolarTermDate(iterations: 10)
     // The jieqi at a boundary date must never be nil.
@@ -112,18 +112,18 @@ import Testing
   /// Expected mapping derived from QijieDizhiTests (Dizhi.jie / Dizhi.qi truth).
   @Test func jieqiDizhiMapping() {
     let expected: [(Jieqi, Dizhi)] = [
-      (.chunfen, .yin), (.qingming, .yin),
-      (.guyu, .mao), (.lixia, .mao),
-      (.xiaoman, .chen), (.mangzhong, .chen),
-      (.xiazhi, .si), (.xiaoshu, .si),
-      (.dashu, .wu), (.liqiu, .wu),
-      (.chushu, .wei), (.bailu, .wei),
-      (.qiufen, .shen), (.hanlu, .shen),
-      (.shuangjiang, .you), (.lidong, .you),
-      (.xiaoxue, .xu), (.daxue, .xu),
-      (.dongzhi, .hai), (.xiaohan, .hai),
-      (.dahan, .zi), (.lichun, .zi),
-      (.yushui, .chou), (.jingzhe, .chou),
+      (.springEquinox, .yin), (.clearAndBright, .yin),
+      (.grainRain, .mao), (.startOfSummer, .mao),
+      (.grainBuds, .chen), (.grainInEar, .chen),
+      (.summerSolstice, .si), (.minorHeat, .si),
+      (.majorHeat, .wu), (.startOfAutumn, .wu),
+      (.endOfHeat, .wei), (.whiteDew, .wei),
+      (.autumnEquinox, .shen), (.coldDew, .shen),
+      (.frostDescent, .you), (.startOfWinter, .you),
+      (.minorSnow, .xu), (.majorSnow, .xu),
+      (.winterSolstice, .hai), (.minorCold, .hai),
+      (.majorCold, .zi), (.startOfSpring, .zi),
+      (.rainWater, .chou), (.awakeningOfInsects, .chou),
     ]
     for (jieqi, expectedDizhi) in expected {
       #expect(jieqi.dizhi == expectedDizhi,

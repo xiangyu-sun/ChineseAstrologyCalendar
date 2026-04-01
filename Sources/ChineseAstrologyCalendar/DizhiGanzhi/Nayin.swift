@@ -9,51 +9,55 @@ import Foundation
 /// used in traditional Chinese astrology, naming conventions, and fate calculation.
 ///
 /// The 60 Jiazi pairs are grouped into 30 pairs, each pair sharing the same Nayin.
-public enum Nayin: String, CaseIterable, Sendable {
-  case 海中金
-  case 炉中火
-  case 大林木
-  case 路旁土
-  case 剑锋金
-  case 山头火
-  case 涧下水
-  case 城头土
-  case 白蜡金
-  case 杨柳木
-  case 泉中水
-  case 屋上土
-  case 霹雳火
-  case 松柏木
-  case 长流水
-  case 沙中金
-  case 山下火
-  case 平地木
-  case 壁上土
-  case 金箔金
-  case 覆灯火
-  case 天河水
-  case 大驿土
-  case 钗钏金
-  case 桑柘木
-  case 大溪水
-  case 沙中土
-  case 天上火
-  case 石榴木
-  case 大海水
+public enum Nayin: String, CaseIterable, TraditionalChineseNaming, Sendable {
+  case seaGold             = "海中金"
+  case furnaceFire         = "炉中火"
+  case forestWood          = "大林木"
+  case roadsideEarth       = "路旁土"
+  case swordEdgeMetal      = "剑锋金"
+  case mountaintopFire     = "山头火"
+  case ravineWater         = "涧下水"
+  case rampartEarth        = "城头土"
+  case beeswaxMetal        = "白蜡金"
+  case willowWood          = "杨柳木"
+  case springWater         = "泉中水"
+  case rooftopEarth        = "屋上土"
+  case thunderFire         = "霹雳火"
+  case pineWood            = "松柏木"
+  case longRiverWater      = "长流水"
+  case sandGold            = "沙中金"
+  case footOfMountainFire  = "山下火"
+  case flatlandWood        = "平地木"
+  case wallEarth           = "壁上土"
+  case goldLeafMetal       = "金箔金"
+  case lanternFire         = "覆灯火"
+  case celestialRiverWater = "天河水"
+  case postRoadEarth       = "大驿土"
+  case braceletMetal       = "钗钏金"
+  case mulberryWood        = "桑柘木"
+  case streamWater         = "大溪水"
+  case sandEarth           = "沙中土"
+  case heavenlyFire        = "天上火"
+  case pomegranateWood     = "石榴木"
+  case oceanWater          = "大海水"
+
+  /// Traditional Chinese character(s) for this Nayin.
+  /// This is identical to `rawValue` and is provided for consistent API access.
+  public var traditionalChineseName: String { rawValue }
 
   /// The Wuxing (Five Element) category this Nayin belongs to.
   public var wuxing: Wuxing {
     switch self {
-    case .海中金, .剑锋金, .白蜡金, .沙中金, .金箔金, .钗钏金:
-      return .jin
-    case .炉中火, .山头火, .霹雳火, .山下火, .覆灯火, .天上火:
-      return .huo
-    case .大林木, .杨柳木, .松柏木, .平地木, .桑柘木, .石榴木:
-      return .mu
-    case .路旁土, .城头土, .屋上土, .壁上土, .大驿土, .沙中土:
-      return .tu
-    case .涧下水, .泉中水, .长流水, .天河水, .大溪水, .大海水:
-      return .shui
+    case .seaGold, .swordEdgeMetal, .beeswaxMetal, .sandGold, .goldLeafMetal, .braceletMetal:
+      return .metal
+    case .furnaceFire, .mountaintopFire, .thunderFire, .footOfMountainFire, .lanternFire, .heavenlyFire:
+      return .fire
+    case .forestWood, .willowWood, .pineWood, .flatlandWood, .mulberryWood, .pomegranateWood:
+      return .wood
+    case .roadsideEarth, .rampartEarth, .rooftopEarth, .wallEarth, .postRoadEarth, .sandEarth:
+      return .earth
+    case .ravineWater, .springWater, .longRiverWater, .celestialRiverWater, .streamWater, .oceanWater:
+      return .water
     }
   }
 }
@@ -70,7 +74,7 @@ extension Ganzhi {
   /// Example:
   /// ```swift
   /// let jiazi = Ganzhi(gan: .jia, zhi: .zi)
-  /// print(jiazi.nayin) // 海中金
+  /// print(jiazi.nayin) // seaGold (rawValue: "海中金")
   /// ```
   public var nayin: Nayin {
     // The 60 Jiazi list: pair index = floor((jiazi_index) / 2)

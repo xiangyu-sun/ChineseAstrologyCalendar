@@ -1,5 +1,5 @@
 import Foundation
-
+import Testing
 @testable import ChineseAstrologyCalendar
 
 @Suite struct ChineseAstrologyCalendarTests {

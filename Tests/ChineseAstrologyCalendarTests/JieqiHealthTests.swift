@@ -6,28 +6,28 @@ import Testing
     // MARK: - Season Mapping
 
     @Test func springSeasonMapping() {
-        let springTerms: [Jieqi] = [.lichun, .yushui, .jingzhe, .chunfen, .qingming, .guyu]
+        let springTerms: [Jieqi] = [.startOfSpring, .rainWater, .awakeningOfInsects, .springEquinox, .clearAndBright, .grainRain]
         for term in springTerms {
             #expect(term.season == .spring, "\(term.stringValue) should be spring")
         }
     }
 
     @Test func summerSeasonMapping() {
-        let summerTerms: [Jieqi] = [.lixia, .xiaoman, .mangzhong, .xiazhi, .xiaoshu, .dashu]
+        let summerTerms: [Jieqi] = [.startOfSummer, .grainBuds, .grainInEar, .summerSolstice, .minorHeat, .majorHeat]
         for term in summerTerms {
             #expect(term.season == .summer, "\(term.stringValue) should be summer")
         }
     }
 
     @Test func fallSeasonMapping() {
-        let fallTerms: [Jieqi] = [.liqiu, .chushu, .bailu, .qiufen, .hanlu, .shuangjiang]
+        let fallTerms: [Jieqi] = [.startOfAutumn, .endOfHeat, .whiteDew, .autumnEquinox, .coldDew, .frostDescent]
         for term in fallTerms {
             #expect(term.season == .fall, "\(term.stringValue) should be fall")
         }
     }
 
     @Test func winterSeasonMapping() {
-        let winterTerms: [Jieqi] = [.lidong, .xiaoxue, .daxue, .dongzhi, .xiaohan, .dahan]
+        let winterTerms: [Jieqi] = [.startOfWinter, .minorSnow, .majorSnow, .winterSolstice, .minorCold, .majorCold]
         for term in winterTerms {
             #expect(term.season == .winter, "\(term.stringValue) should be winter")
         }
@@ -54,26 +54,26 @@ import Testing
 
     /// Spring terms should chain to the wood element via season.
     @Test func springSeasonWuxing() {
-        #expect(Jieqi.chunfen.season.wuxing == .mu)
-        #expect(Jieqi.lichun.season.wuxing == .mu)
+        #expect(Jieqi.springEquinox.season.wuxing == .wood)
+        #expect(Jieqi.startOfSpring.season.wuxing == .wood)
     }
 
     /// Summer terms should chain to the fire element via season.
     @Test func summerSeasonWuxing() {
-        #expect(Jieqi.xiazhi.season.wuxing == .huo)
-        #expect(Jieqi.lixia.season.wuxing == .huo)
+        #expect(Jieqi.summerSolstice.season.wuxing == .fire)
+        #expect(Jieqi.startOfSummer.season.wuxing == .fire)
     }
 
     /// Autumn terms should chain to the metal element via season.
     @Test func fallSeasonWuxing() {
-        #expect(Jieqi.qiufen.season.wuxing == .jin)
-        #expect(Jieqi.liqiu.season.wuxing == .jin)
+        #expect(Jieqi.autumnEquinox.season.wuxing == .metal)
+        #expect(Jieqi.startOfAutumn.season.wuxing == .metal)
     }
 
     /// Winter terms should chain to the water element via season.
     @Test func winterSeasonWuxing() {
-        #expect(Jieqi.dongzhi.season.wuxing == .shui)
-        #expect(Jieqi.lidong.season.wuxing == .shui)
+        #expect(Jieqi.winterSolstice.season.wuxing == .water)
+        #expect(Jieqi.startOfWinter.season.wuxing == .water)
     }
 
     // MARK: - Health Tip Completeness
@@ -98,31 +98,31 @@ import Testing
 
     /// 立春 (Start of Spring) tip should mention nourishing the liver (養肝).
     @Test func lichunHealthTipMentionsLiver() {
-        #expect(Jieqi.lichun.healthTip.contains("養肝"))
+        #expect(Jieqi.startOfSpring.healthTip.contains("養肝"))
     }
 
     /// 夏至 (Summer Solstice) tip should mention nourishing yin (養陰) – peak yang.
     @Test func xiazhinHealthTipMentionsYin() {
-        #expect(Jieqi.xiazhi.healthTip.contains("養陰"))
+        #expect(Jieqi.summerSolstice.healthTip.contains("養陰"))
     }
 
     /// 冬至 (Winter Solstice) tip should mention nourishing the kidney (補腎).
     @Test func dongzhiHealthTipMentionsKidney() {
-        #expect(Jieqi.dongzhi.healthTip.contains("補腎"))
+        #expect(Jieqi.winterSolstice.healthTip.contains("補腎"))
     }
 
     /// 立春 foods should include spring chives (春韭), the classic spring ingredient.
     @Test func lichunSeasonalFoodsIncludesChives() {
-        #expect(Jieqi.lichun.seasonalFoods.contains("春韭"))
+        #expect(Jieqi.startOfSpring.seasonalFoods.contains("春韭"))
     }
 
     /// 冬至 foods should include lamb (羊肉), the classic winter warming food.
     @Test func dongzhiSeasonalFoodsIncludesLamb() {
-        #expect(Jieqi.dongzhi.seasonalFoods.contains("羊肉"))
+        #expect(Jieqi.winterSolstice.seasonalFoods.contains("羊肉"))
     }
 
     /// 立秋 foods should include pear (梨) for lung-moistening.
     @Test func liqiuSeasonalFoodsIncludesPear() {
-        #expect(Jieqi.liqiu.seasonalFoods.contains("梨"))
+        #expect(Jieqi.startOfAutumn.seasonalFoods.contains("梨"))
     }
 }

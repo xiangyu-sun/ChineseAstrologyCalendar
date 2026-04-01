@@ -34,7 +34,7 @@ import Astral
         print("Corrected calculation: \(correctedMansion.rawValue)")
         print("Expected by user: 女宿")
 
-      #expect(correctedMansion == .zhangXiu, "Corrected calculation should match user expectation")
+      #expect(correctedMansion == .extendedNet, "Corrected calculation should match user expectation")
     }
 
     /// Test if the offset is consistent across multiple dates

@@ -75,12 +75,12 @@ import Testing
 
   /// LiuHe resulting elements are correct.
   @Test func liuHeResultingElements() {
-    #expect(Dizhi.zi.liuHe(with: .chou)?.resultingElement == .tu)   // 子丑合化土
-    #expect(Dizhi.yin.liuHe(with: .hai)?.resultingElement == .mu)   // 寅亥合化木
-    #expect(Dizhi.mao.liuHe(with: .xu)?.resultingElement == .huo)  // 卯戌合化火
-    #expect(Dizhi.chen.liuHe(with: .you)?.resultingElement == .jin) // 辰酉合化金
-    #expect(Dizhi.si.liuHe(with: .shen)?.resultingElement == .shui) // 巳申合化水
-    #expect(Dizhi.wu.liuHe(with: .wei)?.resultingElement == .huo)  // 午未合化火
+    #expect(Dizhi.zi.liuHe(with: .chou)?.resultingElement == .earth)   // 子丑合化土
+    #expect(Dizhi.yin.liuHe(with: .hai)?.resultingElement == .wood)   // 寅亥合化木
+    #expect(Dizhi.mao.liuHe(with: .xu)?.resultingElement == .fire)  // 卯戌合化火
+    #expect(Dizhi.chen.liuHe(with: .you)?.resultingElement == .metal) // 辰酉合化金
+    #expect(Dizhi.si.liuHe(with: .shen)?.resultingElement == .water) // 巳申合化水
+    #expect(Dizhi.wu.liuHe(with: .wei)?.resultingElement == .fire)  // 午未合化火
   }
 
   /// LiuHe is nil for non-harmony pairs.
@@ -97,22 +97,22 @@ import Testing
     // 申子辰三合水局
     let waterTriad = Dizhi.shen.sanHe(with: .zi, and: .chen)
     #expect(waterTriad == .shenZiChen)
-    #expect(waterTriad?.resultingElement == .shui)
+    #expect(waterTriad?.resultingElement == .water)
 
     // 寅午戌三合火局
     let fireTriad = Dizhi.yin.sanHe(with: .wu, and: .xu)
     #expect(fireTriad == .yinWuXu)
-    #expect(fireTriad?.resultingElement == .huo)
+    #expect(fireTriad?.resultingElement == .fire)
 
     // 巳酉丑三合金局
     let metalTriad = Dizhi.si.sanHe(with: .you, and: .chou)
     #expect(metalTriad == .siYouChou)
-    #expect(metalTriad?.resultingElement == .jin)
+    #expect(metalTriad?.resultingElement == .metal)
 
     // 亥卯未三合木局
     let woodTriad = Dizhi.hai.sanHe(with: .mao, and: .wei)
     #expect(woodTriad == .haiMaoWei)
-    #expect(woodTriad?.resultingElement == .mu)
+    #expect(woodTriad?.resultingElement == .wood)
   }
 
   /// SanHe triad membership.

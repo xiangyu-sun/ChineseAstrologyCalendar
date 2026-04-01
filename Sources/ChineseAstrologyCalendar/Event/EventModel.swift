@@ -10,7 +10,7 @@ import Foundation
 /// Example:
 /// ```swift
 /// let converter = DayConverter()
-/// let events = converter.find(days: [.chuyi, .shiwu], inNextMonths: 3)
+/// let events = converter.find(days: [.day1, .day15], inNextMonths: 3)
 /// for event in events {
 ///     print("\(event.title) on \(event.date)")
 /// }

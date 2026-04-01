@@ -63,12 +63,12 @@ public enum DizhiRelationship: Sendable {
     /// The Wuxing element produced when these two branches combine.
     public var resultingElement: Wuxing {
       switch self {
-      case .ziChou:  return .tu
-      case .yinHai:  return .mu
-      case .maoXu:   return .huo
-      case .chenYou: return .jin
-      case .siShen:  return .shui
-      case .wuWei:   return .huo
+      case .ziChou:  return .earth
+      case .yinHai:  return .wood
+      case .maoXu:   return .fire
+      case .chenYou: return .metal
+      case .siShen:  return .water
+      case .wuWei:   return .fire
       }
     }
 
@@ -100,10 +100,10 @@ public enum DizhiRelationship: Sendable {
     /// The Wuxing element produced by this triad.
     public var resultingElement: Wuxing {
       switch self {
-      case .shenZiChen: return .shui
-      case .yinWuXu:    return .huo
-      case .siYouChou:  return .jin
-      case .haiMaoWei:  return .mu
+      case .shenZiChen: return .water
+      case .yinWuXu:    return .fire
+      case .siYouChou:  return .metal
+      case .haiMaoWei:  return .wood
       }
     }
 

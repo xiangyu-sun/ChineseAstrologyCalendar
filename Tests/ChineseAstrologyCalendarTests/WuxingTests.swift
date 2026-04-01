@@ -13,11 +13,11 @@ import Testing
 
   @Test func ke() throws {
     // 木克土，土克水，水克火，火克金，金克木
-    #expect(Wuxing.mu.ke == .tu)
-    #expect(Wuxing.tu.ke == .shui)
-    #expect(Wuxing.shui.ke == .huo)
-    #expect(Wuxing.huo.ke == .jin)
-    #expect(Wuxing.jin.ke == .mu)
+    #expect(Wuxing.wood.ke == .earth)
+    #expect(Wuxing.earth.ke == .water)
+    #expect(Wuxing.water.ke == .fire)
+    #expect(Wuxing.fire.ke == .metal)
+    #expect(Wuxing.metal.ke == .wood)
   }
 
 }
