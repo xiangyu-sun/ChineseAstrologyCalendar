@@ -23,14 +23,14 @@ public enum Zodiac: String, DizhiConvertible, TraditionalChineseNaming, Sendable
   case ox      = "牛"
   case tiger   = "虎"
   case rabbit  = "兔"
-  case dragon  = "龙"
+  case dragon  = "龍"
   case snake   = "蛇"
-  case horse   = "马"
+  case horse   = "馬"
   case goat    = "羊"
   case monkey  = "猴"
   case rooster = "雞"
   case dog     = "狗"
-  case pig     = "猪"
+  case pig     = "豬"
 
   // MARK: Lifecycle
 

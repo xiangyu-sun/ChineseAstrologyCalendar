@@ -52,7 +52,7 @@ extension Date {
 
   /// ``Shichen`` calculated using the current time zone.
   ///
-  /// Returns the traditional Chinese 2-hour time period (时辰) for this date.
+  /// Returns the traditional Chinese 2-hour time period (時辰) for this date.
   /// Each shichen corresponds to one of the 12 Earthly Branches (地支).
   ///
   /// - Returns: The `Shichen` for this date, or `nil` if the hour component cannot be extracted

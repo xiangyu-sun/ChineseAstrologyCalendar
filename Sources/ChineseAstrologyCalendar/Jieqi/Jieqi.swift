@@ -170,7 +170,7 @@ extension Jieqi {
     case .clearAndBright:
       return "清明之日桐始華，又五日田鼠化為鴽，又五日虹始見"
     case .grainRain:
-      return "谷雨之日萍始生，又五日鳴鳩拂其羽，又五日戴勝降于桑"
+      return "穀雨之日萍始生，又五日鳴鳩拂其羽，又五日戴勝降于桑"
     case .startOfSummer:
       return "立夏之日螻蟈鳴，又五日蚯蚓出，又五日王瓜生"
     case .grainBuds:
@@ -182,7 +182,7 @@ extension Jieqi {
     case .minorHeat:
       return "小暑之日溫風至，又五日蟋蟀居壁，又五日鷹乃學習（鷹始擊）"
     case .majorHeat:
-      return "大暑之日腐草为萤，又五日土潤溽暑，又五日大雨時行"
+      return "大暑之日腐草為螢，又五日土潤溽暑，又五日大雨時行"
     case .startOfAutumn:
       return "立秋之日涼風至，又五日白露降，又五日寒蟬鳴"
     case .endOfHeat:

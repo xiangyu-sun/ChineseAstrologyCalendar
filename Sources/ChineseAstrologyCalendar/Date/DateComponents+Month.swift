@@ -8,12 +8,12 @@
 
 import Foundation
 
-/// 正月为寅，二月为卯，三月为辰，四月为巳，五月为午，六月为未，七月为申，八月为酉，九月为戌，十月为亥，十一月为子，十二月为丑
+/// 正月為寅，二月為卯，三月為辰，四月為巳，五月為午，六月為未，七月為申，八月為酉，九月為戌，十月為亥，十一月為子，十二月為丑
 extension DateComponents {
 
-  /// 计算月干
-  /// 算法：月干 = (年干 × 2 + 月支序数) mod 10
-  /// 注意：当结果为 0 时，代表第 10 个天干（癸）
+  /// 計算月干
+  /// 算法：月干 = (年干 × 2 + 月支序數) mod 10
+  /// 注意：當結果為 0 時，代表第 10 個天干（癸）
   public var yueGan: Tiangan? {
     // Unwrap the year stem's raw value and the month branch (月支)
     guard
@@ -23,14 +23,14 @@ extension DateComponents {
       return nil
     }
 
-    // 计算月干索引（1～10），把 0 当作 10
+    // 計算月干索引（1～10），把 0 當作 10
     let rawGanIndex = (yearStemRaw * 2 + monthZhi.monthIndex) % 10
     let adjustedGanIndex = (rawGanIndex == 0 ? 10 : rawGanIndex)
     return Tiangan(rawValue: adjustedGanIndex)
   }
 
-  /// 计算月支
-  /// 根据公历的月份，将 1 映射为正月（寅），2 映射为卯，依此类推
+  /// 計算月支
+  /// 根據公曆的月份，將 1 映射為正月（寅），2 映射為卯，依此類推
   public var yueZhi: Dizhi? {
     // Ensure the month is within the valid range.
     guard
@@ -43,7 +43,7 @@ extension DateComponents {
     return Dizhi.orderedMonthAlCases[month - 1]
   }
 
-  /// 返回月柱（干支组合）
+  /// 返回月柱（干支組合）
   public var yueZhu: Ganzhi? {
     guard let gan = yueGan, let zhi = yueZhi else {
       return nil

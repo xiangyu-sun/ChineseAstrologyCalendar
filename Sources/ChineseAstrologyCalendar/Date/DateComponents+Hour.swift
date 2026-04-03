@@ -1,7 +1,7 @@
 import Foundation
 
 extension DateComponents {
-  /// Computes the hour’s Heavenly Stem (时干) based on the day’s stem and branch.
+  /// Computes the hour’s Heavenly Stem (時干) based on the day’s stem and branch.
   ///
   /// Formula:
   ///   shiGan = (riGan * 2 + riZhi - 2) mod 10
@@ -24,7 +24,7 @@ extension DateComponents {
     return Tiangan(rawValue: hourStemIndex)
   }
 
-  /// Computes the hour’s Earthly Branch (时支) based on the hour of day.
+  /// Computes the hour’s Earthly Branch (時支) based on the hour of day.
   ///
   /// The custom initializer of `Dizhi` (i.e. `Dizhi(hourOfDay:)`) is expected
   /// to map the hour (0–23) to the corresponding Earthly Branch.
@@ -37,7 +37,7 @@ extension DateComponents {
     return Dizhi(hourOfDay: hourValue)
   }
 
-  /// Combines the hour Heavenly Stem and Earthly Branch to form the hour pillar (时柱).
+  /// Combines the hour Heavenly Stem and Earthly Branch to form the hour pillar (時柱).
   public var shiZhu: Ganzhi? {
     guard let stem = shiGan, let shiZhi else { return nil }
     return Ganzhi(gan: stem, zhi: shiZhi)

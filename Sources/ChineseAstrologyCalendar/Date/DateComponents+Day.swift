@@ -7,7 +7,7 @@ extension DateComponents {
 
   // MARK: Public
 
-  /// 日干：根据 base 计算
+  /// 日干：根據 base 計算
   public var riGan: Tiangan? {
     guard let index = cycleIndex else {
       return nil
@@ -16,7 +16,7 @@ extension DateComponents {
     return Tiangan(rawValue: stemIndex)
   }
 
-  /// 日支：根据 base 计算
+  /// 日支：根據 base 計算
   public var riZhi: Dizhi? {
     guard let index = cycleIndex else {
       return nil
@@ -25,7 +25,7 @@ extension DateComponents {
     return Dizhi(rawValue: branchIndex)
   }
 
-  /// 日柱：天干与地支的组合
+  /// 日柱：天干與地支的組合
   public var riZhu: Ganzhi? {
     guard let gan = riGan, let zhi = riZhi else { return nil }
     return Ganzhi(gan: gan, zhi: zhi)
