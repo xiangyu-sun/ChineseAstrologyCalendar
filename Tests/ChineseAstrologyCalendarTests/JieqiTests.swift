@@ -98,6 +98,73 @@ import Testing
     #expect(Jieqi.winterSolstice.next == .minorCold)
   }
 
+  // MARK: - Date.isJieqiDay
+  // Note: the Astral library computes solar term transitions in UTC.
+  // Qingming 2026 transitions on April 5 UTC (= April 4 local in China).
+
+  /// April 5 UTC 2026 is the first UTC day of Qingming (清明).
+  @Test func isJieqiDayTrueOnQingming() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
+    #expect(qingming2026.isJieqiDay)
+    #expect(qingming2026.jieqi == .clearAndBright)
+  }
+
+  /// April 4 UTC is not a jieqi day (still springEquinox period).
+  @Test func isJieqiDayFalseBeforeQingming() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let dayBefore = cal.date(from: DateComponents(year: 2026, month: 4, day: 4))!
+    #expect(!dayBefore.isJieqiDay)
+  }
+
+  // MARK: - Date.nextJieqi
+
+  /// From April 4 UTC (day before Qingming in UTC), next jieqi should be clearAndBright in 1 day.
+  @Test func nextJieqiFromDayBeforeQingming() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let dayBefore = cal.date(from: DateComponents(year: 2026, month: 4, day: 4))!
+    let result = dayBefore.nextJieqi
+    #expect(result?.jieqi == .clearAndBright)
+    #expect(result?.days == 1)
+  }
+
+  /// From April 5 UTC (Qingming day), nextJieqi should return 0 days.
+  @Test func nextJieqiOnQingmingIsZeroDays() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
+    let result = qingming2026.nextJieqi
+    #expect(result?.jieqi == .clearAndBright)
+    #expect(result?.days == 0)
+  }
+
+  // MARK: - Jieqi.nextDate(after:)
+
+  /// nextDate(after:) returns a date whose isJieqiDay is true and jieqi matches.
+  @Test func jieqiNextDateQingming2026() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let jan1 = cal.date(from: DateComponents(year: 2026, month: 1, day: 1))!
+    let result = Jieqi.clearAndBright.nextDate(after: jan1)
+    #expect(result != nil)
+    #expect(result!.isJieqiDay)
+    #expect(result!.jieqi == .clearAndBright)
+  }
+
+  /// Calling nextDate(after:) on the jieqi day itself returns that same day.
+  @Test func jieqiNextDateReturnsTodayWhenAlreadyJieqiDay() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
+    let result = Jieqi.clearAndBright.nextDate(after: qingming2026)
+    #expect(result != nil)
+    #expect(result!.isJieqiDay)
+    #expect(result!.jieqi == .clearAndBright)
+  }
+
   /// `preciseNextSolarTermDate()` returns a date at the exact boundary.
   /// Due to Newton iteration tolerance (±1e-4), the date can land
   /// slightly before the crossing, causing `floor(result - 0.5)` to

@@ -75,6 +75,34 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
     Jieqi(rawValue: (rawValue + 1) % 24) ?? .springEquinox
   }
 
+  /// Returns the first calendar day on or after `date` when this solar term begins.
+  ///
+  /// Scans forward day by day until the jieqi transition is detected. Returns `nil`
+  /// if no transition is found within 400 days (should never happen in practice).
+  ///
+  /// ```swift
+  /// // When is the next Qingming?
+  /// if let date = Jieqi.clearAndBright.nextDate(after: Date()) {
+  ///     print("Qingming: \(date)")
+  /// }
+  /// ```
+  public func nextDate(after date: Date = Date()) -> Date? {
+    // If today is already this jieqi's first day, return today.
+    if date.isJieqiDay, date.jieqi == self {
+      return date
+    }
+    let calendar = Calendar(identifier: .gregorian)
+    var probe = date
+    for _ in 0..<400 {
+      guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
+      if next.isJieqiDay, next.jieqi == self {
+        return next
+      }
+      probe = next
+    }
+    return nil
+  }
+
   public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
     (0..<12).map { base in
       let value = base * 2
@@ -84,9 +112,56 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
 }
 
 public extension Date {
+  /// The solar term period this date falls within.
+  ///
+  /// Returns the `Jieqi` whose period has most recently begun. Every date maps
+  /// to exactly one period, so this is never `nil`.
   var jieqi: Jieqi? {
     let raw = Int(floor(currentSolarTerm(for: self) - 0.5))
     return Jieqi(rawValue: ((raw % 24) + 24) % 24)
+  }
+
+  /// Whether this date is the first calendar day of a new solar term (節氣).
+  ///
+  /// Use this to trigger special handling on the exact day a Jieqi begins:
+  /// ```swift
+  /// if Date().isJieqiDay, let jieqi = Date().jieqi {
+  ///     print("Today is \(jieqi.chineseName)!")
+  /// }
+  /// ```
+  var isJieqiDay: Bool {
+    let calendar = Calendar(identifier: .gregorian)
+    guard let yesterday = calendar.date(byAdding: .day, value: -1, to: self) else {
+      return false
+    }
+    return yesterday.jieqi != self.jieqi
+  }
+
+  /// The next solar term transition on or after this date, and how many days away it is.
+  ///
+  /// Returns a tuple of the incoming `Jieqi` and the number of calendar days until it
+  /// begins (0 means today is already the first day of that term).
+  ///
+  /// ```swift
+  /// if let (next, days) = Date().nextJieqi {
+  ///     print("\(next.chineseName) starts in \(days) day(s)")
+  /// }
+  /// ```
+  var nextJieqi: (jieqi: Jieqi, days: Int)? {
+    // If today is itself a jieqi day, report 0 days remaining.
+    if isJieqiDay, let current = jieqi {
+      return (current, 0)
+    }
+    let calendar = Calendar(identifier: .gregorian)
+    var probe = self
+    for days in 1..<400 {
+      guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
+      if next.isJieqiDay, let incoming = next.jieqi {
+        return (incoming, days)
+      }
+      probe = next
+    }
+    return nil
   }
 }
 
