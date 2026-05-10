@@ -153,6 +153,10 @@ public enum ChineseFestival: CaseIterable, TraditionalChineseNaming, Sendable {
   ///   - converter: A `DayConverter` instance for lunar date calculations.
   /// - Returns: The Gregorian date of the next occurrence, or `nil` if not found.
   public func nextDate(from date: Date = Date(), converter: DayConverter = DayConverter()) -> Date? {
+    // Check if the given date already falls on this festival
+    if date.chineseFestival == self {
+      return date
+    }
     if let jieqiValue = jieqi {
       return nextJieqiDate(jieqiValue, from: date)
     }

@@ -60,6 +60,16 @@ Date conversion between Gregorian and Chinese lunar calendar:
 - **DayConverter**: Searches for upcoming lunar day occurrences across months/years
 - **Formatters**: Traditional Chinese text formatting for dates and components
 
+#### 6. SpecialDay Plugin Architecture
+Pluggable sources for surfacing special calendar events on a given date:
+- **SpecialDaySource** protocol: implement `specialDays(on:)` and `nextSpecialDay(after:)` to add custom event sources
+- **FestivalSource**: built-in source for traditional Chinese festivals; inject a `ChineseFestivalContentProvider` for custom names/descriptions/category
+- **JieqiSource**: built-in source for solar-term transition days; inject a `JieqiContentProvider` for custom display strings
+- **Date.specialDays(sources:)**: returns all special days from the provided sources on a given date
+- **Date.nextSpecialDay(sources:)**: returns the closest upcoming special day across all sources
+- **Date.nextChineseFestival(converter:)**: returns `(festival: ChineseFestival, date: Date)?` — the soonest upcoming festival
+- **Date.chineseFestival**: exact-day check — returns the festival that falls on that specific date, or `nil`
+
 ### Dependencies and External Libraries
 - **swift-numerics**: Mathematical calculations for astronomical computations
 - **Astral**: Astronomical calculations for solar terms and celestial positioning
@@ -79,9 +89,12 @@ Comprehensive test coverage organized by functional areas:
 4. **Astronomical Data** → Solar terms and moon phases via Astral dependency
 
 ### Platform Support
-- iOS 13+, macOS 10.14+, watchOS 5+
-- Swift 5.8+ toolchain required
+- iOS 13+, macOS 10.15+, watchOS 6+
+- Swift 6.0+ toolchain required (swift-tools-version: 6.0)
 - Cross-platform compatibility for all astronomical calculations
+
+### Known Issues
+- `swift test` fails with `missing required module '_TestingInternals'` when run via CLI on macOS. Tests pass inside Xcode. Root cause: Swift Testing framework not fully resolved by SwiftPM in this Xcode 26 beta toolchain.
 
 ### Key Extension Points
 When adding new features, consider these integration points:

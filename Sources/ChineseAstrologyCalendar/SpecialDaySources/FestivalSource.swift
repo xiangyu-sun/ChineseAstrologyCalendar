@@ -5,27 +5,36 @@ import Foundation
 /// Uses `Date.chineseFestival` to detect the current festival and
 /// `ChineseFestival.nextDate(from:converter:)` to find the next one.
 ///
+/// Inject a custom ``ChineseFestivalContentProvider`` to supply localised or
+/// alternate display strings without modifying the `ChineseFestival` enum:
+///
 /// ```swift
-/// let sources: [SpecialDaySource] = [FestivalSource(), JieqiSource()]
+/// let source = FestivalSource(contentProvider: EnglishFestivalContent())
+/// let sources: [SpecialDaySource] = [source, JieqiSource()]
 /// let today = Date().specialDays(sources: sources)
 /// ```
 public struct FestivalSource: SpecialDaySource {
 
-  /// The category string used in `SpecialDay.category` for all festival events.
+  /// The default category string used in `SpecialDay.category` for all festival events.
   public static let categoryName = "節日"
 
   private let converter: DayConverter
+  private let contentProvider: any ChineseFestivalContentProvider
 
-  public init(converter: DayConverter = DayConverter()) {
+  public init(
+    converter: DayConverter = DayConverter(),
+    contentProvider: any ChineseFestivalContentProvider = DefaultFestivalContentProvider()
+  ) {
     self.converter = converter
+    self.contentProvider = contentProvider
   }
 
   public func specialDays(on date: Date) -> [SpecialDay] {
     guard let festival = date.chineseFestival else { return [] }
     return [SpecialDay(
-      name: festival.chineseName,
-      category: Self.categoryName,
-      detail: festival.meaning,
+      name: contentProvider.name(for: festival),
+      category: contentProvider.category,
+      detail: contentProvider.detail(for: festival),
       date: date
     )]
   }
@@ -50,9 +59,9 @@ public struct FestivalSource: SpecialDaySource {
     }
 
     return SpecialDay(
-      name: festival.chineseName,
-      category: Self.categoryName,
-      detail: festival.meaning,
+      name: contentProvider.name(for: festival),
+      category: contentProvider.category,
+      detail: contentProvider.detail(for: festival),
       date: nextDate
     )
   }
