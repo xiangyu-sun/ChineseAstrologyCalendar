@@ -214,8 +214,6 @@ extension Date {
     if let currentJieqi = self.jieqi {
       for festival in ChineseFestival.allCases {
         if festival.jieqi == currentJieqi {
-          // Only return on the exact day the jieqi starts
-          // (compare with previous day)
           let greg = Calendar(identifier: .gregorian)
           if let yesterday = greg.date(byAdding: .day, value: -1, to: self),
              yesterday.jieqi != currentJieqi {
@@ -226,5 +224,21 @@ extension Date {
     }
 
     return nil
+  }
+
+  /// Returns the closest upcoming Chinese festival and the date it falls on.
+  ///
+  /// Searches all festivals for their next occurrence on or after `self`
+  /// and returns the one with the earliest date.
+  ///
+  /// - Parameter converter: A `DayConverter` for lunar date calculations.
+  /// - Returns: The soonest upcoming festival and its Gregorian date, or `nil` if none found.
+  public func nextChineseFestival(converter: DayConverter = DayConverter()) -> (festival: ChineseFestival, date: Date)? {
+    ChineseFestival.allCases
+      .compactMap { festival -> (ChineseFestival, Date)? in
+        guard let d = festival.nextDate(from: self, converter: converter) else { return nil }
+        return (festival, d)
+      }
+      .min(by: { $0.1 < $1.1 })
   }
 }

@@ -64,6 +64,25 @@ import Testing
     #expect(categories.contains(JieqiSource.categoryName))
   }
 
+  // MARK: - nextChineseFestival
+
+  @Test func nextChineseFestivalReturnsUpcomingFestival() {
+    // Feb 15 2025: Lantern Festival (元宵節) already passed (Feb 12).
+    // Next festival is Dragon Raises Head (龍抬頭) on lunar 二月初二.
+    let ordinary = date(year: 2025, month: 2, day: 15)
+    let result = ordinary.nextChineseFestival()
+    #expect(result != nil)
+    #expect(result!.date > ordinary)
+  }
+
+  @Test func nextChineseFestivalOnFestivalDayReturnsSelf() {
+    // Spring Festival 2025 = Jan 29
+    let springFestival2025 = date(year: 2025, month: 1, day: 29)
+    let result = springFestival2025.nextChineseFestival()
+    #expect(result?.festival == .springFestival)
+    #expect(result?.date == springFestival2025)
+  }
+
   // MARK: - nextSpecialDay
 
   @Test func nextSpecialDayFromOrdinaryDateIsInFuture() {

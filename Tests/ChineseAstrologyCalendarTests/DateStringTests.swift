@@ -47,7 +47,7 @@ import Testing
   @Test func chineseYearMonthDateZodiacGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
 
-    #expect(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "甲辰龙年正月初一")
+    #expect(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "甲辰龍年正月初一")
   }
 
   @Test func chineseMonth() throws {
