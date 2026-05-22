@@ -179,6 +179,27 @@ import Testing
     #expect(result!.jieqi == .clearAndBright)
   }
 
+  /// Calling nextDate(after:) mid-period returns the period's start day, not next year.
+  /// Regression: a date inside 小滿 but after the transition day was scanning 400 days
+  /// forward and returning 2027 instead of May 21, 2026.
+  @Test func jieqiNextDateMidPeriodReturnsCurrentPeriodStart() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    // May 22 and May 25 are inside 小滿 2026 but not the transition day (May 21).
+    for day in [22, 25] {
+      let mid = cal.date(from: DateComponents(year: 2026, month: 5, day: day))!
+      #expect(mid.jieqi == .grainBuds, "May \(day) should be inside 小滿")
+      #expect(!mid.isJieqiDay, "May \(day) should not be the transition day")
+      let result = Jieqi.grainBuds.nextDate(after: mid)
+      #expect(result != nil)
+      #expect(result!.isJieqiDay, "nextDate result should be a transition day")
+      #expect(result!.jieqi == .grainBuds, "nextDate result should be 小滿")
+      // Must be in 2026, not 2027
+      let year = cal.component(.year, from: result!)
+      #expect(year == 2026, "nextDate for mid-period date should return 2026, not 2027")
+    }
+  }
+
   /// `preciseNextSolarTermDate()` returns a date at the exact boundary.
   /// Due to Newton iteration tolerance (±1e-4), the date can land
   /// slightly before the crossing, causing `floor(result - 0.5)` to

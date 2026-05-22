@@ -75,10 +75,11 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
     Jieqi(rawValue: (rawValue + 1) % 24) ?? .springEquinox
   }
 
-  /// Returns the first calendar day on or after `date` when this solar term begins.
+  /// Returns the start day of this solar term's occurrence that is most relevant to `date`.
   ///
-  /// Scans forward day by day until the jieqi transition is detected. Returns `nil`
-  /// if no transition is found within 400 days (should never happen in practice).
+  /// - If `date` falls within this jieqi's period (including its first day), returns the
+  ///   period's transition day by scanning backward.
+  /// - Otherwise scans forward to find the next future transition.
   ///
   /// ```swift
   /// // When is the next Qingming?
@@ -87,11 +88,17 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
   /// }
   /// ```
   public func nextDate(after date: Date = Date()) -> Date? {
-    // If today is already this jieqi's first day, return today.
-    if date.isJieqiDay, date.jieqi == self {
+    let calendar = Calendar(identifier: .gregorian)
+    // If date is inside this period, scan backward to find the transition day.
+    if date.jieqi == self {
+      var probe = date
+      while let prev = calendar.date(byAdding: .day, value: -1, to: probe) {
+        if prev.jieqi != self { return probe }
+        probe = prev
+      }
       return date
     }
-    let calendar = Calendar(identifier: .gregorian)
+    // Otherwise scan forward to the next transition.
     var probe = date
     for _ in 0..<400 {
       guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
