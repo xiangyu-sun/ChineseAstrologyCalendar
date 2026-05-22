@@ -1,7 +1,7 @@
 # ChineseAstrologyCalendar
 
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-[![Platform](https://img.shields.io/badge/platform-iOS%2013.0%2B%20%7C%20macOS%2010.14%2B%20%7C%20watchOS%206.0%2B-lightgrey.svg)](https://developer.apple.com/swift/)
+[![Platform](https://img.shields.io/badge/platform-iOS%2013.0%2B%20%7C%20macOS%2010.15%2B%20%7C%20watchOS%206.0%2B-lightgrey.svg)](https://developer.apple.com/swift/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 A comprehensive Swift package for working with traditional Chinese lunar calendar and astrology concepts. Convert between Gregorian and Chinese calendars, access zodiac animals, moon phases, five element theory, Bazi four pillars, Nayin sound elements, festival dates, and much more.
@@ -37,11 +37,19 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 - **LiuHai (六害)**: Six harm pairs
 - Query methods: `liuHe(with:)`, `formsLiuHe(with:)`, `sanHe(with:and:)`, `sanHeTriads`, `liuHai(with:)`, `formsLiuHai(with:)`
 
-### 🎊 Traditional Chinese Festivals — New in v1.4
+### 🎊 Traditional Chinese Festivals
 - **12 festivals**: 春節, 元宵, 龍抬頭, 清明, 端午, 七夕, 中元, 中秋, 重陽, 冬至, 臘八, 小年
 - `ChineseFestival.nextDate(from:converter:)` — finds the next Gregorian occurrence
 - `Date.chineseFestival` — returns which festival (if any) falls on a given date
+- `Date.nextChineseFestival()` — returns the soonest upcoming `(festival, date)` tuple
 - Solar-term festivals (Qingming, Dongzhi) are detected automatically via `Jieqi`
+
+### 🔌 Pluggable Special Day Sources — New in v2.1
+- **`SpecialDaySource` protocol**: implement `specialDays(on:)` and `nextSpecialDay(after:)` to add custom event sources
+- **`FestivalSource`**: built-in source for traditional festivals; inject a `ChineseFestivalContentProvider` for custom names/descriptions
+- **`JieqiSource`**: built-in source for solar term transition days; inject a `JieqiContentProvider` for localised strings
+- **`Date.specialDays(sources:)`**: returns all special days from the provided sources on a given date
+- **`Date.nextSpecialDay(sources:)`**: returns the closest upcoming special day across all sources
 
 ### 🌙 Lunar Calendar Features
 - **Lunar Days**: Traditional Chinese lunar month days (初一, 初二, etc.)
@@ -51,6 +59,13 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 ### ⏰ Traditional Time Periods
 - **Shichen** (時辰): Traditional 2-hour periods with exact start/end times
 - **24 Solar Terms** (二十四節氣): Complete Jieqi system for seasonal transitions with health tips
+
+### 🌤️ Solar Terms (節氣) API — New in v2.2+
+- **`JieqiOccurrence`**: bundles a `Jieqi` identity with its `startDate` — no arithmetic required by callers
+- **`Date.currentJieqi`** → `JieqiOccurrence?` — which period we're in and when it started
+- **`Date.nextJieqi`** → `JieqiOccurrence?` — the next future transition with its exact date
+- **`Jieqi.startDate(in:)`** → `Date?` — the start of the period containing a given date
+- **`Jieqi.nextOccurrence(after:)`** → `JieqiOccurrence?` — the next time a specific jieqi occurs
 
 ### 🔥 Five Elements Theory
 - **Wuxing** (五行): Wood, Fire, Earth, Metal, Water with generating (生) and controlling (克) cycles
@@ -67,7 +82,7 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 ## 📱 Platform Support
 
 - **iOS**: 13.0+
-- **macOS**: 10.14+
+- **macOS**: 10.15+
 - **watchOS**: 6.0+
 - **Swift**: 6.0+
 
@@ -79,7 +94,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "1.4.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "2.2.0")
 ]
 ```
 
@@ -168,8 +183,58 @@ if let festival = Date().chineseFestival {
     print("Today is \(festival.chineseName): \(festival.meaning)")
 }
 
-// Get a specific festival's next date
-let midAutumn = ChineseFestival.midAutumn.nextDate(from: Date(), converter: converter)
+// Get the nearest upcoming festival (any)
+if let (festival, date) = Date().nextChineseFestival() {
+    print("Next festival: \(festival.chineseName) on \(date)")
+}
+```
+
+### Special Day Sources (Pluggable)
+
+```swift
+// Built-in sources
+let today = Date().specialDays(sources: [FestivalSource(), JieqiSource()])
+
+// Next upcoming special day across all sources
+if let result = Date().nextSpecialDay(sources: [FestivalSource(), JieqiSource()]) {
+    print("\(result.day.name) in \(result.daysUntil) day(s)")
+}
+
+// Custom source
+struct GregorianNewYearSource: SpecialDaySource {
+    func specialDays(on date: Date) -> [SpecialDay] {
+        let comps = Calendar(identifier: .gregorian).dateComponents([.month, .day], from: date)
+        guard comps.month == 1, comps.day == 1 else { return [] }
+        return [SpecialDay(name: "元旦", category: "公曆節日", detail: "陽曆新年", date: date)]
+    }
+    func nextSpecialDay(after date: Date) -> SpecialDay? { nil }
+}
+
+let custom = Date().specialDays(sources: [FestivalSource(), JieqiSource(), GregorianNewYearSource()])
+```
+
+### Solar Terms (節氣)
+
+```swift
+// Current period with its start date
+if let current = Date().currentJieqi {
+    print("In \(current.jieqi.chineseName) since \(current.startDate)")
+}
+
+// Next upcoming transition — startDate is ready to use, no arithmetic needed
+if let next = Date().nextJieqi {
+    print("\(next.jieqi.chineseName) starts on \(next.startDate)")
+}
+
+// When does a specific jieqi next occur?
+if let occurrence = Jieqi.winterSolstice.nextOccurrence(after: Date()) {
+    print("冬至: \(occurrence.startDate)")
+}
+
+// Start of the current period for a given date
+if let start = Jieqi.grainBuds.startDate(in: Date()) {
+    print("小滿 started on \(start)")
+}
 ```
 
 ### Working with Traditional Time Periods
@@ -238,29 +303,34 @@ The package includes 200+ tests covering:
 
 - **`Date` Extensions**: Seamless integration with Foundation's Date type
 - **`Ganzhi`**: Heavenly Stem and Earthly Branch combinations
-- **`Bazi`**: Four Pillars of Destiny birth chart (New in v1.4)
-- **`Nayin`**: Sound element for each Ganzhi pair (New in v1.4)
-- **`DizhiRelationship`**: Clash, harmony, and harm relationships (New in v1.4)
-- **`ChineseFestival`**: Traditional festival date finder (New in v1.4)
+- **`Bazi`**: Four Pillars of Destiny birth chart
+- **`Nayin`**: Sound element for each Ganzhi pair
+- **`DizhiRelationship`**: Clash, harmony, and harm relationships
+- **`ChineseFestival`**: Traditional festival date finder
+- **`JieqiOccurrence`**: Pairs a `Jieqi` with its `startDate` for safe date handling
+- **`SpecialDaySource`**: Protocol for pluggable special day providers
+- **`FestivalSource`** / **`JieqiSource`**: Built-in special day sources
 - **`Day`**: Lunar calendar day representations
 - **`Shichen`**: Traditional 2-hour time periods
 - **`Wuxing`**: Five Elements theory implementation
 - **`ChineseMoonPhase`**: Traditional lunar phase system
-- **`Jieqi`**: 24 Solar Terms calculations with health tips
+- **`Jieqi`**: 24 Solar Terms with health tips, occurrence queries, and next/current helpers
 
 ### Architecture
 
 ```
 ChineseAstrologyCalendar/
-├── Date/           # Date conversion and formatting
-├── DizhiGanzhi/    # Core Ganzhi system + relationships + Nayin
-├── FiveElements/   # Wuxing theory and relationships
-├── Event/          # Event modeling
-├── Jieqi/          # Solar terms + health tips
-├── Moon/           # Lunar phases
-├── Bazi.swift      # Four Pillars of Destiny
+├── Date/                  # Date conversion and formatting
+├── DizhiGanzhi/           # Core Ganzhi system + relationships + Nayin
+├── FiveElements/          # Wuxing theory and relationships
+├── Event/                 # Event modeling
+├── Jieqi/                 # Solar terms, JieqiOccurrence, health tips
+├── Moon/                  # Lunar phases
+├── SpecialDaySources/     # FestivalSource, JieqiSource, pluggable providers
+├── Bazi.swift             # Four Pillars of Destiny
 ├── ChineseFestival.swift  # Traditional festival dates
-└── Math.swift      # Astronomical calculations
+├── SpecialDay.swift       # SpecialDay + SpecialDaySource protocol
+└── Math.swift             # Astronomical calculations
 ```
 
 ## 🔧 Dependencies
