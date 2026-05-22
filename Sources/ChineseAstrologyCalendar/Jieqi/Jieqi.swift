@@ -137,10 +137,9 @@ public extension Date {
     return yesterday.jieqi != self.jieqi
   }
 
-  /// The next solar term transition on or after this date, and how many days away it is.
+  /// The next solar term transition strictly after this date, and how many days away it is.
   ///
-  /// Returns a tuple of the incoming `Jieqi` and the number of calendar days until it
-  /// begins (0 means today is already the first day of that term).
+  /// Always returns a future jieqi (at least 1 day away), even when called on a jieqi day itself.
   ///
   /// ```swift
   /// if let (next, days) = Date().nextJieqi {
@@ -148,10 +147,6 @@ public extension Date {
   /// }
   /// ```
   var nextJieqi: (jieqi: Jieqi, days: Int)? {
-    // If today is itself a jieqi day, report 0 days remaining.
-    if isJieqiDay, let current = jieqi {
-      return (current, 0)
-    }
     let calendar = Calendar(identifier: .gregorian)
     var probe = self
     for days in 1..<400 {

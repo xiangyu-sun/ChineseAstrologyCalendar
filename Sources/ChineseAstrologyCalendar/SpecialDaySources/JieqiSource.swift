@@ -37,11 +37,8 @@ public struct JieqiSource: SpecialDaySource {
 
   public func nextSpecialDay(after date: Date) -> SpecialDay? {
     let calendar = Calendar(identifier: .gregorian)
-    guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: date) else {
-      return nil
-    }
-    guard let (jieqi, _) = tomorrow.nextJieqi,
-          let nextDate = jieqi.nextDate(after: tomorrow) else {
+    guard let (jieqi, days) = date.nextJieqi,
+          let nextDate = calendar.date(byAdding: .day, value: days, to: date) else {
       return nil
     }
     return SpecialDay(

@@ -131,14 +131,28 @@ import Testing
     #expect(result?.days == 1)
   }
 
-  /// From April 5 UTC (Qingming day), nextJieqi should return 0 days.
-  @Test func nextJieqiOnQingmingIsZeroDays() {
+  /// From April 5 UTC (Qingming day), nextJieqi should skip 清明 itself and return 穀雨.
+  /// Regression: previously returned (clearAndBright, 0) — the current day's jieqi.
+  @Test func nextJieqiOnJieqiDaySkipsSelfAndReturnsFutureJieqi() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
     let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
     let result = qingming2026.nextJieqi
-    #expect(result?.jieqi == .clearAndBright)
-    #expect(result?.days == 0)
+    #expect(result?.jieqi == .grainRain)
+    #expect((result?.days ?? 0) > 0)
+  }
+
+  /// On 小滿 day (May 21 UTC 2026), nextJieqi should return 芒種, not 小滿.
+  /// Regression: calling nextJieqi on a jieqi day was returning that same day's jieqi with 0 days.
+  @Test func nextJieqiOnXiaomanDayReturnsManzhong() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let xiaoman2026 = cal.date(from: DateComponents(year: 2026, month: 5, day: 21))!
+    #expect(xiaoman2026.isJieqiDay)
+    #expect(xiaoman2026.jieqi == .grainBuds)
+    let result = xiaoman2026.nextJieqi
+    #expect(result?.jieqi == .grainInEar)
+    #expect((result?.days ?? 0) > 0)
   }
 
   // MARK: - Jieqi.nextDate(after:)
