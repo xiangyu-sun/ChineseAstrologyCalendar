@@ -45,6 +45,35 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
     return String(describing: self)
   }
 
+  // MARK: - Occurrence queries
+
+  /// Returns the start date of this jieqi's period that contains `date`, or `nil` if
+  /// `date` is not inside this jieqi's period.
+  public func startDate(in date: Date) -> Date? {
+    guard date.jieqi == self else { return nil }
+    let calendar = Calendar(identifier: .gregorian)
+    var probe = date
+    while let prev = calendar.date(byAdding: .day, value: -1, to: probe) {
+      if prev.jieqi != self { return probe }
+      probe = prev
+    }
+    return date
+  }
+
+  /// Returns the next occurrence of this jieqi strictly after `date`.
+  public func nextOccurrence(after date: Date = Date()) -> JieqiOccurrence? {
+    let calendar = Calendar(identifier: .gregorian)
+    var probe = date
+    for _ in 0..<400 {
+      guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
+      if next.isJieqiDay, next.jieqi == self {
+        return JieqiOccurrence(jieqi: self, startDate: next)
+      }
+      probe = next
+    }
+    return nil
+  }
+
   public static var current: Jieqi? {
     // Subtract 0.5 before flooring to undo the +7.5° rounding offset in
     // currentSolarTerm(), giving floor(normalizedLong / 15) — i.e. the
@@ -75,47 +104,18 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
     Jieqi(rawValue: (rawValue + 1) % 24) ?? .springEquinox
   }
 
-  /// Returns the start day of this solar term's occurrence that is most relevant to `date`.
-  ///
-  /// - If `date` falls within this jieqi's period (including its first day), returns the
-  ///   period's transition day by scanning backward.
-  /// - Otherwise scans forward to find the next future transition.
-  ///
-  /// ```swift
-  /// // When is the next Qingming?
-  /// if let date = Jieqi.clearAndBright.nextDate(after: Date()) {
-  ///     print("Qingming: \(date)")
-  /// }
-  /// ```
-  public func nextDate(after date: Date = Date()) -> Date? {
-    let calendar = Calendar(identifier: .gregorian)
-    // If date is inside this period, scan backward to find the transition day.
-    if date.jieqi == self {
-      var probe = date
-      while let prev = calendar.date(byAdding: .day, value: -1, to: probe) {
-        if prev.jieqi != self { return probe }
-        probe = prev
-      }
-      return date
-    }
-    // Otherwise scan forward to the next transition.
-    var probe = date
-    for _ in 0..<400 {
-      guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
-      if next.isJieqiDay, next.jieqi == self {
-        return next
-      }
-      probe = next
-    }
-    return nil
-  }
-
   public var jieqiPairs: [(jie: Jieqi, qi: Jieqi)] {
     (0..<12).map { base in
       let value = base * 2
       return (Jieqi(rawValue: value + 1) ?? .startOfSpring, Jieqi(rawValue: (value + 2) % 24) ?? .startOfSpring)
     }
   }
+}
+
+/// A specific occurrence of a solar term: the jieqi identity and the calendar day it starts.
+public struct JieqiOccurrence: Equatable, Sendable {
+  public let jieqi: Jieqi
+  public let startDate: Date
 }
 
 public extension Date {
@@ -144,22 +144,34 @@ public extension Date {
     return yesterday.jieqi != self.jieqi
   }
 
-  /// The next solar term transition strictly after this date, and how many days away it is.
-  ///
-  /// Always returns a future jieqi (at least 1 day away), even when called on a jieqi day itself.
+  /// The jieqi period this date falls within, together with the day that period started.
   ///
   /// ```swift
-  /// if let (next, days) = Date().nextJieqi {
-  ///     print("\(next.chineseName) starts in \(days) day(s)")
+  /// if let current = Date().currentJieqi {
+  ///     print("In \(current.jieqi.chineseName) since \(current.startDate)")
   /// }
   /// ```
-  var nextJieqi: (jieqi: Jieqi, days: Int)? {
+  var currentJieqi: JieqiOccurrence? {
+    guard let jq = jieqi, let start = jq.startDate(in: self) else { return nil }
+    return JieqiOccurrence(jieqi: jq, startDate: start)
+  }
+
+  /// The next solar term transition strictly after this date.
+  ///
+  /// Always returns a future occurrence (at least 1 day away), even when called on a jieqi day itself.
+  ///
+  /// ```swift
+  /// if let next = Date().nextJieqi {
+  ///     print("\(next.jieqi.chineseName) starts on \(next.startDate)")
+  /// }
+  /// ```
+  var nextJieqi: JieqiOccurrence? {
     let calendar = Calendar(identifier: .gregorian)
     var probe = self
-    for days in 1..<400 {
+    for _ in 1..<400 {
       guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
       if next.isJieqiDay, let incoming = next.jieqi {
-        return (incoming, days)
+        return JieqiOccurrence(jieqi: incoming, startDate: next)
       }
       probe = next
     }

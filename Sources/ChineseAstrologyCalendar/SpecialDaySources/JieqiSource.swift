@@ -36,16 +36,12 @@ public struct JieqiSource: SpecialDaySource {
   }
 
   public func nextSpecialDay(after date: Date) -> SpecialDay? {
-    let calendar = Calendar(identifier: .gregorian)
-    guard let (jieqi, days) = date.nextJieqi,
-          let nextDate = calendar.date(byAdding: .day, value: days, to: date) else {
-      return nil
-    }
+    guard let occurrence = date.nextJieqi else { return nil }
     return SpecialDay(
-      name: contentProvider.name(for: jieqi),
+      name: contentProvider.name(for: occurrence.jieqi),
       category: contentProvider.category,
-      detail: contentProvider.detail(for: jieqi),
-      date: nextDate
+      detail: contentProvider.detail(for: occurrence.jieqi),
+      date: occurrence.startDate
     )
   }
 }

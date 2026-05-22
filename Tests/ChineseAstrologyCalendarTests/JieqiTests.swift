@@ -119,31 +119,59 @@ import Testing
     #expect(!dayBefore.isJieqiDay)
   }
 
+  // MARK: - Date.currentJieqi
+
+  /// currentJieqi bundles the current period's jieqi with its start date.
+  @Test func currentJieqiOnTransitionDay() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
+    let result = qingming2026.currentJieqi
+    #expect(result?.jieqi == .clearAndBright)
+    #expect(result?.startDate == qingming2026)
+  }
+
+  /// currentJieqi mid-period returns the period's start date, not the current date.
+  /// Regression: previously no clean way to get both jieqi identity and start date together.
+  @Test func currentJieqiMidPeriodReturnsStartDate() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let xiaomanStart = cal.date(from: DateComponents(year: 2026, month: 5, day: 21))!
+    for day in [22, 25] {
+      let mid = cal.date(from: DateComponents(year: 2026, month: 5, day: day))!
+      let result = mid.currentJieqi
+      #expect(result?.jieqi == .grainBuds, "May \(day) should be inside 小滿")
+      #expect(result?.startDate == xiaomanStart, "May \(day) should report start of May 21")
+    }
+  }
+
   // MARK: - Date.nextJieqi
 
-  /// From April 4 UTC (day before Qingming in UTC), next jieqi should be clearAndBright in 1 day.
+  /// From April 4 UTC (day before Qingming), nextJieqi should identify clearAndBright
+  /// and supply its start date directly — no arithmetic required by the caller.
   @Test func nextJieqiFromDayBeforeQingming() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
     let dayBefore = cal.date(from: DateComponents(year: 2026, month: 4, day: 4))!
+    let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
     let result = dayBefore.nextJieqi
     #expect(result?.jieqi == .clearAndBright)
-    #expect(result?.days == 1)
+    #expect(result?.startDate == qingming2026)
   }
 
-  /// From April 5 UTC (Qingming day), nextJieqi should skip 清明 itself and return 穀雨.
-  /// Regression: previously returned (clearAndBright, 0) — the current day's jieqi.
+  /// From April 5 UTC (Qingming day), nextJieqi should skip 清明 and return 穀雨.
+  /// Regression: previously returned the current day's jieqi with 0 days.
   @Test func nextJieqiOnJieqiDaySkipsSelfAndReturnsFutureJieqi() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
     let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
     let result = qingming2026.nextJieqi
     #expect(result?.jieqi == .grainRain)
-    #expect((result?.days ?? 0) > 0)
+    #expect(result?.startDate ?? qingming2026 > qingming2026)
   }
 
   /// On 小滿 day (May 21 UTC 2026), nextJieqi should return 芒種, not 小滿.
-  /// Regression: calling nextJieqi on a jieqi day was returning that same day's jieqi with 0 days.
+  /// Regression: calling nextJieqi on a jieqi day was returning that same day's jieqi.
   @Test func nextJieqiOnXiaomanDayReturnsManzhong() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
@@ -152,52 +180,52 @@ import Testing
     #expect(xiaoman2026.jieqi == .grainBuds)
     let result = xiaoman2026.nextJieqi
     #expect(result?.jieqi == .grainInEar)
-    #expect((result?.days ?? 0) > 0)
+    #expect(result?.startDate ?? xiaoman2026 > xiaoman2026)
   }
 
-  // MARK: - Jieqi.nextDate(after:)
+  // MARK: - Jieqi.startDate(in:) and nextOccurrence(after:)
 
-  /// nextDate(after:) returns a date whose isJieqiDay is true and jieqi matches.
-  @Test func jieqiNextDateQingming2026() {
+  /// startDate(in:) returns nil when date is outside the jieqi's period.
+  @Test func jieqiStartDateInReturnsNilWhenNotInPeriod() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
     let jan1 = cal.date(from: DateComponents(year: 2026, month: 1, day: 1))!
-    let result = Jieqi.clearAndBright.nextDate(after: jan1)
-    #expect(result != nil)
-    #expect(result!.isJieqiDay)
-    #expect(result!.jieqi == .clearAndBright)
+    #expect(Jieqi.clearAndBright.startDate(in: jan1) == nil)
   }
 
-  /// Calling nextDate(after:) on the jieqi day itself returns that same day.
-  @Test func jieqiNextDateReturnsTodayWhenAlreadyJieqiDay() {
+  /// startDate(in:) returns the transition day when called on the transition day itself.
+  @Test func jieqiStartDateInOnTransitionDay() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
     let qingming2026 = cal.date(from: DateComponents(year: 2026, month: 4, day: 5))!
-    let result = Jieqi.clearAndBright.nextDate(after: qingming2026)
-    #expect(result != nil)
-    #expect(result!.isJieqiDay)
-    #expect(result!.jieqi == .clearAndBright)
+    let result = Jieqi.clearAndBright.startDate(in: qingming2026)
+    #expect(result == qingming2026)
   }
 
-  /// Calling nextDate(after:) mid-period returns the period's start day, not next year.
-  /// Regression: a date inside 小滿 but after the transition day was scanning 400 days
-  /// forward and returning 2027 instead of May 21, 2026.
-  @Test func jieqiNextDateMidPeriodReturnsCurrentPeriodStart() {
+  /// startDate(in:) mid-period returns May 21 (period start), not next year.
+  /// Regression: previously nextDate(after:) would return 2027 for a mid-period date.
+  @Test func jieqiStartDateInMidPeriodReturns2026() {
     var cal = Calendar(identifier: .gregorian)
     cal.timeZone = TimeZone(identifier: "UTC")!
-    // May 22 and May 25 are inside 小滿 2026 but not the transition day (May 21).
+    let xiaomanStart = cal.date(from: DateComponents(year: 2026, month: 5, day: 21))!
     for day in [22, 25] {
       let mid = cal.date(from: DateComponents(year: 2026, month: 5, day: day))!
-      #expect(mid.jieqi == .grainBuds, "May \(day) should be inside 小滿")
-      #expect(!mid.isJieqiDay, "May \(day) should not be the transition day")
-      let result = Jieqi.grainBuds.nextDate(after: mid)
+      let result = Jieqi.grainBuds.startDate(in: mid)
       #expect(result != nil)
-      #expect(result!.isJieqiDay, "nextDate result should be a transition day")
-      #expect(result!.jieqi == .grainBuds, "nextDate result should be 小滿")
-      // Must be in 2026, not 2027
-      let year = cal.component(.year, from: result!)
-      #expect(year == 2026, "nextDate for mid-period date should return 2026, not 2027")
+      #expect(result!.isJieqiDay)
+      #expect(result == xiaomanStart, "May \(day) startDate should be May 21")
     }
+  }
+
+  /// nextOccurrence(after:) from before the period finds it in the current year.
+  @Test func jieqiNextOccurrenceQingming2026() {
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let jan1 = cal.date(from: DateComponents(year: 2026, month: 1, day: 1))!
+    let result = Jieqi.clearAndBright.nextOccurrence(after: jan1)
+    #expect(result?.jieqi == .clearAndBright)
+    #expect(result?.startDate.isJieqiDay == true)
+    #expect(result?.startDate.jieqi == .clearAndBright)
   }
 
   /// `preciseNextSolarTermDate()` returns a date at the exact boundary.
