@@ -204,4 +204,45 @@ import Testing
     let totalSeconds = Shichen.keLength * 8
     #expect(totalSeconds == 7200, "8 ke periods should equal 2 hours (7200 seconds)")
   }
+
+  // MARK: - Ke Fraction Tests
+  // These verify the math used by app-layer keProgress:
+  //   elapsed = date - shichen.startDate
+  //   keElapsed = elapsed - currentKe * keLength
+  //   fraction = keElapsed / keLength  (clamped 0–1)
+
+  @Test func keElapsedFractionAtStart() {
+    var c = DateComponents()
+    c.year = 2023; c.month = 6; c.day = 15; c.hour = 9; c.minute = 0; c.second = 0
+    let date = Calendar.current.date(from: c)!
+    let shichen = Shichen(dizhi: .si, date: date)
+    let elapsed = date.timeIntervalSince1970 - shichen.startDate.timeIntervalSince1970
+    let keElapsed = elapsed - Double(shichen.currentKe) * Shichen.keLength
+    let fraction = keElapsed / Shichen.keLength
+    #expect(fraction >= 0.0 && fraction < 0.05, "Fraction at ke start should be ~0")
+  }
+
+  @Test func keElapsedFractionAtMidpoint() {
+    // 7m30s into Si hour → midpoint of ke 0
+    var c = DateComponents()
+    c.year = 2023; c.month = 6; c.day = 15; c.hour = 9; c.minute = 7; c.second = 30
+    let date = Calendar.current.date(from: c)!
+    let shichen = Shichen(dizhi: .si, date: date)
+    let elapsed = date.timeIntervalSince1970 - shichen.startDate.timeIntervalSince1970
+    let keElapsed = elapsed - Double(shichen.currentKe) * Shichen.keLength
+    let fraction = keElapsed / Shichen.keLength
+    #expect(fraction > 0.45 && fraction < 0.55, "Fraction at midpoint of ke should be ~0.5")
+  }
+
+  @Test func keElapsedFractionAtEndOfKe() {
+    // 14m59s into Si hour → near end of ke 0
+    var c = DateComponents()
+    c.year = 2023; c.month = 6; c.day = 15; c.hour = 9; c.minute = 14; c.second = 59
+    let date = Calendar.current.date(from: c)!
+    let shichen = Shichen(dizhi: .si, date: date)
+    let elapsed = date.timeIntervalSince1970 - shichen.startDate.timeIntervalSince1970
+    let keElapsed = elapsed - Double(shichen.currentKe) * Shichen.keLength
+    let fraction = keElapsed / Shichen.keLength
+    #expect(fraction > 0.95 && fraction <= 1.0, "Fraction near end of ke should be ~1")
+  }
 }
