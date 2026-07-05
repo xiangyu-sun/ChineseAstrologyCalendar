@@ -11,13 +11,9 @@ jobs:
 
     steps:
       # 1. Check out the PR’s code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # 2. Set up the Swift toolchain (adjust version as needed)
-      - name: Set up Swift
-        uses: actions/setup-swift@v1
-        with:
-          swift-version: '6.1'
+      # 2. Swift toolchain ships with the preinstalled Xcode on macOS runners.
 
       # 3. Build the package
       - name: Build

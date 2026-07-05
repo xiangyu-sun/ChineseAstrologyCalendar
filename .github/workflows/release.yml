@@ -5,47 +5,33 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Swift
-      uses: maxim-lobanov/setup-swift@v1
+      uses: swift-actions/setup-swift@v2
       with:
-        swift-version: '5.6' # specify your Swift version
+        swift-version: '6.0'
 
     - name: Build and Test
       run: |
         swift build -c release
         swift test
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
     - name: Archive release build
       run: |
         zip -r ChineseAstrologyCalendar.zip .build/release
 
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./ChineseAstrologyCalendar.zip
-        asset_name: ChineseAstrologyCalendar.zip
-        asset_content_type: application/zip
-
-    # Add any additional steps for packaging your software, if necessary
-
+        files: ChineseAstrologyCalendar.zip
+        draft: false
+        prerelease: false
