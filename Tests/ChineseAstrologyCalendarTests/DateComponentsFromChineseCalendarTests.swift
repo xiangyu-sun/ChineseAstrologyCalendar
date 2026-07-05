@@ -91,10 +91,13 @@ import Testing
 
     let resultComponents = date.dateComponentsFromChineseCalendar()
 
-    // Validate that the time components are zero as expected.
-    #expect(resultComponents.hour == 1)
-    #expect(resultComponents.minute == 0)
-    #expect(resultComponents.second == 0)
+    // The clock time passes through from the host calendar (Calendar.current),
+    // so assert against that rather than a hard-coded hour to stay independent
+    // of the machine's time zone.
+    let expectedTime = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+    #expect(resultComponents.hour == expectedTime.hour)
+    #expect(resultComponents.minute == expectedTime.minute)
+    #expect(resultComponents.second == expectedTime.second)
 
     // Ensure that the Chinese calendar date components are non-nil.
     #expect(resultComponents.day != nil)
