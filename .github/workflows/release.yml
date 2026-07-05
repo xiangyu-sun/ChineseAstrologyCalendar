@@ -10,15 +10,14 @@ permissions:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    # Astral depends on CoreLocation, which is only available on Apple
+    # platforms, so the package can only be built on a macOS runner.
+    runs-on: macos-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Swift
-      uses: swift-actions/setup-swift@v2
-      with:
-        swift-version: '6.0'
+    # The Swift toolchain ships with the preinstalled Xcode on macOS runners.
 
     - name: Build and Test
       run: |
