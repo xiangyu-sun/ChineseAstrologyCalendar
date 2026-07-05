@@ -118,13 +118,29 @@ public struct JieqiOccurrence: Equatable, Sendable {
   public let startDate: Date
 }
 
+/// The timezone used to reckon which calendar day a solar-term transition belongs to.
+///
+/// The Chinese almanac assigns each 節氣 to the civil day (in China Standard Time,
+/// UTC+8) that contains the instant the sun crosses the term's ecliptic longitude.
+/// China has observed UTC+8 year-round with no DST since 1949, so a fixed offset is
+/// exact for all modern dates.
+private let jieqiCivilTimeZone = TimeZone(secondsFromGMT: 8 * 3600)!
+
 public extension Date {
   /// The solar term period this date falls within.
   ///
-  /// Returns the `Jieqi` whose period has most recently begun. Every date maps
-  /// to exactly one period, so this is never `nil`.
+  /// Returns the `Jieqi` whose period is in effect on this date's China-local
+  /// (UTC+8) civil day. The term is sampled at local noon so that a transition
+  /// landing anywhere within the civil day — including the minutes just after
+  /// midnight — is attributed to the correct day rather than the next one.
+  /// Every date maps to exactly one period, so this is never `nil`.
   var jieqi: Jieqi? {
-    let raw = Int(floor(currentSolarTerm(for: self) - 0.5))
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = jieqiCivilTimeZone
+    // Sample at local noon: safely inside the civil day and clear of the day
+    // boundary, so a crossing near either midnight is reckoned on its own day.
+    let noon = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: self) ?? self
+    let raw = Int(floor(currentSolarTerm(for: noon) - 0.5))
     return Jieqi(rawValue: ((raw % 24) + 24) % 24)
   }
 
