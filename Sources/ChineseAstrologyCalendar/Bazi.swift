@@ -33,12 +33,13 @@ public struct Bazi: CustomStringConvertible, Equatable, Sendable {
   ///
   /// Returns `nil` if the Ganzhi pillars cannot be computed for the given date.
   public init?(date: Date) {
-    // Use the Chinese calendar for year/month pillars (nian/yue).
-    let chineseCal = Calendar.chineseCalendarGTM8
-    let chineseComponents = chineseCal.dateComponents(
-      [.era, .year, .month, .day, .hour],
-      from: date
-    )
+    // Use the Chinese calendar for year/month pillars (nian/yue). `nianGan`/
+    // `nianZhi` expect `.year` to be the *related Gregorian* year, and
+    // `yueZhi` expects `.month` to be the lunar month number — which is what
+    // `dateComponentsFromChineseCalendar` provides. Apple's native
+    // `Calendar(identifier: .chinese).dateComponents(...)` instead returns
+    // `.year` as the cyclic 60-year position, which corrupts both pillars.
+    let chineseComponents = date.dateComponentsFromChineseCalendar(.chineseCalendarGTM8)
     // Use Gregorian calendar for day/hour pillars (ri/shi) since
     // the cycleIndex calculation in DateComponents+Day.swift requires
     // Gregorian year/month/day to compute a reference date.

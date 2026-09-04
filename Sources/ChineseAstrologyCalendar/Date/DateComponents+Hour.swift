@@ -1,25 +1,22 @@
 import Foundation
 
 extension DateComponents {
-  /// Computes the hour’s Heavenly Stem (時干) based on the day’s stem and branch.
+  /// Computes the hour’s Heavenly Stem (時干) per 五鼠遁, based on the day’s
+  /// stem and the *hour's own* branch.
   ///
   /// Formula:
-  ///   shiGan = (riGan * 2 + riZhi - 2) mod 10
-  ///
-  /// Note: If the modulo operation results in 0, it is mapped to 10.
+  ///   shiGan = ((riGan - 1) * 2 + (shiZhi - 1)) mod 10, then +1 to re-index to 1...10
   public var shiGan: Tiangan? {
-    // Ensure that the day’s Heavenly Stem and Earthly Branch are available.
-    guard let dayStem = riGan, let dayBranch = riZhi else {
+    // Ensure that the day’s Heavenly Stem and the hour's Earthly Branch are available.
+    guard let dayStem = riGan, let hourBranch = shiZhi else {
       return nil
     }
 
-    // Calculate the preliminary value.
-    // We assume that both dayStem.rawValue and dayBranch.rawValue are 1-indexed.
-    let preliminaryValue = (dayStem.rawValue * 2) + dayBranch.rawValue - 2
+    // We assume that both dayStem.rawValue and hourBranch.rawValue are 1-indexed.
+    let preliminaryValue = (dayStem.rawValue - 1) * 2 + (hourBranch.rawValue - 1)
 
     // Calculate the hour stem index in the range 1...10.
-    // If preliminaryValue % 10 == 0, we consider it as 10.
-    let hourStemIndex = (preliminaryValue - 1) % 10 + 1
+    let hourStemIndex = preliminaryValue % 10 + 1
 
     return Tiangan(rawValue: hourStemIndex)
   }

@@ -60,12 +60,14 @@ import Testing
   // MARK: - Hour Pillar Tests
 
   /// Test the hour pillar (时柱) for 2010-04-12 at 3 AM.
-  /// Assumes that 3 AM is mapped to the period starting with 寅.
+  ///
+  /// Day pillar is 壬辰 (壬 = 9); hour 3 maps to 寅 (rawValue 3).
+  /// shiGan = ((9-1)*2 + (3-1)) % 10 + 1 = 9 → 壬. See `ShiZhuTests.shizhu_for_3AM`.
   @Test func hourPillar_for2010_04_12_at3AM() throws {
     // Provide hour = 3 for 3 AM.
     let component = DateComponents(calendar: .current, year: 2010, month: 4, day: 12, hour: 3)
 
-    #expect(component.shiZhu?.description == "甲寅", "The hour pillar for 2010-04-12 at 3 AM should be 甲寅")
+    #expect(component.shiZhu?.description == "壬寅", "The hour pillar for 2010-04-12 at 3 AM should be 壬寅")
   }
 
   /// Test the hour pillar when the hour component is missing.
@@ -79,13 +81,16 @@ import Testing
   // MARK: - Additional Boundary and Consistency Tests
 
   /// Test that the computed pillars wrap around correctly.
+  ///
+  /// Day pillar 乙卯 (乙 = 2); hour 23 maps to 子 (rawValue 1).
+  /// shiGan = ((2-1)*2 + (1-1)) % 10 + 1 = 2 % 10 + 1 = 3 → 丙.
   @Test func moduloWrapping() {
     // Create a component with a date that yields a base value near the modulo boundaries.
     let component = DateComponents(calendar: .current, year: 1999, month: 12, day: 29, hour: 23, minute: 59, second: 59)
 
     #expect(component.riZhu?.description == "乙卯", "Day pillar should wrap correctly at the modulo boundary")
     #expect(component.yue?.description == "丁丑", "Month pillar should wrap correctly at the modulo boundary")
-    #expect(component.shiZhu?.description == "己子", "Hour pillar should wrap correctly at the modulo boundary")
+    #expect(component.shiZhu?.description == "丙子", "Hour pillar should wrap correctly at the modulo boundary")
   }
 
   /// Test consistency across different calendars (if applicable).

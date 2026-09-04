@@ -78,7 +78,10 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
     // Subtract 0.5 before flooring to undo the +7.5° rounding offset in
     // currentSolarTerm(), giving floor(normalizedLong / 15) — i.e. the
     // solar term period that most recently started, not the nearest one.
-    self.init(rawValue: Int(floor(currentSolarTerm() - 0.5)))
+    // Normalized the same way as `Date.jieqi` (below): the raw value can
+    // fall outside 0..<24 and must wrap rather than yield `nil`.
+    let raw = Int(floor(currentSolarTerm() - 0.5))
+    return Jieqi(rawValue: ((raw % 24) + 24) % 24)
   }
 
   public var qi: Bool {

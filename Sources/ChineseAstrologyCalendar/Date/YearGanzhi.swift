@@ -10,8 +10,10 @@ extension DateComponents {
     guard let chineseYear else {
       return nil
     }
-    // Ensure that the underlying chineseYear is valid.
-    let remainder = chineseYear % 10
+    // Normalize to a non-negative remainder first — Swift's `%` can return a
+    // negative result for years before the epoch, which `Tiangan(rawValue:)`
+    // would then (silently) map to `nil` instead of the correct stem.
+    let remainder = ((chineseYear % 10) + 10) % 10
     // Adjust a 0 remainder to 10.
     let adjusted = remainder == 0 ? 10 : remainder
     return Tiangan(rawValue: adjusted)
@@ -27,7 +29,10 @@ extension DateComponents {
     guard let chineseYear else {
       return nil
     }
-    let remainder = chineseYear % 12
+    // Normalize to a non-negative remainder first — Swift's `%` can return a
+    // negative result, which would otherwise index the array out of bounds
+    // for any year more than 2697 years before the epoch.
+    let remainder = ((chineseYear % 12) + 12) % 12
     // Adjust a 0 remainder to 12.
     let adjusted = remainder == 0 ? 12 : remainder
     // Since allCases is 0-indexed, subtract 1.
