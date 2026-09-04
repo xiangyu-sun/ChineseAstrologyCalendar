@@ -35,7 +35,8 @@ public struct FestivalSource: SpecialDaySource {
       name: contentProvider.name(for: festival),
       category: contentProvider.category,
       detail: contentProvider.detail(for: festival),
-      date: date
+      date: date,
+      kind: .festival
     )]
   }
 
@@ -62,7 +63,8 @@ public struct FestivalSource: SpecialDaySource {
       name: contentProvider.name(for: festival),
       category: contentProvider.category,
       detail: contentProvider.detail(for: festival),
-      date: nextDate
+      date: nextDate,
+      kind: .festival
     )
   }
 }

@@ -31,7 +31,8 @@ public struct JieqiSource: SpecialDaySource {
       name: contentProvider.name(for: jieqi),
       category: contentProvider.category,
       detail: contentProvider.detail(for: jieqi),
-      date: date
+      date: date,
+      kind: .jieqi
     )]
   }
 
@@ -41,7 +42,8 @@ public struct JieqiSource: SpecialDaySource {
       name: contentProvider.name(for: occurrence.jieqi),
       category: contentProvider.category,
       detail: contentProvider.detail(for: occurrence.jieqi),
-      date: occurrence.startDate
+      date: occurrence.startDate,
+      kind: .jieqi
     )
   }
 }

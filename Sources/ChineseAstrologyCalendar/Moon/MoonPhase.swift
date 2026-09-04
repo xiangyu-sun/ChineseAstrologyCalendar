@@ -69,7 +69,7 @@ extension MoonPhase {
 // MARK: - ChineseMoonPhase
 
 /// Lunar phases expressed with traditional Chinese names.
-public enum ChineseMoonPhase: String, CaseIterable, TraditionalChineseNaming {
+public enum ChineseMoonPhase: String, CaseIterable, TraditionalChineseNaming, Sendable {
 
   /// The disk is unlit where the moon is not visible.
   case newMoon        = "朔"

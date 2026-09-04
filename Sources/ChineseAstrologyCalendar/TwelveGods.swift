@@ -1,7 +1,7 @@
 import Foundation
 
 /// 建、除、滿、平、定、執、破、危、成、收、開、閉
-public enum TwelveGods: Int, CaseIterable, TraditionalChineseNaming {
+public enum TwelveGods: Int, CaseIterable, TraditionalChineseNaming, Sendable {
   case establish = 0  // 建
   case remove         // 除
   case fullness       // 滿

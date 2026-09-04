@@ -60,4 +60,20 @@ public enum Tiangan: Int, CaseIterable, YinYangIdentifiable, FangWeiConvertible,
   public var chineseCharactor: String {
     chineseCharacter
   }
+
+  /// Hanyu Pinyin romanization of the stem, with tone marks.
+  public var pinyin: String {
+    switch self {
+    case .jia:  return "jiǎ"
+    case .yi:   return "yǐ"
+    case .bing: return "bǐng"
+    case .ding: return "dīng"
+    case .wu:   return "wù"
+    case .ji:   return "jǐ"
+    case .geng: return "gēng"
+    case .xin:  return "xīn"
+    case .ren:  return "rén"
+    case .kui:  return "guǐ"
+    }
+  }
 }

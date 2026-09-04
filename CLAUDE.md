@@ -94,7 +94,12 @@ Comprehensive test coverage organized by functional areas:
 - Cross-platform compatibility for all astronomical calculations
 
 ### Known Issues
-- `swift test` fails with `missing required module '_TestingInternals'` when run via CLI on macOS. Tests pass inside Xcode. Root cause: Swift Testing framework not fully resolved by SwiftPM in this Xcode 26 beta toolchain.
+- `swift test` may fail with `missing required module '_TestingInternals'` or `module compiled with Swift 6.2.4 cannot be imported by the Swift 6.3.3 compiler`. Root cause: a stale prebuilt `Testing.swiftmodule` in `.build` left over from an older toolchain. Fix: clear the cached modules and rerun —
+  ```bash
+  rm -f .build/*/debug/Modules/Testing.swiftmodule .build/*/debug/Modules/_TestingInternals.swiftmodule
+  swift test
+  ```
+  After clearing the cache, CLI `swift test` runs normally.
 
 ### Key Extension Points
 When adding new features, consider these integration points:

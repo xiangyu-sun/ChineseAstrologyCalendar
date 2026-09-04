@@ -1,5 +1,37 @@
 import Foundation
 
+// MARK: - SpecialDayKind
+
+/// A stable, locale-independent identifier for the kind of source that
+/// produced a ``SpecialDay``.
+///
+/// Unlike ``SpecialDay/category`` — which is a localized *display* string and
+/// therefore changes with language — a `SpecialDayKind` is safe to compare
+/// against in code (e.g. to filter or branch on event type):
+///
+/// ```swift
+/// let festivals = Date().specialDays().filter { $0.kind == .festival }
+/// ```
+///
+/// It is backed by a raw `String` so third-party ``SpecialDaySource``
+/// implementations can define their own kinds.
+public struct SpecialDayKind: RawRepresentable, Hashable, Sendable {
+  public let rawValue: String
+
+  public init(rawValue: String) {
+    self.rawValue = rawValue
+  }
+
+  /// A traditional Chinese festival (produced by ``FestivalSource``).
+  public static let festival = SpecialDayKind(rawValue: "festival")
+
+  /// A solar-term transition day (produced by ``JieqiSource``).
+  public static let jieqi = SpecialDayKind(rawValue: "jieqi")
+
+  /// A custom event kind from a third-party source that did not specify one.
+  public static let custom = SpecialDayKind(rawValue: "custom")
+}
+
 // MARK: - SpecialDay
 
 /// A unified representation of a "special day" in the Chinese calendar.
@@ -33,11 +65,18 @@ public struct SpecialDay: Sendable {
   /// The Gregorian date on which this event occurs.
   public let date: Date
 
-  public init(name: String, category: String, detail: String, date: Date) {
+  /// A stable, locale-independent identifier for the source kind.
+  ///
+  /// Use this — not ``category`` — when comparing or filtering events in code,
+  /// since ``category`` is a localized display string.
+  public let kind: SpecialDayKind
+
+  public init(name: String, category: String, detail: String, date: Date, kind: SpecialDayKind = .custom) {
     self.name = name
     self.category = category
     self.detail = detail
     self.date = date
+    self.kind = kind
   }
 }
 

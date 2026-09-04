@@ -16,6 +16,20 @@ public struct Ganzhi: CustomStringConvertible, Equatable, YinYangIdentifiable, H
   public var description: String {
     gan.chineseCharacter + zhi.chineseCharacter
   }
+
+  /// Hanyu Pinyin romanization of the stem-branch pair, with tone marks
+  /// (e.g. `"Guǐmǎo"` for 癸卯).
+  public var pinyin: String {
+    (gan.pinyin + zhi.pinyin).capitalizedFirstLetter
+  }
+}
+
+extension String {
+  /// Returns the string with only its first character uppercased.
+  fileprivate var capitalizedFirstLetter: String {
+    guard let first else { return self }
+    return first.uppercased() + dropFirst()
+  }
 }
 
 extension Ganzhi {

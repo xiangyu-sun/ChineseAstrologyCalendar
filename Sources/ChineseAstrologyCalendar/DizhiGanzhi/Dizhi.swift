@@ -121,6 +121,24 @@ public enum Dizhi: Int, CaseIterable, Comparable, Identifiable, YinYangIdentifia
     chineseCharacter
   }
 
+  /// Hanyu Pinyin romanization of the branch, with tone marks.
+  public var pinyin: String {
+    switch self {
+    case .zi:   return "zǐ"
+    case .chou: return "chǒu"
+    case .yin:  return "yín"
+    case .mao:  return "mǎo"
+    case .chen: return "chén"
+    case .si:   return "sì"
+    case .wu:   return "wǔ"
+    case .wei:  return "wèi"
+    case .shen: return "shēn"
+    case .you:  return "yǒu"
+    case .xu:   return "xū"
+    case .hai:  return "hài"
+    }
+  }
+
   /// Alternate historic name for the time period represented by the branch.
   public var aliasName: String {
     switch self {
