@@ -36,8 +36,8 @@ import Testing
   // MARK: - JieqiSource
 
   @Test func jieqiSourceDetectsQingming() {
-    // Qingming 2025 = April 5 UTC (isJieqiDay == true)
-    let qingming2025 = date(year: 2025, month: 4, day: 5)
+    // Qingming 2025 begins 15:48 on April 4 China time (isJieqiDay == true)
+    let qingming2025 = date(year: 2025, month: 4, day: 4)
     let results = qingming2025.specialDays(sources: [JieqiSource()])
     #expect(results.count == 1)
     #expect(results[0].name == "清明")
@@ -56,7 +56,7 @@ import Testing
 
   @Test func qingmingAppearsFromBothSources() {
     // April 5 2025: both a ChineseFestival and a Jieqi transition
-    let qingming2025 = date(year: 2025, month: 4, day: 5)
+    let qingming2025 = date(year: 2025, month: 4, day: 4)
     let results = qingming2025.specialDays(sources: [FestivalSource(), JieqiSource()])
     #expect(results.count == 2)
     let categories = Set(results.map(\.category))
@@ -95,13 +95,12 @@ import Testing
   }
 
   @Test func nextSpecialDayPicksSoonest() {
-    // Feb 15 2025: Rainwater (雨水 jieqi, Feb 19) should beat Lantern Festival (元宵節, Feb 12 — already past)
-    // Actually Lantern Festival 2025 is Feb 12 which is before our date.
-    // Rainwater is Feb 19 (4 days away). Verify it is returned.
+    // Feb 15 2025: the Lantern Festival (Feb 12) is already past; Rainwater (雨水)
+    // begins at 12:07 on Feb 18 China time, 3 days away.
     let ordinary = date(year: 2025, month: 2, day: 15)
     let result = ordinary.nextSpecialDay(sources: [FestivalSource(), JieqiSource()])
     #expect(result?.day.name == "雨水")
-    #expect(result?.daysUntil == 4)
+    #expect(result?.daysUntil == 3)
   }
 
   // MARK: - Pluggable custom source
