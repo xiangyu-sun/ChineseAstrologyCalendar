@@ -5,7 +5,7 @@ import Foundation
 /// Chinese names include the 宿 suffix (角宿), matching ``LunarMansion/name``.
 extension LunarMansion: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return name
     case .zhHans: return (Self.simplifiedCharacters[self] ?? rawValue) + "宿"
     case .en: return Self.englishNames[self] ?? name
@@ -58,7 +58,7 @@ extension LunarMansion: LocalizedNaming {
 
 extension FourSymbol: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant:
       return traditionalChineseName
     case .zhHans:

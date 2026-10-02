@@ -21,8 +21,8 @@ import Testing
   /// Every festival must have a non-empty, unique name and non-empty detail in each language.
   @Test func festivalProvidersCoverAllCasesUniquely() {
     let providers: [any ChineseFestivalContentProvider] = [
-      RussianFestivalContentProvider(),
-      SpanishFestivalContentProvider(),
+      LocalizedFestivalContentProvider(language: .ru),
+      LocalizedFestivalContentProvider(language: .es),
     ]
     for provider in providers {
       #expect(!provider.category.isEmpty)
@@ -43,8 +43,8 @@ import Testing
   /// Every solar term must have a non-empty, unique name and non-empty detail in each language.
   @Test func jieqiProvidersCoverAllCasesUniquely() {
     let providers: [any JieqiContentProvider] = [
-      RussianJieqiContentProvider(),
-      SpanishJieqiContentProvider(),
+      LocalizedJieqiContentProvider(language: .ru),
+      LocalizedJieqiContentProvider(language: .es),
     ]
     for provider in providers {
       #expect(!provider.category.isEmpty)
@@ -67,13 +67,13 @@ import Testing
     // Spring Festival 2025 = Jan 29 UTC
     let springFestival2025 = date(year: 2025, month: 1, day: 29)
 
-    let ru = springFestival2025.specialDays(sources: [FestivalSource(contentProvider: RussianFestivalContentProvider())])
+    let ru = springFestival2025.specialDays(sources: [FestivalSource(contentProvider: LocalizedFestivalContentProvider(language: .ru))])
     #expect(ru.count == 1)
     #expect(ru.first?.name == "Праздник весны (Китайский Новый год)")
     #expect(ru.first?.category == "Праздник")
     #expect(ru.first?.detail.isEmpty == false)
 
-    let es = springFestival2025.specialDays(sources: [FestivalSource(contentProvider: SpanishFestivalContentProvider())])
+    let es = springFestival2025.specialDays(sources: [FestivalSource(contentProvider: LocalizedFestivalContentProvider(language: .es))])
     #expect(es.count == 1)
     #expect(es.first?.name == "Fiesta de la Primavera (Año Nuevo Chino)")
     #expect(es.first?.category == "Festividad")
@@ -82,16 +82,16 @@ import Testing
 
   /// A localized JieqiSource surfaces the translated name on a solar-term day.
   @Test func jieqiSourceUsesRussianAndSpanishNames() {
-    // Qingming 2025 = April 5 UTC (isJieqiDay == true)
-    let qingming2025 = date(year: 2025, month: 4, day: 5)
+    // Qingming 2025 begins 15:48 on April 4 China time (isJieqiDay == true)
+    let qingming2025 = date(year: 2025, month: 4, day: 4)
     #expect(qingming2025.isJieqiDay)
 
-    let ru = qingming2025.specialDays(sources: [JieqiSource(contentProvider: RussianJieqiContentProvider())])
+    let ru = qingming2025.specialDays(sources: [JieqiSource(contentProvider: LocalizedJieqiContentProvider(language: .ru))])
     #expect(ru.count == 1)
     #expect(ru.first?.name == "Ясность и чистота (Цинмин)")
     #expect(ru.first?.detail.isEmpty == false)
 
-    let es = qingming2025.specialDays(sources: [JieqiSource(contentProvider: SpanishJieqiContentProvider())])
+    let es = qingming2025.specialDays(sources: [JieqiSource(contentProvider: LocalizedJieqiContentProvider(language: .es))])
     #expect(es.count == 1)
     #expect(es.first?.name == "Claro y luminoso (Qingming)")
     #expect(es.first?.detail.isEmpty == false)

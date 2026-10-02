@@ -3,7 +3,7 @@ import Foundation
 
 extension TimeZone {
   /// Time zone used for China Standard Time (GMT+8).
-  static let chinaStandardTime = TimeZone(abbreviation: "GMT+8") ?? .autoupdatingCurrent
+  public static let chinaStandardTime = TimeZone(secondsFromGMT: 8 * 3600)!
 }
 
 extension Calendar {

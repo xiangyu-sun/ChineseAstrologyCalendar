@@ -100,7 +100,7 @@ import Testing
 
   // MARK: - Date.isJieqiDay
   // Note: the Astral library computes solar term transitions in UTC.
-  // Qingming 2026 transitions on April 5 UTC (= April 4 local in China).
+  // Qingming 2026 begins 03:40 on April 5 China time.
 
   /// April 5 UTC 2026 is the first UTC day of Qingming (清明).
   @Test func isJieqiDayTrueOnQingming() {

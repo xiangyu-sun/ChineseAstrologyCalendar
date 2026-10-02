@@ -6,7 +6,7 @@ extension Day: LocalizedNaming {
   /// The Chinese forms (初一…三十) are identical in Traditional and Simplified
   /// script, so both return ``name``. English returns an ordinal ("1st"…"30th").
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans:
       return name
     case .en:

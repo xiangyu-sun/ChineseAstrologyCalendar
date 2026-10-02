@@ -1,19 +1,12 @@
 import Foundation
 
-// MARK: - SpanishJieqiContentProvider
+// MARK: - SpanishJieqiContent
 
-/// Spanish-language content for `JieqiSource`.
-///
-/// Supplies Spanish names and seasonal health notes for every `Jieqi` case.
-///
-/// ```swift
-/// let source = JieqiSource(contentProvider: SpanishJieqiContentProvider())
-/// ```
-public struct SpanishJieqiContentProvider: JieqiContentProvider {
+/// Spanish display strings for ``Jieqi``, served through ``DisplayLanguage/es``
+/// by `localizedName(in:)` and ``LocalizedJieqiContentProvider``.
+struct SpanishJieqiContent {
 
-  public init() {}
-
-  public func name(for jieqi: Jieqi) -> String {
+  func name(for jieqi: Jieqi) -> String {
     switch jieqi {
     case .startOfSpring:      return "Comienzo de la primavera"
     case .rainWater:          return "Agua de lluvia"
@@ -42,7 +35,7 @@ public struct SpanishJieqiContentProvider: JieqiContentProvider {
     }
   }
 
-  public func detail(for jieqi: Jieqi) -> String {
+  func detail(for jieqi: Jieqi) -> String {
     switch jieqi {
     case .startOfSpring:
       return "En el comienzo de la primavera, nutre el hígado y protege el yang: acuéstate y levántate temprano, estira el cuerpo para elevar el qi yang y mantén un ánimo alegre."
@@ -95,5 +88,5 @@ public struct SpanishJieqiContentProvider: JieqiContentProvider {
     }
   }
 
-  public var category: String { "Término solar" }
+  var category: String { "Término solar" }
 }

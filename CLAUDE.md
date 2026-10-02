@@ -20,7 +20,7 @@ swift package lint           # Lint code using SwiftLint
 ```
 
 ### Release Management
-Create releases by pushing git tags that match the pattern `v*` (e.g., `v1.2.0`). This triggers an automated workflow that builds the package and creates a GitHub release with a ZIP archive.
+Create releases by pushing git tags that match the pattern `v*` (e.g., `v4.0.0`). This triggers an automated workflow that builds the package and creates a GitHub release with a ZIP archive. Add the release's entry to `CHANGELOG.md` before tagging, and for major versions update `MIGRATION.md`. Tag only commits on `master` (v3.0.0/v3.1.0 were once tagged on an unmerged branch).
 
 ## Project Architecture
 
@@ -65,11 +65,35 @@ Pluggable sources for surfacing special calendar events on a given date:
 - **SpecialDaySource** protocol: implement `specialDays(on:)` and `nextSpecialDay(after:)` to add custom event sources
 - **FestivalSource**: built-in source for traditional Chinese festivals; inject a `ChineseFestivalContentProvider` for custom names/descriptions/category
 - **JieqiSource**: built-in source for solar-term transition days; inject a `JieqiContentProvider` for custom display strings
-- **Localized content providers**: built-in translations of festival and solar-term names/details — `Default*` (Traditional Chinese), `Russian*`, and `Spanish*` variants of both `ChineseFestivalContentProvider` and `JieqiContentProvider`. Pass one to `FestivalSource(contentProvider:)` / `JieqiSource(contentProvider:)`
+- **Localized content providers**: `LocalizedFestivalContentProvider(language:)` and `LocalizedJieqiContentProvider(language:)` serve every `DisplayLanguage`; `Default*` providers are the Traditional Chinese originals. The `Russian*`/`Spanish*` providers are deprecated wrappers kept for 4.x; their tables live in `Localization/Tables/` as internal types
 - **Date.specialDays(sources:)**: returns all special days from the provided sources on a given date
 - **Date.nextSpecialDay(sources:)**: returns the closest upcoming special day across all sources
 - **Date.nextChineseFestival(converter:)**: returns `(festival: ChineseFestival, date: Date)?` — the soonest upcoming festival
 - **Date.chineseFestival**: exact-day check — returns the festival that falls on that specific date, or `nil`
+
+#### 7. ChineseAlmanac (app entry point, v4)
+- **`ChineseAlmanac(timeZone:language:)`**: `day(for:)` → `AlmanacDay`, `days(from:count:)` for ranges. Default time zone is China Standard Time
+- **`AlmanacDay`**: `Equatable`/`Sendable` snapshot (lunarDate, pillars, jieqi, festival, twelveGod, lunarMansion, shichen, plus derived zodiac/moonPhase/isJieqiDay); `text` returns `AlmanacText` with every value localized
+- **`LunarDate`** (`Date/LunarDate.swift`): year `Ganzhi` + `LunarMonth` + `Day`, `formatted(_ style:in:)`. Replaces the deprecated `Date+Year` string properties
+- New almanac facts should be added to `AlmanacDay` and `AlmanacText` together, with a test in `V4APITests.swift`
+
+#### 8. Localization
+- **`DisplayLanguage`** is a struct (`zhHant`, `zhHans`, `en`, `ru`, `es`), not an enum, so adding a language is not source-breaking. Never make it an enum again
+- Inside the package, switch on `language.base` (internal `BaseLanguage`: zhHant/zhHans/en) for types translated only into Chinese and English. Russian/Spanish fall back to English automatically. Types with their own ru/es text (`ChineseFestival`, `Jieqi`) check `language == .ru/.es` before switching on `base`
+- `.zhHant` is canonical and must equal the type's `traditionalChineseName`/`chineseCharacter`. All canonical strings are Traditional script
+- Long-form prose (Jieqi `healthTip`, TwelveGods almanac text) is intentionally not machine-translated
+- Every `localizedName(in:)` must return a non-empty string for every `DisplayLanguage.allCases` value
+
+#### 9. Time zones and solar terms
+- Solar terms are reckoned by the **China civil day (UTC+8)**. A term belongs to the day it begins, so `Date.jieqi` samples the sun at the **last instant** of the civil day, never at noon (noon sampling put afternoon transitions a day late; fixed in 4.0)
+- `Bazi(date:)` and solar terms always use China Standard Time. Lunar dates, festivals, Twelve Gods and Shichen take a time zone/calendar; `ChineseAlmanac` passes its own
+- `dateComponentsFromChineseCalendar` uses a shared `DateFormatter` guarded by a lock; keep that if you touch it
+
+### Breaking-change policy
+- Breaking changes go in a major version, are listed in `CHANGELOG.md`, and get a section in `MIGRATION.md` with before/after code
+- Prefer deprecating over removing: keep a deprecated forwarding API for one major version (`@available(*, deprecated, message: "Use …")`), then delete it in the next major. Deprecated in 4.x, to delete in 5.0: the `Russian*`/`Spanish*` content providers and the `Date+Year` string properties
+- Behaviour changes (results differ for the same input) count as breaking even if signatures are unchanged
+- Downstream packages (Bagua, JingluoShuxueCore in the same GitHub folder) depend on this one by version; bump their minimum when they need a new API
 
 ### Dependencies and External Libraries
 - **swift-numerics**: Mathematical calculations for astronomical computations

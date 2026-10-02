@@ -6,7 +6,7 @@ import Foundation
 /// English has no established translation, so it uses capitalized Hanyu Pinyin.
 extension Tiangan: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return chineseCharacter
     case .en: return pinyin.capitalizedFirstLetter
     }
@@ -19,7 +19,7 @@ extension Tiangan: LocalizedNaming {
 /// script. English uses capitalized Hanyu Pinyin.
 extension Dizhi: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return chineseCharacter
     case .en: return pinyin.capitalizedFirstLetter
     }
@@ -29,7 +29,7 @@ extension Dizhi: LocalizedNaming {
   ///
   /// Equivalent to ``displayHourText`` for `.zhHant`.
   public func localizedHourName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return displayHourText
     case .zhHans: return chineseCharacter + "时"
     case .en: return "\(localizedName(in: .en)) hour"
@@ -43,7 +43,7 @@ extension Dizhi: LocalizedNaming {
 /// capitalized Hanyu Pinyin, e.g. "Guǐmǎo" for 癸卯.
 extension Ganzhi: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return description
     case .en: return pinyin
     }

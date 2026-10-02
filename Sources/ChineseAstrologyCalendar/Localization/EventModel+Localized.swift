@@ -16,7 +16,7 @@ extension EventModel {
 
     let monthValue = dateComponents.month ?? 1
 
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans:
       let monthNumber = NSNumber(value: monthValue)
       let monthString = NumberFormatter.traditionalChineseNumberFormatter.string(from: monthNumber) ?? "\(monthValue)"

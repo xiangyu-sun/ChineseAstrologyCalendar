@@ -35,8 +35,13 @@ extension Date {
   /// }
   /// ```
   public func dateComponentsFromChineseCalendar(_ calendar: Calendar = .chineseCalendar) -> DateComponents {
+    // The formatter is shared, and its time zone is set per call, so both
+    // steps must happen under the lock or concurrent callers race.
+    Date.chineseENDateFormatterLock.lock()
     Date.chineseENDateFormatter.timeZone = calendar.timeZone
-    let elements = Date.chineseENDateFormatter.string(from: self).split(separator: "/")
+    let formatted = Date.chineseENDateFormatter.string(from: self)
+    Date.chineseENDateFormatterLock.unlock()
+    let elements = formatted.split(separator: "/")
     let day = Int(elements[1])
     let month: Int?
     let year = Int(elements[2])
@@ -74,7 +79,9 @@ extension Date {
 
   // MARK: Internal
 
-  static let chineseENDateFormatter: DateFormatter = {
+  static let chineseENDateFormatterLock = NSLock()
+
+  nonisolated(unsafe) static let chineseENDateFormatter: DateFormatter = {
     let df = DateFormatter()
     df.calendar = Calendar.chineseCalendar
     df.dateStyle = .short

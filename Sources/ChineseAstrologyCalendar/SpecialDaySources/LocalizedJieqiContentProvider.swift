@@ -2,14 +2,15 @@ import Foundation
 
 // MARK: - LocalizedJieqiContentProvider
 
-/// A `JieqiContentProvider` that supplies a Simplified Chinese or English
-/// display name for each ``Jieqi``.
+/// A `JieqiContentProvider` that supplies display strings for each ``Jieqi``
+/// in any ``DisplayLanguage``.
 ///
-/// Only `name(for:)` is translated. `detail(for:)` (the TCM `healthTip`) is
-/// dense, medically-adjacent classical text; auto-translating it risked
-/// introducing inaccurate health claims, so it intentionally falls back to
-/// the library's Traditional Chinese text for every ``DisplayLanguage``.
-/// Inject your own ``JieqiContentProvider`` if you need a translated `detail`.
+/// `name(for:)` is translated for every language. `detail(for:)` is the
+/// seasonal health note: Russian and Spanish have hand-written notes, while
+/// Simplified Chinese and English return the library's Traditional Chinese
+/// `healthTip`, because machine-translating dense TCM text risked introducing
+/// inaccurate health claims. Inject your own ``JieqiContentProvider`` if you
+/// need a different `detail`.
 ///
 /// ```swift
 /// let source = JieqiSource(contentProvider: LocalizedJieqiContentProvider(language: .en))
@@ -27,11 +28,20 @@ public struct LocalizedJieqiContentProvider: JieqiContentProvider {
   }
 
   public func detail(for jieqi: Jieqi) -> String {
-    jieqi.healthTip
+    switch language {
+    case .ru: return RussianJieqiContent().detail(for: jieqi)
+    case .es: return SpanishJieqiContent().detail(for: jieqi)
+    default: return jieqi.healthTip
+    }
   }
 
   public var category: String {
     switch language {
+    case .ru: return RussianJieqiContent().category
+    case .es: return SpanishJieqiContent().category
+    default: break
+    }
+    switch language.base {
     case .zhHant: return JieqiSource.categoryName
     case .zhHans: return "节气"
     case .en: return "Solar Term"

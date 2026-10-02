@@ -2,7 +2,7 @@ import Foundation
 
 extension Wuxing: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return traditionalChineseName // 金木水火土 identical in both scripts
     case .en: return Self.englishNames[self] ?? traditionalChineseName
     }
@@ -10,7 +10,7 @@ extension Wuxing: LocalizedNaming {
 
   /// The traditional color associated with this element, in the given language.
   public func localizedColorDescription(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return colorDescription
     case .zhHans: return Self.simplifiedColors[self] ?? colorDescription
     case .en: return Self.englishColors[self] ?? colorDescription
@@ -19,7 +19,7 @@ extension Wuxing: LocalizedNaming {
 
   /// The traditional flavor associated with this element, in the given language.
   public func localizedFlavor(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return fiveFlavor
     case .zhHans: return Self.simplifiedFlavors[self] ?? fiveFlavor
     case .en: return Self.englishFlavors[self] ?? fiveFlavor

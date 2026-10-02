@@ -1,19 +1,12 @@
 import Foundation
 
-// MARK: - SpanishFestivalContentProvider
+// MARK: - SpanishFestivalContent
 
-/// Spanish-language content for `FestivalSource`.
-///
-/// Supplies Spanish names and descriptions for every `ChineseFestival` case.
-///
-/// ```swift
-/// let source = FestivalSource(contentProvider: SpanishFestivalContentProvider())
-/// ```
-public struct SpanishFestivalContentProvider: ChineseFestivalContentProvider {
+/// Spanish display strings for ``ChineseFestival``, served through ``DisplayLanguage/es``
+/// by `localizedName(in:)` and ``LocalizedFestivalContentProvider``.
+struct SpanishFestivalContent {
 
-  public init() {}
-
-  public func name(for festival: ChineseFestival) -> String {
+  func name(for festival: ChineseFestival) -> String {
     switch festival {
     case .springFestival:     return "Fiesta de la Primavera (Año Nuevo Chino)"
     case .lanternFestival:    return "Fiesta de los Faroles"
@@ -30,7 +23,7 @@ public struct SpanishFestivalContentProvider: ChineseFestivalContentProvider {
     }
   }
 
-  public func detail(for festival: ChineseFestival) -> String {
+  func detail(for festival: ChineseFestival) -> String {
     switch festival {
     case .springFestival:
       return "El Año Nuevo del calendario lunar, la festividad tradicional más importante del año, que celebra el comienzo del nuevo año."
@@ -59,5 +52,5 @@ public struct SpanishFestivalContentProvider: ChineseFestivalContentProvider {
     }
   }
 
-  public var category: String { "Festividad" }
+  var category: String { "Festividad" }
 }

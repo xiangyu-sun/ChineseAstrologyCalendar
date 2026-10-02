@@ -38,7 +38,7 @@ extension LunarMonth: LocalizedNaming {
   /// The month's traditional name: 正月 … 十月, 冬月, 臘月, prefixed with 閏 for
   /// leap months. English uses ordinals: "1st Month", "Leap 4th Month".
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant:
       return (isLeap ? "閏" : "") + Self.traditionalNames[number - 1]
     case .zhHans:

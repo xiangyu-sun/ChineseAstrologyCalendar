@@ -6,7 +6,7 @@ import Foundation
 /// A Shichen (時辰) is one of twelve two-hour periods in traditional Chinese timekeeping,
 /// each associated with an Earthly Branch (Dizhi). This structure provides methods to
 /// calculate start and end times, as well as subdivisions called "ke" (刻).
-public struct Shichen: Codable {
+public struct Shichen: Codable, Sendable {
 
   // MARK: Lifecycle
 

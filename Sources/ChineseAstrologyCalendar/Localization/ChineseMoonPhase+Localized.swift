@@ -7,7 +7,7 @@ import Foundation
 /// terminology and is not translated.
 extension ChineseMoonPhase: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return Self.traditionalModernNames[self] ?? traditionalChineseName
     case .zhHans: return Self.simplifiedModernNames[self] ?? Self.traditionalModernNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName

@@ -17,7 +17,7 @@ import Testing
 
     let date = Calendar.current.date(from: component)
 
-    #expect(date?.chineseYearMonthDate == "壬寅年五月初九")
+    #expect(date?.lunarDate()?.formatted(.yearMonthDay) == "壬寅年五月初九")
   }
 
   @Test func chineseYearMonthDateZodiac() throws {
@@ -25,7 +25,7 @@ import Testing
 
     let date = Calendar.current.date(from: component)
 
-    #expect(date?.displayStringOfChineseYearMonthDateWithZodiac == "壬寅虎年五月初九")
+    #expect(date?.lunarDate()?.formatted(.yearZodiacMonthDay) == "壬寅虎年五月初九")
   }
 
   @Test func chineseYearMonthDateZodiacGTM8() throws {
@@ -33,7 +33,7 @@ import Testing
 
     let date = Calendar.current.date(from: component)
 
-    #expect(date?.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "癸卯兔年正月初一")
+    #expect(date?.lunarDate(.chineseCalendarGTM8)?.formatted(.yearZodiacMonthDay) == "癸卯兔年正月初一")
   }
 
   @Test func chineseYearMonthDateZodiacCurrentCalendar() throws {
@@ -41,13 +41,13 @@ import Testing
 
     let date = Calendar.current.date(from: component)
 
-    #expect(date?.displayStringOfChineseYearMonthDateWithZodiac == "癸卯兔年正月初一")
+    #expect(date?.lunarDate()?.formatted(.yearZodiacMonthDay) == "癸卯兔年正月初一")
   }
 
   @Test func chineseYearMonthDateZodiacGTM8WithEventModel() throws {
     let date = Date(timeIntervalSinceReferenceDate: 696009600)
 
-    #expect(event.date.displayStringOfChineseYearMonthDateWithZodiacGTM8 == "甲辰龍年正月初一")
+    #expect(event.date.lunarDate(.chineseCalendarGTM8)?.formatted(.yearZodiacMonthDay) == "甲辰龍年正月初一")
   }
 
   @Test func chineseMonth() throws {
@@ -64,14 +64,14 @@ import Testing
     let component = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
 
     let date = Calendar.current.date(from: component)
-    #expect(date!.chineseYearMonthDate == "壬寅年十月初八")
+    #expect(date!.lunarDate()?.formatted(.yearMonthDay) == "壬寅年十月初八")
   }
 
   @Test func chineseMonthAndDateGTM8() throws {
     let component = DateComponents(calendar: .current, year: 2022, month: 11, day: 1, hour: 17)
 
     let date = Calendar.current.date(from: component)
-    #expect(date!.chineseYearMonthDateGTM8 == "壬寅年十月初九")
+    #expect(date!.lunarDate(.chineseCalendarGTM8)?.formatted(.yearMonthDay) == "壬寅年十月初九")
   }
 
 }

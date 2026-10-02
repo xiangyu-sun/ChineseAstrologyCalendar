@@ -4,70 +4,49 @@
 
 import Foundation
 
+// MARK: - Deprecated string accessors
+//
+// These used to cut fixed character offsets out of a DateFormatter's output,
+// which broke whenever the OS changed its Chinese-calendar format, and could
+// only produce Traditional Chinese. They now render a LunarDate.
+
 extension Date {
-  /// Chinese day and month string in the current time zone.
+  /// Chinese day string in the current time zone, e.g. 初九.
+  @available(*, deprecated, message: "Use lunarDate()?.formatted(.day, in:)")
   public var chineseDate: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
-    guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
-    let start = index.utf16Offset(in: dateInChinese) + 1
-
-    return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
+    lunarDate()?.formatted(.day) ?? ""
   }
 
-  /// Chinese year, month and day string in the current time zone.
+  /// Chinese year, month and day string in the current time zone, e.g. 壬寅年五月初九.
+  @available(*, deprecated, message: "Use lunarDate()?.formatted(.yearMonthDay, in:)")
   public var chineseYearMonthDate: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatter.string(from: self)
-
-    return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
+    lunarDate()?.formatted(.yearMonthDay) ?? ""
   }
 
-  /// Year-month-date string with zodiac animal inserted.
+  /// Year-month-date string with the zodiac animal, e.g. 壬寅虎年五月初九.
+  @available(*, deprecated, message: "Use lunarDate()?.formatted(.yearZodiacMonthDay, in:)")
   public var displayStringOfChineseYearMonthDateWithZodiac: String {
-    var result = chineseYearMonthDate
-
-    let dateCompoenent = dateComponentsFromChineseCalendar()
-
-    guard let index = result.firstIndex(of: "年") else { return "" }
-
-    guard let zodiac = (dateCompoenent.zodiac?.rawValue ?? "").first else { return "" }
-
-    result.insert(zodiac, at: index)
-
-    return result
+    lunarDate()?.formatted(.yearZodiacMonthDay) ?? ""
   }
 
-  /// Chinese date string using China Standard Time.
+  /// Chinese day string in China Standard Time, e.g. 初九.
+  @available(*, deprecated, message: "Use lunarDate(.chineseCalendarGTM8)?.formatted(.day, in:)")
   public var chineseDateGTM8: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
-    guard let index = dateInChinese.firstIndex(of: "月") else { return "" }
-    let start = index.utf16Offset(in: dateInChinese) + 1
-
-    return String(dateInChinese[.init(utf16Offset: start, in: dateInChinese)...])
+    lunarDate(.chineseCalendarGTM8)?.formatted(.day) ?? ""
   }
 
-  /// Chinese year-month-date string using China Standard Time.
+  /// Chinese year-month-date string in China Standard Time.
+  @available(*, deprecated, message: "Use lunarDate(.chineseCalendarGTM8)?.formatted(.yearMonthDay, in:)")
   public var chineseYearMonthDateGTM8: String {
-    let dateInChinese = DateFormatter.chineseTranditionalChineseDateFormatterWithGTM8.string(from: self)
-
-    return String(dateInChinese[String.Index(utf16Offset: 4, in: dateInChinese)..<dateInChinese.endIndex])
+    lunarDate(.chineseCalendarGTM8)?.formatted(.yearMonthDay) ?? ""
   }
 
-  /// Year-month-date string with zodiac using China Standard Time.
+  /// Year-month-date string with the zodiac animal in China Standard Time.
+  @available(*, deprecated, message: "Use lunarDate(.chineseCalendarGTM8)?.formatted(.yearZodiacMonthDay, in:)")
   public var displayStringOfChineseYearMonthDateWithZodiacGTM8: String {
-    var result = chineseYearMonthDateGTM8
-
-    let dateComponent = dateComponentsFromChineseCalendar(.chineseCalendarGTM8)
-
-    guard let index = result.firstIndex(of: "年") else { return "" }
-
-    guard let zodiac = (dateComponent.zodiac?.rawValue ?? "").first else { return "" }
-
-    result.insert(zodiac, at: index)
-
-    return result
+    lunarDate(.chineseCalendarGTM8)?.formatted(.yearZodiacMonthDay) ?? ""
   }
 }
-
 extension DateComponents {
 
   // MARK: Internal
