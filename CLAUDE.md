@@ -73,7 +73,7 @@ Pluggable sources for surfacing special calendar events on a given date:
 
 ### Dependencies and External Libraries
 - **swift-numerics**: Mathematical calculations for astronomical computations
-- **Astral**: Astronomical calculations for solar terms and celestial positioning
+- **Astral**: Astronomical calculations for solar terms and celestial positioning (pinned by version, `from: "1.2.0"` — never a branch, or downstream packages cannot depend on this one by version)
 - **SwiftLint/SwiftFormat**: Code quality tools (as package plugins)
 
 ### Testing Strategy
@@ -90,7 +90,7 @@ Comprehensive test coverage organized by functional areas:
 4. **Astronomical Data** → Solar terms and moon phases via Astral dependency
 
 ### Platform Support
-- iOS 13+, macOS 10.15+, watchOS 6+
+- iOS 13+, macOS 10.14+, watchOS 6+
 - Swift 6.0+ toolchain required (swift-tools-version: 6.0)
 - Cross-platform compatibility for all astronomical calculations
 

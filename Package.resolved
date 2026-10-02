@@ -1,13 +1,13 @@
 {
-  "originHash" : "07faa050808fd47aa8cec0eb08bda259b9c79b9dfc42287a0774c321b822818b",
+  "originHash" : "d9994fb1e06f4716bbdcf3e59103ca428296b87480d0504483e0e8ec5eb0255e",
   "pins" : [
     {
       "identity" : "astral",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/xiangyu-sun/Astral.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "e9d873f744021db6f69a06877562ee0ed1091360"
+        "revision" : "e9d873f744021db6f69a06877562ee0ed1091360",
+        "version" : "1.2.0"
       }
     },
     {
