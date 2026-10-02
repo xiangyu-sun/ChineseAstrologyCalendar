@@ -65,6 +65,7 @@ Pluggable sources for surfacing special calendar events on a given date:
 - **SpecialDaySource** protocol: implement `specialDays(on:)` and `nextSpecialDay(after:)` to add custom event sources
 - **FestivalSource**: built-in source for traditional Chinese festivals; inject a `ChineseFestivalContentProvider` for custom names/descriptions/category
 - **JieqiSource**: built-in source for solar-term transition days; inject a `JieqiContentProvider` for custom display strings
+- **Localized content providers**: built-in translations of festival and solar-term names/details — `Default*` (Traditional Chinese), `Russian*`, and `Spanish*` variants of both `ChineseFestivalContentProvider` and `JieqiContentProvider`. Pass one to `FestivalSource(contentProvider:)` / `JieqiSource(contentProvider:)`
 - **Date.specialDays(sources:)**: returns all special days from the provided sources on a given date
 - **Date.nextSpecialDay(sources:)**: returns the closest upcoming special day across all sources
 - **Date.nextChineseFestival(converter:)**: returns `(festival: ChineseFestival, date: Date)?` — the soonest upcoming festival
