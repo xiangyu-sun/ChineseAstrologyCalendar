@@ -85,8 +85,9 @@ Pluggable sources for surfacing special calendar events on a given date:
 - Every `localizedName(in:)` must return a non-empty string for every `DisplayLanguage.allCases` value
 
 #### 9. Time zones and solar terms
-- Solar terms are reckoned by the **China civil day (UTC+8)**. A term belongs to the day it begins, so `Date.jieqi` samples the sun at the **last instant** of the civil day, never at noon (noon sampling put afternoon transitions a day late; fixed in 4.0)
-- `Bazi(date:)` and solar terms always use China Standard Time. Lunar dates, festivals, Twelve Gods and Shichen take a time zone/calendar; `ChineseAlmanac` passes its own
+- Solar terms are reckoned by **calendar day in a time zone**: China (UTC+8) for the plain properties (`jieqi`, `isJieqiDay`, `currentJieqi`, `nextJieqi`), any zone via the `(in: TimeZone)` overloads (4.1). A term belongs to the day it begins, so `jieqi(in:)` samples the sun at the **last instant** of that day, never at noon (noon sampling put afternoon transitions a day late; fixed in 4.0)
+- Clients that let users choose local vs China time (TianganDizhi's `useGTM8`) pass that time zone to the `(in:)` overloads; don't re-implement end-of-day alignment app-side
+- `Bazi(date:)` always uses China Standard Time. Lunar dates, solar terms, festivals, Twelve Gods and Shichen take a time zone/calendar; `ChineseAlmanac` passes its own to all of them
 - `dateComponentsFromChineseCalendar` uses a shared `DateFormatter` guarded by a lock; keep that if you touch it
 
 ### Breaking-change policy

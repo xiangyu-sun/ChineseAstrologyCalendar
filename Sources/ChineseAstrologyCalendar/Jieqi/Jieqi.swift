@@ -50,11 +50,18 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
   /// Returns the start date of this jieqi's period that contains `date`, or `nil` if
   /// `date` is not inside this jieqi's period.
   public func startDate(in date: Date) -> Date? {
-    guard date.jieqi == self else { return nil }
-    let calendar = Calendar(identifier: .gregorian)
+    startDate(in: date, timeZone: .chinaStandardTime)
+  }
+
+  /// The start of the period of this jieqi containing `date`, with solar-term
+  /// days reckoned as calendar days in `timeZone`. Returns `nil` when `date`
+  /// is outside this jieqi's period.
+  public func startDate(in date: Date, timeZone: TimeZone) -> Date? {
+    guard date.jieqi(in: timeZone) == self else { return nil }
+    let calendar = gregorian(in: timeZone)
     var probe = date
     while let prev = calendar.date(byAdding: .day, value: -1, to: probe) {
-      if prev.jieqi != self { return probe }
+      if prev.jieqi(in: timeZone) != self { return probe }
       probe = prev
     }
     return date
@@ -62,11 +69,17 @@ public enum Jieqi: Int, CaseIterable, Equatable, TraditionalChineseNaming, Senda
 
   /// Returns the next occurrence of this jieqi strictly after `date`.
   public func nextOccurrence(after date: Date = Date()) -> JieqiOccurrence? {
-    let calendar = Calendar(identifier: .gregorian)
+    nextOccurrence(after: date, timeZone: .chinaStandardTime)
+  }
+
+  /// Returns the next occurrence of this jieqi strictly after `date`, with
+  /// solar-term days reckoned as calendar days in `timeZone`.
+  public func nextOccurrence(after date: Date, timeZone: TimeZone) -> JieqiOccurrence? {
+    let calendar = gregorian(in: timeZone)
     var probe = date
     for _ in 0..<400 {
       guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
-      if next.isJieqiDay, next.jieqi == self {
+      if next.isJieqiDay(in: timeZone), next.jieqi(in: timeZone) == self {
         return JieqiOccurrence(jieqi: self, startDate: next)
       }
       probe = next
@@ -127,74 +140,80 @@ public struct JieqiOccurrence: Equatable, Sendable {
 /// UTC+8) that contains the instant the sun crosses the term's ecliptic longitude.
 /// China has observed UTC+8 year-round with no DST since 1949, so a fixed offset is
 /// exact for all modern dates.
-private let jieqiCivilTimeZone = TimeZone(secondsFromGMT: 8 * 3600)!
 
 public extension Date {
-  /// The solar term period this date falls within.
+  /// The solar term period this date falls within, reckoned by the China
+  /// civil day (UTC+8). Equivalent to `jieqi(in: .chinaStandardTime)`.
+  var jieqi: Jieqi? { jieqi(in: .chinaStandardTime) }
+
+  /// Whether this date's China civil day (UTC+8) is the first day of a new
+  /// solar term (節氣). Equivalent to `isJieqiDay(in: .chinaStandardTime)`.
   ///
-  /// Returns the `Jieqi` whose period is in effect on this date's China-local
-  /// (UTC+8) civil day. A term that begins at any time during a civil day is
-  /// attributed to that whole day, as printed almanacs do, so the term is
-  /// sampled at the last instant of the day. Every date maps to exactly one
-  /// period, so this is never `nil`.
-  var jieqi: Jieqi? {
-    var calendar = Calendar(identifier: .gregorian)
-    calendar.timeZone = jieqiCivilTimeZone
+  /// ```swift
+  /// if Date().isJieqiDay, let jieqi = Date().jieqi {
+  ///     print("Today is \(jieqi.chineseName)!")
+  /// }
+  /// ```
+  var isJieqiDay: Bool { isJieqiDay(in: .chinaStandardTime) }
+
+  /// The jieqi period this date falls within, together with the day that
+  /// period started, reckoned by the China civil day (UTC+8).
+  var currentJieqi: JieqiOccurrence? { currentJieqi(in: .chinaStandardTime) }
+
+  /// The next solar term transition strictly after this date's China civil
+  /// day (UTC+8), at least one day away even when called on a jieqi day.
+  var nextJieqi: JieqiOccurrence? { nextJieqi(in: .chinaStandardTime) }
+
+  /// The solar term period in effect on this date's calendar day in `timeZone`.
+  ///
+  /// A term that begins at any time during that calendar day is attributed to
+  /// the whole day, as printed almanacs do, so the term is sampled at the last
+  /// instant of the day. Pass `.chinaStandardTime` to match Chinese almanacs, or
+  /// the user's time zone to place terms on their local calendar day. Every
+  /// date maps to exactly one period, so this is never `nil`.
+  func jieqi(in timeZone: TimeZone) -> Jieqi? {
+    let calendar = gregorian(in: timeZone)
     let startOfDay = calendar.startOfDay(for: self)
     let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)?.addingTimeInterval(-1) ?? self
     let raw = Int(floor(currentSolarTerm(for: endOfDay) - 0.5))
     return Jieqi(rawValue: ((raw % 24) + 24) % 24)
   }
 
-  /// Whether this date is the first calendar day of a new solar term (節氣).
-  ///
-  /// Use this to trigger special handling on the exact day a Jieqi begins:
-  /// ```swift
-  /// if Date().isJieqiDay, let jieqi = Date().jieqi {
-  ///     print("Today is \(jieqi.chineseName)!")
-  /// }
-  /// ```
-  var isJieqiDay: Bool {
-    let calendar = Calendar(identifier: .gregorian)
-    guard let yesterday = calendar.date(byAdding: .day, value: -1, to: self) else {
+  /// Whether this date's calendar day in `timeZone` is the first day of a new solar term.
+  func isJieqiDay(in timeZone: TimeZone) -> Bool {
+    guard let yesterday = gregorian(in: timeZone).date(byAdding: .day, value: -1, to: self) else {
       return false
     }
-    return yesterday.jieqi != self.jieqi
+    return yesterday.jieqi(in: timeZone) != jieqi(in: timeZone)
   }
 
-  /// The jieqi period this date falls within, together with the day that period started.
-  ///
-  /// ```swift
-  /// if let current = Date().currentJieqi {
-  ///     print("In \(current.jieqi.chineseName) since \(current.startDate)")
-  /// }
-  /// ```
-  var currentJieqi: JieqiOccurrence? {
-    guard let jq = jieqi, let start = jq.startDate(in: self) else { return nil }
+  /// The jieqi period this date falls within and the day it started, with
+  /// days reckoned in `timeZone`.
+  func currentJieqi(in timeZone: TimeZone) -> JieqiOccurrence? {
+    guard let jq = jieqi(in: timeZone), let start = jq.startDate(in: self, timeZone: timeZone) else { return nil }
     return JieqiOccurrence(jieqi: jq, startDate: start)
   }
 
-  /// The next solar term transition strictly after this date.
-  ///
-  /// Always returns a future occurrence (at least 1 day away), even when called on a jieqi day itself.
-  ///
-  /// ```swift
-  /// if let next = Date().nextJieqi {
-  ///     print("\(next.jieqi.chineseName) starts on \(next.startDate)")
-  /// }
-  /// ```
-  var nextJieqi: JieqiOccurrence? {
-    let calendar = Calendar(identifier: .gregorian)
+  /// The next solar term transition strictly after this date's calendar day
+  /// in `timeZone`.
+  func nextJieqi(in timeZone: TimeZone) -> JieqiOccurrence? {
+    let calendar = gregorian(in: timeZone)
     var probe = self
     for _ in 1..<400 {
       guard let next = calendar.date(byAdding: .day, value: 1, to: probe) else { break }
-      if next.isJieqiDay, let incoming = next.jieqi {
+      if next.isJieqiDay(in: timeZone), let incoming = next.jieqi(in: timeZone) {
         return JieqiOccurrence(jieqi: incoming, startDate: next)
       }
       probe = next
     }
     return nil
   }
+}
+
+private func gregorian(in timeZone: TimeZone) -> Calendar {
+  var calendar = Calendar(identifier: .gregorian)
+  calendar.timeZone = timeZone
+  return calendar
 }
 
 // MARK: DizhiConvertable

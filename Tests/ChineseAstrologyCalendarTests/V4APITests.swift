@@ -184,3 +184,61 @@ import Testing
     #expect(results == expected)
   }
 }
+
+@Suite struct JieqiTimeZoneTests {
+
+  private let losAngeles = TimeZone(identifier: "America/Los_Angeles")!
+
+  private func date(_ year: Int, _ month: Int, _ day: Int, hour: Int = 12, in timeZone: TimeZone) -> Date {
+    var gregorian = Calendar(identifier: .gregorian)
+    gregorian.timeZone = timeZone
+    return gregorian.date(from: DateComponents(year: year, month: month, day: day, hour: hour))!
+  }
+
+  /// 清明 2025 begins 15:48 on 4 April in China, which is 00:48 on 4 April in
+  /// California (PDT, UTC−7): the same calendar date in both places.
+  /// 立秋 2025 begins 08:51 on 7 August in China = 17:51 on 6 August in California.
+  @Test func localDayDiffersFromChinaDayWhenTransitionCrossesMidnight() {
+    let chinaDay = date(2025, 8, 7, in: .chinaStandardTime)
+    #expect(chinaDay.isJieqiDay)
+    #expect(chinaDay.jieqi == .startOfAutumn)
+
+    let californiaDay = date(2025, 8, 6, in: losAngeles)
+    #expect(californiaDay.isJieqiDay(in: losAngeles))
+    #expect(californiaDay.jieqi(in: losAngeles) == .startOfAutumn)
+    #expect(!date(2025, 8, 7, in: losAngeles).isJieqiDay(in: losAngeles))
+  }
+
+  @Test func chinaDefaultsMatchExplicitChinaTimeZone() {
+    let instant = date(2025, 4, 4, in: .chinaStandardTime)
+    #expect(instant.jieqi == instant.jieqi(in: .chinaStandardTime))
+    #expect(instant.nextJieqi == instant.nextJieqi(in: .chinaStandardTime))
+    #expect(instant.currentJieqi == instant.currentJieqi(in: .chinaStandardTime))
+  }
+
+  @Test func nextAndCurrentRespectTimeZone() throws {
+    let before = date(2025, 8, 5, in: losAngeles)
+    let next = try #require(before.nextJieqi(in: losAngeles))
+    #expect(next.jieqi == .startOfAutumn)
+    var gregorian = Calendar(identifier: .gregorian)
+    gregorian.timeZone = losAngeles
+    #expect(gregorian.component(.day, from: next.startDate) == 6)
+
+    let after = date(2025, 8, 10, in: losAngeles)
+    let current = try #require(after.currentJieqi(in: losAngeles))
+    #expect(gregorian.component(.day, from: current.startDate) == 6)
+    #expect(Jieqi.startOfAutumn.nextOccurrence(after: before, timeZone: losAngeles)?.startDate == next.startDate)
+  }
+
+  @Test func almanacUsesItsTimeZoneForSolarTerms() {
+    let california = ChineseAlmanac(timeZone: losAngeles, language: .en)
+    #expect(california.day(for: date(2025, 8, 6, in: losAngeles)).isJieqiDay)
+    #expect(ChineseAlmanac(language: .en).day(for: date(2025, 8, 7, in: .chinaStandardTime)).isJieqiDay)
+  }
+
+  @Test func festivalSolarTermUsesTimeZone() {
+    // 冬至 2025 begins 23:03 on 21 December in China = 07:03 on 21 December in California.
+    #expect(date(2025, 12, 21, in: .chinaStandardTime).chineseFestival(timeZone: .chinaStandardTime) == .dongzhi)
+    #expect(date(2025, 12, 21, in: losAngeles).chineseFestival(timeZone: losAngeles) == .dongzhi)
+  }
+}

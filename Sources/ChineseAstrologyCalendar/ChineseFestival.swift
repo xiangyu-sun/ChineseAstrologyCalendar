@@ -201,19 +201,26 @@ extension Date {
   ///
   /// Checks against all fixed lunar-date festivals. Solar-term festivals
   /// (Qingming, Dongzhi) are matched by Jieqi.
+  ///
+  /// Lunar festivals use the device's time zone; solar-term festivals use
+  /// China Standard Time. Prefer ``chineseFestival(timeZone:)``, which uses
+  /// one time zone for both.
   public var chineseFestival: ChineseFestival? {
-    chineseFestival(timeZone: .current)
+    chineseFestival(lunarTimeZone: .current, solarTermTimeZone: .chinaStandardTime)
   }
 
   /// Returns the Chinese festival that falls on this date's calendar day in
   /// `timeZone`, if any.
   ///
-  /// Lunar festivals are matched on the lunar date in `timeZone`. Solar-term
-  /// festivals (Qingming, Dongzhi) are matched by Jieqi, which is always
-  /// reckoned in China Standard Time.
+  /// Both lunar festivals and solar-term festivals (Qingming, Dongzhi) are
+  /// matched on the calendar day in `timeZone`.
   public func chineseFestival(timeZone: TimeZone) -> ChineseFestival? {
+    chineseFestival(lunarTimeZone: timeZone, solarTermTimeZone: timeZone)
+  }
+
+  private func chineseFestival(lunarTimeZone: TimeZone, solarTermTimeZone: TimeZone) -> ChineseFestival? {
     var chinCal = Calendar(identifier: .chinese)
-    chinCal.timeZone = timeZone
+    chinCal.timeZone = lunarTimeZone
     let components = chinCal.dateComponents([.month, .day], from: self)
     guard let month = components.month, let day = components.day else { return nil }
 
@@ -226,16 +233,8 @@ extension Date {
     }
 
     // Check solar-term festivals
-    if let currentJieqi = self.jieqi {
-      for festival in ChineseFestival.allCases {
-        if festival.jieqi == currentJieqi {
-          let greg = Calendar(identifier: .gregorian)
-          if let yesterday = greg.date(byAdding: .day, value: -1, to: self),
-             yesterday.jieqi != currentJieqi {
-            return festival
-          }
-        }
-      }
+    if isJieqiDay(in: solarTermTimeZone), let currentJieqi = jieqi(in: solarTermTimeZone) {
+      return ChineseFestival.allCases.first { $0.jieqi == currentJieqi }
     }
 
     return nil

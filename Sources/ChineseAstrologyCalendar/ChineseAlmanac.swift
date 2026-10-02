@@ -19,10 +19,11 @@ import Foundation
 /// it does not cover.
 public struct ChineseAlmanac: Sendable {
 
-  /// The time zone whose calendar day defines "a day" for lunar dates,
-  /// festivals, the Twelve Gods and the Shichen. Defaults to China Standard
-  /// Time, the time zone the Chinese calendar is defined in, so results match
-  /// printed almanacs wherever the device is.
+  /// The time zone whose calendar day defines "a day" for lunar dates, solar
+  /// terms, festivals, the Twelve Gods and the Shichen. Defaults to China
+  /// Standard Time, the time zone the Chinese calendar is defined in, so
+  /// results match printed almanacs wherever the device is. Pass the user's
+  /// time zone to place everything on their local calendar day instead.
   public var timeZone: TimeZone
 
   /// The language used by ``AlmanacDay/text``.
@@ -46,7 +47,8 @@ public struct ChineseAlmanac: Sendable {
       language: language,
       lunarDate: lunarDate,
       pillars: Bazi(date: date),
-      jieqi: date.currentJieqi,
+      timeZone: timeZone,
+      jieqi: date.currentJieqi(in: timeZone),
       festival: date.chineseFestival(timeZone: timeZone),
       twelveGod: date.twelveGod(timeZone: timeZone),
       lunarMansion: LunarMansion.lunarMansion(date: date),
@@ -84,7 +86,10 @@ public struct AlmanacDay: Equatable, Sendable {
   /// The four pillars (八字). Always reckoned in China Standard Time.
   public let pillars: Bazi?
 
-  /// The solar term in effect and the day it began. Always reckoned in China Standard Time.
+  /// The time zone this snapshot's calendar days are reckoned in.
+  public let timeZone: TimeZone
+
+  /// The solar term in effect and the day it began.
   public let jieqi: JieqiOccurrence?
 
   /// The traditional festival falling on this day, if any.
@@ -109,7 +114,7 @@ public struct AlmanacDay: Equatable, Sendable {
   public var isJieqiDay: Bool {
     guard let jieqi else { return false }
     var gregorian = Calendar(identifier: .gregorian)
-    gregorian.timeZone = .chinaStandardTime
+    gregorian.timeZone = timeZone
     return gregorian.isDate(jieqi.startDate, inSameDayAs: date)
   }
 
@@ -120,6 +125,7 @@ public struct AlmanacDay: Equatable, Sendable {
     lhs.date == rhs.date
       && lhs.language == rhs.language
       && lhs.lunarDate == rhs.lunarDate
+      && lhs.timeZone == rhs.timeZone
       && lhs.pillars == rhs.pillars
       && lhs.jieqi == rhs.jieqi
       && lhs.festival == rhs.festival

@@ -2,6 +2,15 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.1.0
+
+### Added
+- Time-zone-aware solar terms: `Date.jieqi(in:)`, `isJieqiDay(in:)`, `currentJieqi(in:)`, `nextJieqi(in:)`, `Jieqi.startDate(in:timeZone:)` and `Jieqi.nextOccurrence(after:timeZone:)` reckon solar-term days on the calendar day of any time zone. The existing properties are unchanged and still use China Standard Time.
+
+### Changed
+- `ChineseAlmanac` reckons solar terms in its own `timeZone` (4.0.0 always used China Standard Time), and `AlmanacDay` exposes `timeZone`. With the default time zone, results are unchanged.
+- `Date.chineseFestival(timeZone:)` matches solar-term festivals (清明, 冬至) in the given time zone. The `chineseFestival` property is unchanged.
+
 ## 4.0.0
 
 Breaking release. See [MIGRATION.md](MIGRATION.md).
