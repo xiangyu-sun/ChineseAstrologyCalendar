@@ -5,7 +5,7 @@ extension Bazi {
   ///
   /// Equivalent to ``formattedDescription`` for `.zhHant`.
   public func localizedFormattedDescription(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant:
       return "年:\(nian.description) 月:\(yue.description) 日:\(ri.description) 時:\(shi.description)"
     case .zhHans:

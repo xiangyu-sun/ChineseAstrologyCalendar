@@ -2,7 +2,7 @@ import Foundation
 
 extension Nayin: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant: return traditionalChineseName
     case .zhHans: return Self.simplifiedNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName

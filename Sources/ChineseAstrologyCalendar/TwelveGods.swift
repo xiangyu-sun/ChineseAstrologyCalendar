@@ -138,9 +138,14 @@ public enum TwelveGods: Int, CaseIterable, TraditionalChineseNaming, Sendable {
 
 public extension Date {
   /// Returns the "建除十二神" for this date.
-  func twelveGod() -> TwelveGods? {
-    let greg = Calendar(identifier: .gregorian)
-    let chin = Calendar(identifier: .chinese)
+  ///
+  /// - Parameter timeZone: The time zone whose calendar day is used. Defaults
+  ///   to the device's time zone; pass China Standard Time to match printed almanacs.
+  func twelveGod(timeZone: TimeZone = .current) -> TwelveGods? {
+    var greg = Calendar(identifier: .gregorian)
+    greg.timeZone = timeZone
+    var chin = Calendar(identifier: .chinese)
+    chin.timeZone = timeZone
 
     // 1) lunar month (1...12)
     let lunarComp = chin.dateComponents([.year, .month, .day], from: self)

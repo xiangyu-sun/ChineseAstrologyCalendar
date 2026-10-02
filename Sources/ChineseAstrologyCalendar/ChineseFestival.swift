@@ -202,7 +202,18 @@ extension Date {
   /// Checks against all fixed lunar-date festivals. Solar-term festivals
   /// (Qingming, Dongzhi) are matched by Jieqi.
   public var chineseFestival: ChineseFestival? {
-    let chinCal = Calendar(identifier: .chinese)
+    chineseFestival(timeZone: .current)
+  }
+
+  /// Returns the Chinese festival that falls on this date's calendar day in
+  /// `timeZone`, if any.
+  ///
+  /// Lunar festivals are matched on the lunar date in `timeZone`. Solar-term
+  /// festivals (Qingming, Dongzhi) are matched by Jieqi, which is always
+  /// reckoned in China Standard Time.
+  public func chineseFestival(timeZone: TimeZone) -> ChineseFestival? {
+    var chinCal = Calendar(identifier: .chinese)
+    chinCal.timeZone = timeZone
     let components = chinCal.dateComponents([.month, .day], from: self)
     guard let month = components.month, let day = components.day else { return nil }
 

@@ -8,7 +8,7 @@ import Foundation
 extension DizhiRelationship.Chong: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     let (a, b) = branches
-    switch language {
+    switch language.base {
     case .zhHant: return chineseName
     case .zhHans: return a.chineseCharacter + b.chineseCharacter + "冲"
     case .en: return pairName(a, b) + " Clash"
@@ -19,7 +19,7 @@ extension DizhiRelationship.Chong: LocalizedNaming {
 extension DizhiRelationship.LiuHe: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     let (a, b) = branches
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return chineseName
     case .en: return pairName(a, b) + " Harmony"
     }
@@ -29,7 +29,7 @@ extension DizhiRelationship.LiuHe: LocalizedNaming {
 extension DizhiRelationship.SanHe: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     let (a, b, c) = branches
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return chineseName
     case .en: return [a, b, c].map { $0.localizedName(in: .en) }.joined(separator: "–") + " Triad"
     }
@@ -39,7 +39,7 @@ extension DizhiRelationship.SanHe: LocalizedNaming {
 extension DizhiRelationship.LiuHai: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     let (a, b) = branches
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return chineseName
     case .en: return pairName(a, b) + " Harm"
     }

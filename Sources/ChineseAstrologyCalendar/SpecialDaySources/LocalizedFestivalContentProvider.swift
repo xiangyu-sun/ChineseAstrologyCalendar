@@ -2,8 +2,8 @@ import Foundation
 
 // MARK: - LocalizedFestivalContentProvider
 
-/// A `ChineseFestivalContentProvider` that supplies Simplified Chinese or
-/// English display strings for ``ChineseFestival``.
+/// A `ChineseFestivalContentProvider` that supplies display strings for
+/// ``ChineseFestival`` in any ``DisplayLanguage``.
 ///
 /// The library's canonical data (`chineseName`, `meaning`) is Traditional
 /// Chinese; this provider translates it for the requested ``DisplayLanguage``.
@@ -26,6 +26,11 @@ public struct LocalizedFestivalContentProvider: ChineseFestivalContentProvider {
 
   public func detail(for festival: ChineseFestival) -> String {
     switch language {
+    case .ru: return RussianFestivalContent().detail(for: festival)
+    case .es: return SpanishFestivalContent().detail(for: festival)
+    default: break
+    }
+    switch language.base {
     case .zhHant: return festival.meaning
     case .zhHans: return Self.simplifiedMeanings[festival] ?? festival.meaning
     case .en: return Self.englishMeanings[festival] ?? festival.meaning
@@ -34,6 +39,11 @@ public struct LocalizedFestivalContentProvider: ChineseFestivalContentProvider {
 
   public var category: String {
     switch language {
+    case .ru: return RussianFestivalContent().category
+    case .es: return SpanishFestivalContent().category
+    default: break
+    }
+    switch language.base {
     case .zhHant: return FestivalSource.categoryName
     case .zhHans: return "节日"
     case .en: return "Festival"

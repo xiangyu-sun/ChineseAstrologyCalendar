@@ -6,7 +6,7 @@ extension Shichen {
   /// `.zhHant`/`.zhHans` both return ``currentKeSpellOut`` — the characters
   /// (初二三四五六七末) are identical in both scripts.
   public func localizedKeSpellOut(in language: DisplayLanguage) -> String {
-    switch language {
+    switch language.base {
     case .zhHant, .zhHans: return currentKeSpellOut
     case .en: return Self.englishKeOrdinals[currentKe]
     }

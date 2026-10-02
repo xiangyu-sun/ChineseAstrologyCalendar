@@ -1,19 +1,12 @@
 import Foundation
 
-// MARK: - RussianJieqiContentProvider
+// MARK: - RussianJieqiContent
 
-/// Russian-language content for `JieqiSource`.
-///
-/// Supplies Russian names and seasonal health notes for every `Jieqi` case.
-///
-/// ```swift
-/// let source = JieqiSource(contentProvider: RussianJieqiContentProvider())
-/// ```
-public struct RussianJieqiContentProvider: JieqiContentProvider {
+/// Russian display strings for ``Jieqi``, served through ``DisplayLanguage/ru``
+/// by `localizedName(in:)` and ``LocalizedJieqiContentProvider``.
+struct RussianJieqiContent {
 
-  public init() {}
-
-  public func name(for jieqi: Jieqi) -> String {
+  func name(for jieqi: Jieqi) -> String {
     switch jieqi {
     case .startOfSpring:      return "Начало весны"
     case .rainWater:          return "Дождевая вода"
@@ -42,7 +35,7 @@ public struct RussianJieqiContentProvider: JieqiContentProvider {
     }
   }
 
-  public func detail(for jieqi: Jieqi) -> String {
+  func detail(for jieqi: Jieqi) -> String {
     switch jieqi {
     case .startOfSpring:
       return "В начале весны питайте печень и берегите ян: ложитесь и вставайте рано, разминайте тело, чтобы поднять ян-ци, и сохраняйте бодрое расположение духа."
@@ -95,5 +88,5 @@ public struct RussianJieqiContentProvider: JieqiContentProvider {
     }
   }
 
-  public var category: String { "Солнечный сезон (цзеци)" }
+  var category: String { "Солнечный сезон (цзеци)" }
 }

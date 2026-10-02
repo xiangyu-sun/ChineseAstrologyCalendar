@@ -79,8 +79,15 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 - **Event Models**: Rich event representation with titles and descriptions
 - **Yin-Yang Theory**: Built-in polarity system throughout all components
 
-### 🌐 Localization — New in v3.2
-- **`DisplayLanguage`**: Traditional Chinese (canonical), Simplified Chinese and English
+### 📆 One-Call Almanac — New in v4.0
+- **`ChineseAlmanac`**: configure the time zone and language once, then call `day(for:)`
+- **`AlmanacDay`**: lunar date, four pillars, solar term, festival, Twelve Gods, lunar mansion, moon phase and Shichen in one `Sendable` value
+- **`AlmanacDay.text`**: every value above, already localized
+- **`LunarDate`**: lunar year, month and day with `formatted(_:in:)` in any language
+
+### 🌐 Localization — Expanded in v4.0
+- **`DisplayLanguage`**: Traditional Chinese (canonical), Simplified Chinese, English, Russian and Spanish. It is a struct, so future languages are not breaking changes
+- Russian and Spanish translate festivals and solar terms (names and descriptions); other types fall back to English
 - **`LocalizedNaming`**: one `localizedName(in:)` call for Zodiac, Tiangan, Dizhi, Ganzhi, Wuxing, Season, FangWei, Jieqi, ChineseFestival, ChineseMoonPhase, TwelveGods, Nayin, LunarMansion, FourSymbol, DizhiRelationship, Day and `LunarMonth`
 - Downstream packages can adopt `LocalizedNaming` for their own types
 
@@ -99,7 +106,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "3.2.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.0.0")
 ]
 ```
 
@@ -109,6 +116,32 @@ Or add via Xcode:
 3. Click Add Package
 
 ## 📖 Usage Examples
+
+### Quick Start: ChineseAlmanac
+
+`ChineseAlmanac` is the recommended entry point for apps. It reckons days in China
+Standard Time by default, so results match printed almanacs wherever the device is.
+
+```swift
+import ChineseAstrologyCalendar
+
+let language = DisplayLanguage(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+let almanac = ChineseAlmanac(language: language)
+
+let today = almanac.day(for: Date())
+today.lunarDate          // on 2024-02-10: 甲辰年正月初一
+today.festival           // .springFestival
+today.jieqi?.jieqi       // .startOfSpring
+today.twelveGod          // e.g. .establish
+today.text.lunarDate     // "甲辰龍年正月初一" / "1st Month 1st, Year of the Dragon (Jiǎchén)"
+today.text.festival      // "春節" / "Spring Festival" / "Праздник весны (Китайский Новый год)"
+
+// A week view, one value per day:
+let week = almanac.days(from: Date(), count: 7)
+```
+
+`AlmanacDay` is a plain `Sendable` value: cache it, diff it in SwiftUI, or pass it to a
+widget timeline. The `Date` extensions below remain available for anything it doesn't cover.
 
 ### Localized Display Names
 
@@ -126,7 +159,24 @@ LunarMansion.chariot.localizedName(in: .en)     // "Chariot"
 
 Prefer `Bundle.main.preferredLocalizations` over `Locale.current`: it reflects the
 language your app's UI is actually displayed in. Long-form prose (Jieqi health tips,
-Twelve Gods almanac guidance) intentionally stays in Traditional Chinese.
+Twelve Gods almanac guidance) stays in Traditional Chinese, except for the hand-written
+Russian and Spanish solar-term notes.
+
+`DisplayLanguage` is a struct, so switch over it with a `default:` branch:
+
+```swift
+extension MyType: LocalizedNaming {
+  func localizedName(in language: DisplayLanguage) -> String {
+    switch language {
+    case .zhHant: return "龍"
+    case .zhHans: return "龙"
+    default: return "Dragon"
+    }
+  }
+}
+```
+
+> **Upgrading from 3.x?** See [MIGRATION.md](MIGRATION.md) for the 4.0 breaking changes.
 
 ### Basic Date Conversion
 
@@ -141,8 +191,11 @@ print(chineseComponents.nian?.description ?? "")  // Year pillar (e.g., "癸卯"
 print(chineseComponents.yue?.description ?? "")   // Month pillar (e.g., "甲子")
 print(chineseComponents.riZhu?.description ?? "") // Day pillar (e.g., "乙丑")
 
-// Formatted Chinese date string
-print(today.chineseYearMonthDate)  // "癸卯年 二月初三"
+// Formatted lunar date in any language
+let lunar = today.lunarDate(.chineseCalendarGTM8)
+print(lunar?.formatted(.yearMonthDay, in: .zhHant) ?? "")       // "癸卯年二月初三"
+print(lunar?.formatted(.yearZodiacMonthDay, in: .zhHans) ?? "") // "癸卯兔年二月初三"
+print(lunar?.formatted(.monthDay, in: .en) ?? "")               // "2nd Month 3rd"
 ```
 
 ### Four Pillars of Destiny (Bazi)
