@@ -39,9 +39,6 @@ import Testing
         // Test the Four Symbol grouping
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
-
-        // Store the mansion for sequence testing
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_07_28")
     }
 
     @Test func lunarMansionJuly29_2025() {
@@ -74,7 +71,6 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_07_29")
     }
 
     @Test func lunarMansionJuly30_2025() {
@@ -107,7 +103,6 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_07_30")
     }
 
     @Test func lunarMansionJuly31_2025() {
@@ -140,7 +135,6 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_07_31")
     }
 
     @Test func lunarMansionAugust1_2025() {
@@ -173,7 +167,6 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_08_01")
     }
 
     @Test func lunarMansionAugust2_2025() {
@@ -206,7 +199,6 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_08_02")
     }
 
     @Test func lunarMansionAugust3_2025() {
@@ -239,42 +231,23 @@ import Testing
         let fourSymbol = mansion.fourSymbol
         #expect([FourSymbol.azureDragon, .vermilionBird, .whiteTiger, .blackTortoise].contains(fourSymbol))
 
-        UserDefaults.standard.set(mansion.rawValue, forKey: "mansion_2025_08_03")
     }
 
     // Test that lunar mansions change progressively (not necessarily daily, but over the 7-day period)
     @Test func lunarMansionProgression() {
-        let dates = [
-            ("2025-07-28", "mansion_2025_07_28"),
-            ("2025-07-29", "mansion_2025_07_29"),
-            ("2025-07-30", "mansion_2025_07_30"),
-            ("2025-07-31", "mansion_2025_07_31"),
-            ("2025-08-01", "mansion_2025_08_01"),
-            ("2025-08-02", "mansion_2025_08_02"),
-            ("2025-08-03", "mansion_2025_08_03")
-        ]
+        // Computed directly rather than read back from the per-day tests: Swift
+        // Testing runs tests in parallel, so sharing results through
+        // UserDefaults made this test order-dependent.
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let start = calendar.date(from: DateComponents(year: 2025, month: 7, day: 28))!
 
-        var mansions: [String] = []
-        for (_, key) in dates {
-            if let mansion = UserDefaults.standard.string(forKey: key) {
-                mansions.append(mansion)
-            }
+        let mansions = (0..<7).map { offset in
+            LunarMansion.lunarMansion(date: calendar.date(byAdding: .day, value: offset, to: start)!)
         }
 
-        print("7-day Lunar Mansion Sequence:")
-        for (i, mansion) in mansions.enumerated() {
-            print("Day \(i+1): \(mansion)")
-        }
-
-        // The moon's position should change over 7 days
-        // We should see at least some variation in the mansions over this period
-        let uniqueMansions = Set(mansions)
-        #expect(uniqueMansions.count >= 1, "Should have at least 1 unique mansion")
-
-        // Clean up UserDefaults after test
-        for (_, key) in dates {
-            UserDefaults.standard.removeObject(forKey: key)
-        }
+        // The mansion changes over a week, so the sequence should not be constant.
+        #expect(Set(mansions).count > 1, "Expected the lunar mansion to vary over 7 days, got \(mansions)")
     }
 
     // Test the implementation against known astronomical data
