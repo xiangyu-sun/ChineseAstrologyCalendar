@@ -20,27 +20,40 @@ extension DisplayLanguage {
 
   /// The display language that best matches the given locale.
   ///
-  /// - Chinese locales with a Simplified script (`zh-Hans`, `zh-CN`, `zh-SG`)
-  ///   map to `.zhHans`.
-  /// - Chinese locales with a Traditional script (`zh-Hant`, `zh-TW`, `zh-HK`,
-  ///   `zh-MO`) map to `.zhHant`.
+  /// An explicit script wins over the region, so `zh-Hant-CN` is Traditional
+  /// and `zh-Hans-HK` is Simplified.
+  /// - Chinese locales with a Simplified script (`zh-Hans`), or with no script
+  ///   and a region other than Taiwan, Hong Kong or Macau (`zh-CN`, `zh-SG`,
+  ///   bare `zh`), map to `.zhHans`.
+  /// - Chinese locales with a Traditional script (`zh-Hant`), or with no script
+  ///   and a `TW`, `HK` or `MO` region, map to `.zhHant`.
   /// - Any other locale maps to `.en`.
   public init(locale: Locale) {
-    let language = locale.identifier.lowercased().replacingOccurrences(of: "_", with: "-")
-    guard language.hasPrefix("zh") else {
+    self.init(identifier: locale.identifier)
+  }
+
+  /// The display language that best matches a BCP 47 or ICU locale
+  /// identifier such as `"zh-Hant-TW"` or `"zh_CN"`.
+  ///
+  /// Pass `Bundle.main.preferredLocalizations.first` to follow the language
+  /// your app's UI is actually shown in, which can differ from `Locale.current`.
+  public init(identifier: String) {
+    let subtags = identifier
+      .lowercased()
+      .split(whereSeparator: { $0 == "-" || $0 == "_" || $0 == "@" })
+      .map(String.init)
+    guard subtags.first == "zh" else {
       self = .en
       return
     }
-    if language.contains("hans") || language.contains("-cn") || language.contains("-sg") {
+    if subtags.contains("hant") {
+      self = .zhHant
+    } else if subtags.contains("hans") {
       self = .zhHans
-    } else if language.contains("hant")
-      || language.contains("-tw")
-      || language.contains("-hk")
-      || language.contains("-mo") {
+    } else if subtags.contains(where: { ["tw", "hk", "mo"].contains($0) }) {
       self = .zhHant
     } else {
-      // Bare "zh" or an unspecified Chinese region: default to Simplified,
-      // the most widely used script.
+      // Bare "zh" or a mainland/Singapore region: Simplified is the default script.
       self = .zhHans
     }
   }

@@ -1,7 +1,7 @@
 # ChineseAstrologyCalendar
 
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-[![Platform](https://img.shields.io/badge/platform-iOS%2013.0%2B%20%7C%20macOS%2010.15%2B%20%7C%20watchOS%206.0%2B-lightgrey.svg)](https://developer.apple.com/swift/)
+[![Platform](https://img.shields.io/badge/platform-iOS%2013.0%2B%20%7C%20macOS%2010.14%2B%20%7C%20watchOS%206.0%2B-lightgrey.svg)](https://developer.apple.com/swift/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
 A comprehensive Swift package for working with traditional Chinese lunar calendar and astrology concepts. Convert between Gregorian and Chinese calendars, access zodiac animals, moon phases, five element theory, Bazi four pillars, Nayin sound elements, festival dates, and much more.
@@ -79,10 +79,15 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 - **Event Models**: Rich event representation with titles and descriptions
 - **Yin-Yang Theory**: Built-in polarity system throughout all components
 
+### 🌐 Localization — New in v3.2
+- **`DisplayLanguage`**: Traditional Chinese (canonical), Simplified Chinese and English
+- **`LocalizedNaming`**: one `localizedName(in:)` call for Zodiac, Tiangan, Dizhi, Ganzhi, Wuxing, Season, FangWei, Jieqi, ChineseFestival, ChineseMoonPhase, TwelveGods, Nayin, LunarMansion, FourSymbol, DizhiRelationship, Day and `LunarMonth`
+- Downstream packages can adopt `LocalizedNaming` for their own types
+
 ## 📱 Platform Support
 
 - **iOS**: 13.0+
-- **macOS**: 10.15+
+- **macOS**: 10.14+
 - **watchOS**: 6.0+
 - **Swift**: 6.0+
 
@@ -94,7 +99,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "2.2.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "3.2.0")
 ]
 ```
 
@@ -104,6 +109,24 @@ Or add via Xcode:
 3. Click Add Package
 
 ## 📖 Usage Examples
+
+### Localized Display Names
+
+Model types stay language-neutral; ask for a display string in the language you need.
+
+```swift
+let language = DisplayLanguage(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+
+Zodiac.dragon.localizedName(in: .zhHans)        // "龙"
+Ganzhi(.kui, .mao)!.localizedName(in: .en)      // "Guǐmǎo"
+Date().lunarMonth()?.localizedName(in: language) // "臘月" / "腊月" / "12th Month"
+Dizhi.zi.localizedHourName(in: .zhHans)         // "子时"
+LunarMansion.chariot.localizedName(in: .en)     // "Chariot"
+```
+
+Prefer `Bundle.main.preferredLocalizations` over `Locale.current`: it reflects the
+language your app's UI is actually displayed in. Long-form prose (Jieqi health tips,
+Twelve Gods almanac guidance) intentionally stays in Traditional Chinese.
 
 ### Basic Date Conversion
 
@@ -160,12 +183,12 @@ print(Dizhi.zi.formsLiuHai(with: .wei))  // true
 ### Nayin Sound Elements
 
 ```swift
-let jiaZi = Ganzhi(gan: .jia, zhi: .zi)
-print(jiaZi.nayin)            // 海中金
-print(jiaZi.nayin.wuxing)     // .jin
+let jiaZi = Ganzhi(.jia, .zi)!
+print(jiaZi.nayin)            // seaGold (海中金)
+print(jiaZi.nayin.wuxing)     // .metal
 
-let bingYin = Ganzhi(gan: .bing, zhi: .yin)
-print(bingYin.nayin)          // 炉中火
+let bingYin = Ganzhi(.bing, .yin)!
+print(bingYin.nayin)          // furnaceFire (爐中火)
 ```
 
 ### Traditional Chinese Festivals
@@ -267,12 +290,14 @@ for moon in fullMoons {
 
 ```swift
 // Working with Ganzhi and elements
-let ganzhi = Ganzhi(gan: .jia, zhi: .zi)  // 甲子
+let ganzhi = Ganzhi(.jia, .zi)!  // 甲子 (returns nil for pairs outside the 60-cycle)
 print(ganzhi.description)      // "甲子"
-print(ganzhi.gan.wuxing)       // .mu (Wood element)
+print(ganzhi.gan.wuxing)       // .wood
+print(ganzhi.jiaziIndex)       // 0
+print(Ganzhi(jiaziIndex: 39))  // 癸卯
 
 // Element relationships
-let wood = Wuxing.mu
+let wood = Wuxing.wood
 print(wood.sheng.chineseCharacter)  // "火" — Wood generates Fire
 print(wood.ke.chineseCharacter)     // "土" — Wood controls Earth
 ```

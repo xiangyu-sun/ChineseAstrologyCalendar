@@ -3,7 +3,7 @@ import Foundation
 import Astral
 
 /// Represents the Four Symbols (四象) corresponding to groups of lunar mansions.
-public enum FourSymbol: String, FangWeiConvertible, TraditionalChineseNaming {
+public enum FourSymbol: String, FangWeiConvertible, TraditionalChineseNaming, Sendable {
     case azureDragon   = "青龍"
     case vermilionBird = "朱雀"
     case whiteTiger    = "白虎"
@@ -28,7 +28,7 @@ public enum FourSymbol: String, FangWeiConvertible, TraditionalChineseNaming {
 
 /// Represents one of the 28 lunar mansions (二十八宿) in traditional order.
 /// The order follows: Eastern Azure Dragon → Northern Black Tortoise → Western White Tiger → Southern Vermillion Bird
-public enum LunarMansion: String, CaseIterable, TraditionalChineseNaming {
+public enum LunarMansion: String, CaseIterable, TraditionalChineseNaming, Sendable {
   // Eastern Azure Dragon (東方青龍) - 7 mansions
   case horn             = "角"   // 角宿
   case neck             = "亢"   // 亢宿
@@ -63,7 +63,7 @@ public enum LunarMansion: String, CaseIterable, TraditionalChineseNaming {
   case star             = "星"   // 星宿
   case extendedNet      = "張"   // 張宿
   case wings            = "翼"   // 翼宿
-  case chariot          = "轸"   // 軫宿
+  case chariot          = "軫"   // 軫宿
 
   /// Traditional Chinese character(s) for this mansion.
   /// This is identical to `rawValue` and is provided for consistent API access.

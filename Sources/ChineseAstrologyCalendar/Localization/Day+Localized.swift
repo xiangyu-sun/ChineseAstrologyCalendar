@@ -14,7 +14,7 @@ extension Day: LocalizedNaming {
     }
   }
 
-  private static func englishOrdinal(_ n: Int) -> String {
+  static func englishOrdinal(_ n: Int) -> String {
     let suffix: String
     switch (n % 100, n % 10) {
     case (11, _), (12, _), (13, _): suffix = "th"

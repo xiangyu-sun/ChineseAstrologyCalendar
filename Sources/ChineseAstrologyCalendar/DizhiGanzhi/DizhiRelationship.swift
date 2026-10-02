@@ -34,7 +34,7 @@ public enum DizhiRelationship: Sendable {
     /// Chinese name of this clash pair.
     public var chineseName: String {
       let (a, b) = branches
-      return a.chineseCharacter + b.chineseCharacter + "冲"
+      return a.chineseCharacter + b.chineseCharacter + "沖"
     }
   }
 

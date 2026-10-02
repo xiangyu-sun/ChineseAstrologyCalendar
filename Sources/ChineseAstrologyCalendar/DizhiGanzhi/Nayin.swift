@@ -30,7 +30,7 @@ public enum Nayin: String, CaseIterable, TraditionalChineseNaming, Sendable {
   case flatlandWood        = "平地木"
   case wallEarth           = "壁上土"
   case goldLeafMetal       = "金箔金"
-  case lanternFire         = "覆灯火"
+  case lanternFire         = "覆燈火"
   case celestialRiverWater = "天河水"
   case postRoadEarth       = "大驛土"
   case braceletMetal       = "釵釧金"
@@ -73,31 +73,12 @@ extension Ganzhi {
   ///
   /// Example:
   /// ```swift
-  /// let jiazi = Ganzhi(gan: .jia, zhi: .zi)
+  /// let jiazi = Ganzhi(.jia, .zi)!
   /// print(jiazi.nayin) // seaGold (rawValue: "海中金")
   /// ```
   public var nayin: Nayin {
-    // The 60 Jiazi list: pair index = floor((jiazi_index) / 2)
-    // jiazi_index: 甲子=0, 乙丑=1, 丙寅=2, …
-    // Each Tiangan goes jia(1),yi(2)..kui(10); each Dizhi goes zi(1)..hai(12)
-    // The jiazi index within 0–59 is computed from the LCM cycle.
-    let tianganIndex = gan.rawValue - 1  // 0–9
-    let dizhiIndex = zhi.rawValue - 1    // 0–11
-    // The 60-cycle index: since tiangan repeats every 10 and dizhi every 12,
-    // we can compute: index = (tianganIndex * 6 + dizhiIndex * 5) % 60
-    // Simpler: find position in the jiazi sequence
-    // Position = first valid position where tiangan index matches mod 10
-    // and dizhi index matches mod 12.
-    // Since gcd(10,12)=2, valid combinations have same parity.
-    // index in cycle: ((tianganIndex % 10) steps through with dizhi)
-    // Standard formula: jiazi position = tianganIndex*6 (mod 60), but let's use
-    // the canonical: for 甲子(0), 乙丑(1), 丙寅(2)…
-    // The cycle always increments both stem and branch by 1 together.
-    // Starting from 甲子(jia=1,zi=1): index = (tianganIndex - dizhiIndex%10 ... )
-    // Reliable approach: scan the getJiazhi() list
-    let all = getJiazhi()
-    let position = all.firstIndex(of: self) ?? 0
-    let pairIndex = position / 2
+    // Consecutive pairs in the sixty-term cycle share a Nayin.
+    let pairIndex = jiaziIndex / 2
     let allNayin = Nayin.allCases
     return allNayin[pairIndex % allNayin.count]
   }
