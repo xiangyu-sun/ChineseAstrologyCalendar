@@ -1,5 +1,7 @@
 # ChineseAstrologyCalendar
 
+**English** | [繁體中文](README.zh-Hant.md) | [简体中文](README.zh-Hans.md)
+
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Platform](https://img.shields.io/badge/platform-iOS%2013.0%2B%20%7C%20macOS%2010.14%2B%20%7C%20watchOS%206.0%2B-lightgrey.svg)](https://developer.apple.com/swift/)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
