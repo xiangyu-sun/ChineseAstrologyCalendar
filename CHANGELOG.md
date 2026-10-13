@@ -2,6 +2,19 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.2.0
+
+### Added
+- `JieqiSource(timeZone:contentProvider:)` reckons solar-term days in any time zone (default China Standard Time, as before).
+- `FestivalSource(converter:timeZone:contentProvider:)` matches lunar and solar-term festivals on the calendar day in one time zone. Without `timeZone` the behaviour is unchanged.
+- `ChineseFestival.nextDate(from:converter:timeZone:)`.
+- `Date.currentOrNextSpecialDay(sources:calendar:)`: today's event with `daysUntil == 0` on the day itself, otherwise the next one. `nextSpecialDay(sources:)` only ever looks after the date, so it can't drive a "today / next" display.
+- `Date.upcomingSpecialDays(sources:within:calendar:)`: every event in the coming days, sorted, with same-name same-day duplicates (冬至) removed.
+- `RecurringDay` and `RecurringDaySource`: user-defined yearly days on a lunar or Gregorian date (birthdays, anniversaries). Days missing from a short month fall on its last day.
+
+### Fixed
+- `Date.nextSpecialDay(sources:)` counts calendar days, so an event at midnight tomorrow is 1 day away instead of 0.
+
 ## 4.1.0
 
 ### Added

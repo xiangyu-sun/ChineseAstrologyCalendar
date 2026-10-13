@@ -163,6 +163,26 @@ public enum ChineseFestival: CaseIterable, TraditionalChineseNaming, Sendable {
     return nextLunarDate(from: date, converter: converter)
   }
 
+  /// Finds the next occurrence of this festival on or after the given date,
+  /// with every calendar day reckoned in `timeZone`.
+  ///
+  /// Unlike ``nextDate(from:converter:)``, which matches solar-term festivals
+  /// (清明, 冬至) in China Standard Time, this matches them on the calendar day
+  /// in `timeZone`. Pass a `converter` whose calendar uses the same time zone
+  /// (e.g. `DayConverter(calendar: .chineseCalendarGTM8)` for
+  /// `.chinaStandardTime`) so lunar festivals agree.
+  ///
+  /// - Returns: A date on the festival's calendar day, or `nil` if not found.
+  public func nextDate(from date: Date, converter: DayConverter, timeZone: TimeZone) -> Date? {
+    if date.chineseFestival(timeZone: timeZone) == self {
+      return date
+    }
+    if let jieqiValue = jieqi {
+      return date.nextJieqiStart(of: jieqiValue, in: timeZone)
+    }
+    return nextLunarDate(from: date, converter: converter)
+  }
+
   // MARK: Private
 
   private func nextLunarDate(from date: Date, converter: DayConverter) -> Date? {
@@ -254,5 +274,21 @@ extension Date {
         return (festival, d)
       }
       .min(by: { $0.1 < $1.1 })
+  }
+}
+
+// MARK: - Date + next solar-term festival
+
+extension Date {
+  /// The next start day of `target` strictly after this date's calendar day in `timeZone`.
+  fileprivate func nextJieqiStart(of target: Jieqi, in timeZone: TimeZone) -> Date? {
+    var probe = self
+    // Each term recurs yearly, so at most 24 transitions need checking.
+    for _ in 0..<25 {
+      guard let next = probe.nextJieqi(in: timeZone) else { return nil }
+      if next.jieqi == target { return next.startDate }
+      probe = next.startDate
+    }
+    return nil
   }
 }

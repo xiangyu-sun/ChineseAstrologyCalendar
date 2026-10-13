@@ -65,8 +65,86 @@ public extension Date {
     guard let soonest = candidates.min(by: { $0.date < $1.date }) else {
       return nil
     }
-    let calendar = Calendar(identifier: .gregorian)
-    let days = calendar.dateComponents([.day], from: self, to: soonest.date).day ?? 0
-    return (soonest, max(0, days))
+    return (soonest, calendarDays(to: soonest.date, in: Calendar(identifier: .gregorian)))
+  }
+
+  // MARK: - Today, or the next special day
+
+  /// The special day falling on this date, or failing that the nearest
+  /// upcoming one, with the number of calendar days until it.
+  ///
+  /// Unlike ``nextSpecialDay(sources:)`` — which only ever looks *after* this
+  /// date — this returns today's event with `daysUntil == 0` on the day itself,
+  /// which is what a "today / next" display needs.
+  ///
+  /// When several sources match the same day, the first in `sources` wins
+  /// (冬至 is both a festival and a solar term).
+  ///
+  /// - Parameters:
+  ///   - sources: The data sources to query, in priority order.
+  ///   - calendar: The calendar whose days `daysUntil` counts. Use one in the
+  ///     same time zone as the sources.
+  func currentOrNextSpecialDay(
+    sources: [SpecialDaySource] = [FestivalSource(), JieqiSource()],
+    calendar: Calendar = Calendar(identifier: .gregorian)
+  ) -> (day: SpecialDay, daysUntil: Int)? {
+    if let today = specialDays(sources: sources).first {
+      return (today, 0)
+    }
+    let candidates = sources.compactMap { $0.nextSpecialDay(after: self) }
+    guard let soonest = candidates.min(by: { $0.date < $1.date }) else { return nil }
+    return (soonest, calendarDays(to: soonest.date, in: calendar))
+  }
+
+  // MARK: - Everything coming up
+
+  /// Every special day from this date's calendar day through the next `days`
+  /// calendar days, soonest first, each with the number of days until it.
+  ///
+  /// Events with the same name on the same day are reported once (the first
+  /// source in `sources` wins); events on the same day keep `sources` order.
+  ///
+  /// ```swift
+  /// for (event, days) in Date().upcomingSpecialDays(within: 30) {
+  ///     print("\(event.name) in \(days) day(s)")
+  /// }
+  /// ```
+  func upcomingSpecialDays(
+    sources: [SpecialDaySource] = [FestivalSource(), JieqiSource()],
+    within days: Int = 365,
+    calendar: Calendar = Calendar(identifier: .gregorian)
+  ) -> [(day: SpecialDay, daysUntil: Int)] {
+    var found: [(day: SpecialDay, daysUntil: Int, order: Int)] = []
+    for (order, source) in sources.enumerated() {
+      for event in source.specialDays(on: self) {
+        found.append((event, 0, order))
+      }
+      var probe = self
+      // Bounded so a misbehaving source can't loop forever.
+      for _ in 0..<500 {
+        guard let next = source.nextSpecialDay(after: probe), next.date > probe else { break }
+        let until = calendarDays(to: next.date, in: calendar)
+        guard until <= days else { break }
+        found.append((next, until, order))
+        probe = next.date
+      }
+    }
+    found.sort { ($0.daysUntil, $0.order) < ($1.daysUntil, $1.order) }
+
+    var seen = Set<String>()
+    return found.compactMap { item in
+      seen.insert("\(item.daysUntil)|\(item.day.name)").inserted ? (item.day, item.daysUntil) : nil
+    }
+  }
+}
+
+// MARK: - Helpers
+
+extension Date {
+  /// Whole calendar days from this date's day to `other`'s day in `calendar`.
+  fileprivate func calendarDays(to other: Date, in calendar: Calendar) -> Int {
+    let from = calendar.startOfDay(for: self)
+    let to = calendar.startOfDay(for: other)
+    return max(0, calendar.dateComponents([.day], from: from, to: to).day ?? 0)
   }
 }

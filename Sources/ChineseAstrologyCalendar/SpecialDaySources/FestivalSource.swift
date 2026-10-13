@@ -19,18 +19,30 @@ public struct FestivalSource: SpecialDaySource {
   public static let categoryName = "節日"
 
   private let converter: DayConverter
+  private let timeZone: TimeZone?
   private let contentProvider: any ChineseFestivalContentProvider
 
+  /// - Parameters:
+  ///   - converter: Finds lunar festival dates.
+  ///   - timeZone: The time zone whose calendar days both lunar and solar-term
+  ///     festivals (清明, 冬至) are matched on. Pass the same time zone as
+  ///     `converter`'s calendar. `nil` (the default) keeps the original
+  ///     behaviour: lunar festivals in the device time zone, solar-term
+  ///     festivals in China Standard Time.
+  ///   - contentProvider: Supplies the display strings.
   public init(
     converter: DayConverter = DayConverter(),
+    timeZone: TimeZone? = nil,
     contentProvider: any ChineseFestivalContentProvider = DefaultFestivalContentProvider()
   ) {
     self.converter = converter
+    self.timeZone = timeZone
     self.contentProvider = contentProvider
   }
 
   public func specialDays(on date: Date) -> [SpecialDay] {
-    guard let festival = date.chineseFestival else { return [] }
+    let match = timeZone.map { date.chineseFestival(timeZone: $0) } ?? date.chineseFestival
+    guard let festival = match else { return [] }
     return [SpecialDay(
       name: contentProvider.name(for: festival),
       category: contentProvider.category,
@@ -43,14 +55,15 @@ public struct FestivalSource: SpecialDaySource {
   public func nextSpecialDay(after date: Date) -> SpecialDay? {
     // Find the next occurrence across all festivals and return the soonest.
     let candidates = ChineseFestival.allCases.compactMap { festival -> (ChineseFestival, Date)? in
-      guard let next = festival.nextDate(from: date, converter: converter) else { return nil }
+      guard let next = nextDate(of: festival, from: date) else { return nil }
       // nextDate(from:) may return `date` itself if it is the festival day;
       // we want strictly after `date`.
-      let calendar = Calendar(identifier: .gregorian)
+      var calendar = Calendar(identifier: .gregorian)
+      if let timeZone { calendar.timeZone = timeZone }
       guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: date) else { return nil }
       if next < tomorrow {
         // The returned date is today or earlier — find next year's occurrence.
-        return festival.nextDate(from: tomorrow, converter: converter).map { (festival, $0) }
+        return nextDate(of: festival, from: tomorrow).map { (festival, $0) }
       }
       return (festival, next)
     }
@@ -66,5 +79,10 @@ public struct FestivalSource: SpecialDaySource {
       date: nextDate,
       kind: .festival
     )
+  }
+
+  private func nextDate(of festival: ChineseFestival, from date: Date) -> Date? {
+    guard let timeZone else { return festival.nextDate(from: date, converter: converter) }
+    return festival.nextDate(from: date, converter: converter, timeZone: timeZone)
   }
 }
