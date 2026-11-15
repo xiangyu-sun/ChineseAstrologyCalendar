@@ -62,6 +62,6 @@ Concepts, data flow and extension points: `docs/architecture.md` (read when new 
 - Deprecate before removing: keep a forwarding `@available(*, deprecated, message: "Use …")` API for one major version.
   To delete in 5.0: `Russian*`/`Spanish*` content providers (`DeprecatedContentProviders.swift`) and `Date+Year` string properties.
 - Release = push a `v*` tag on a `master` commit (never an unmerged branch); `release.yml` builds, tests and publishes a GitHub release.
-- Dependencies are pinned by version, never a branch (downstream packages depend on this one by version): Astral `from: "1.2.0"`
+- Dependencies are pinned by version, never a branch (downstream packages depend on this one by version): Astral `from: "1.3.0"`
   (sun position for solar terms). swift-numerics is declared but no source imports it.
 - Downstream Bagua and JingluoShuxueCore (same GitHub folder) must bump their minimum version when they need a new API.

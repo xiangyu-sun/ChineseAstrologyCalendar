@@ -3,7 +3,7 @@ import WeatherKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 extension ChineseMoonPhase {
-  public var moonPhase: MoonPhase {
+  public var moonPhase: WeatherKit.MoonPhase {
     switch self {
     case .newMoon:
       return .new
@@ -28,7 +28,7 @@ extension ChineseMoonPhase {
 }
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
-extension MoonPhase {
+extension WeatherKit.MoonPhase {
 
   public func moonPhase(day: Day) -> ChineseMoonPhase {
     switch self {

@@ -2,6 +2,16 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.2.1
+
+### Changed
+- Requires Astral 1.3.0 or newer (was 1.2.0). Astral 1.3.0 builds in Swift 6 language mode with strict concurrency and
+  no longer pulls `airbnb/swift` and `swift-argument-parser` into consumers' dependency graphs.
+- `Package.swift` declares `swiftLanguageModes: [.v6]` explicitly. The package already built in Swift 6 mode; nothing
+  changes for clients.
+- The WeatherKit bridge (`ChineseMoonPhase.moonPhase`, `MoonPhase.moonPhase(day:)`) names `WeatherKit.MoonPhase`
+  explicitly so it can't be confused with Astral 1.3.0's new `MoonPhase` type.
+
 ## 4.2.0
 
 ### Added
