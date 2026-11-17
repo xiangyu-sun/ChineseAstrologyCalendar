@@ -2,6 +2,18 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## Unreleased
+
+### Added
+- `Jieqi.monthBranch`: the earthly branch of the solar month (月建) a term falls in. Each 節 opens a month and the following 中氣 belongs to it: 立春/雨水 → 寅, 驚蟄/春分 → 卯, … 小寒/大寒 → 丑.
+- `Jieqi.isMonthOpener` (true for the 12 節), `monthOpener` (the 節 that opens the term's month) and `isMajorTerm` (the 12 中氣, same as `qi`).
+- `Jieqi.previous`, the counterpart of `next`.
+- `Jieqi.traditionalOrder` (立春 = 1 … 大寒 = 24) and `Jieqi.traditionallyOrderedCases`.
+- `Jieqi.pinyin` (tone-marked, lowercase, like `Tiangan.pinyin` and `Dizhi.pinyin`) and `Jieqi.slug`, an ASCII name for assets and URLs (立春 → "lichun").
+
+### Deprecated
+- `Jieqi.dizhi`. It maps most terms a month early (春分 and 清明 → 寅) and is unchanged for compatibility. Use `monthBranch`.
+
 ## 4.2.1
 
 ### Changed

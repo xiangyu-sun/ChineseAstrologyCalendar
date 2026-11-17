@@ -219,8 +219,119 @@ private func gregorian(in timeZone: TimeZone) -> Calendar {
 // MARK: DizhiConvertable
 
 extension Jieqi: DizhiConvertable {
+  /// A legacy branch mapping that is off by one month for most terms (春分 and 清明 → 寅).
+  ///
+  /// Kept unchanged for source compatibility. Use ``monthBranch`` for the branch of the
+  /// solar month (月建) a term falls in.
+  @available(*, deprecated, renamed: "monthBranch", message: "dizhi maps most terms to the wrong month (春分 → 寅). Use monthBranch for the 月建: 立春/雨水 → 寅, 驚蟄/春分 → 卯.")
   public var dizhi: Dizhi? {
     Dizhi(rawValue: ((rawValue / 2 + 2) % 12) + 1)
+  }
+}
+
+// MARK: - Solar months and traditional order
+
+extension Jieqi {
+
+  /// The 24 terms in traditional order, starting at 立春 and ending at 大寒.
+  ///
+  /// `allCases` follows the raw values, which start at 春分 (celestial longitude 0°).
+  public static let traditionallyOrderedCases: [Jieqi] = (0..<24).compactMap { Jieqi(rawValue: (21 + $0) % 24) }
+
+  /// The 1-based position of this term in the traditional order: 立春 = 1, 雨水 = 2, … 大寒 = 24.
+  public var traditionalOrder: Int {
+    (rawValue + 3) % 24 + 1
+  }
+
+  /// The previous solar term in the 24-term cycle.
+  public var previous: Jieqi {
+    Jieqi(rawValue: (rawValue + 23) % 24) ?? .awakeningOfInsects
+  }
+
+  /// Whether this term is a 中氣 (principal term). Same as ``qi``.
+  ///
+  /// The 12 中氣 (春分, 穀雨, … 雨水) fall in the middle of a solar month; the other 12
+  /// terms are 節, which open one (see ``isMonthOpener``).
+  public var isMajorTerm: Bool { qi }
+
+  /// Whether this term is one of the 12 節 (sectional terms) that open a solar month:
+  /// 立春, 驚蟄, 清明, 立夏, 芒種, 小暑, 立秋, 白露, 寒露, 立冬, 大雪, 小寒.
+  public var isMonthOpener: Bool { !qi }
+
+  /// The 節 that opens the solar month this term falls in: the term itself for a 節,
+  /// the preceding 節 for a 中氣 (雨水 → 立春, 春分 → 驚蟄).
+  public var monthOpener: Jieqi {
+    isMonthOpener ? self : previous
+  }
+
+  /// The earthly branch of the solar month (月建) this term falls in.
+  ///
+  /// Each 節 opens a month and the following 中氣 belongs to it: 立春/雨水 → 寅,
+  /// 驚蟄/春分 → 卯, 清明/穀雨 → 辰, … 大雪/冬至 → 子, 小寒/大寒 → 丑.
+  public var monthBranch: Dizhi {
+    Dizhi.orderedMonthAlCases[(traditionalOrder - 1) / 2]
+  }
+
+  /// Hanyu Pinyin romanization of the term's name, with tone marks, lowercase
+  /// (立春 → "lìchūn"), in the style of ``Tiangan/pinyin`` and ``Dizhi/pinyin``.
+  public var pinyin: String {
+    switch self {
+    case .startOfSpring:      return "lìchūn"
+    case .rainWater:          return "yǔshuǐ"
+    case .awakeningOfInsects: return "jīngzhé"
+    case .springEquinox:      return "chūnfēn"
+    case .clearAndBright:     return "qīngmíng"
+    case .grainRain:          return "gǔyǔ"
+    case .startOfSummer:      return "lìxià"
+    case .grainBuds:          return "xiǎomǎn"
+    case .grainInEar:         return "mángzhòng"
+    case .summerSolstice:     return "xiàzhì"
+    case .minorHeat:          return "xiǎoshǔ"
+    case .majorHeat:          return "dàshǔ"
+    case .startOfAutumn:      return "lìqiū"
+    case .endOfHeat:          return "chǔshǔ"
+    case .whiteDew:           return "báilù"
+    case .autumnEquinox:      return "qiūfēn"
+    case .coldDew:            return "hánlù"
+    case .frostDescent:       return "shuāngjiàng"
+    case .startOfWinter:      return "lìdōng"
+    case .minorSnow:          return "xiǎoxuě"
+    case .majorSnow:          return "dàxuě"
+    case .winterSolstice:     return "dōngzhì"
+    case .minorCold:          return "xiǎohán"
+    case .majorCold:          return "dàhán"
+    }
+  }
+
+  /// An ASCII identifier for the term: its pinyin without tone marks, lowercase
+  /// (立春 → "lichun", 霜降 → "shuangjiang"). Suitable for asset names, file names and URLs.
+  public var slug: String {
+    switch self {
+    case .startOfSpring:      return "lichun"
+    case .rainWater:          return "yushui"
+    case .awakeningOfInsects: return "jingzhe"
+    case .springEquinox:      return "chunfen"
+    case .clearAndBright:     return "qingming"
+    case .grainRain:          return "guyu"
+    case .startOfSummer:      return "lixia"
+    case .grainBuds:          return "xiaoman"
+    case .grainInEar:         return "mangzhong"
+    case .summerSolstice:     return "xiazhi"
+    case .minorHeat:          return "xiaoshu"
+    case .majorHeat:          return "dashu"
+    case .startOfAutumn:      return "liqiu"
+    case .endOfHeat:          return "chushu"
+    case .whiteDew:           return "bailu"
+    case .autumnEquinox:      return "qiufen"
+    case .coldDew:            return "hanlu"
+    case .frostDescent:       return "shuangjiang"
+    case .startOfWinter:      return "lidong"
+    case .minorSnow:          return "xiaoxue"
+    case .majorSnow:          return "daxue"
+    case .winterSolstice:     return "dongzhi"
+    case .minorCold:          return "xiaohan"
+    case .majorCold:          return "dahan"
+    }
   }
 }
 

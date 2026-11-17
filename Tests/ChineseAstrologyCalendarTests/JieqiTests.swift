@@ -80,13 +80,16 @@ import Testing
     #expect(Set(allJie).isDisjoint(with: Set(allQi)))
   }
 
-  // MARK: - Jieqi.dizhi
+  // MARK: - Jieqi.dizhi (deprecated)
+
+  // `dizhi` is deprecated; the tests read it through `DizhiConvertable` (whose requirement
+  // is not deprecated) to pin its legacy values without a deprecation warning.
 
   /// Every Jieqi must map to a non-nil Dizhi.
   /// Bug: rawValues 19 (minorCold) and 20 (majorCold) produced Dizhi(rawValue: 0) = nil.
   @Test func jieqiDizhiNeverNil() {
     for jieqi in Jieqi.allCases {
-      #expect(jieqi.dizhi != nil, "\(jieqi.stringValue) (rawValue \(jieqi.rawValue)) has nil dizhi")
+      #expect((jieqi as any DizhiConvertable).dizhi != nil, "\(jieqi.stringValue) (rawValue \(jieqi.rawValue)) has nil dizhi")
     }
   }
 
@@ -238,8 +241,9 @@ import Testing
     #expect(boundaryDate.jieqi != nil)
   }
 
-  /// Each consecutive pair of Jieqi (one jie + one qi) belongs to the same Dizhi month.
-  /// Expected mapping derived from QijieDizhiTests (Dizhi.jie / Dizhi.qi truth).
+  /// The legacy `dizhi` mapping, pinned so it doesn't change before it is removed.
+  /// It pairs each 中氣 with the following 節 and is a month early (春分 → 寅); the correct
+  /// 月建 is `monthBranch`, tested in `JieqiMonthBranchTests`.
   @Test func jieqiDizhiMapping() {
     let expected: [(Jieqi, Dizhi)] = [
       (.springEquinox, .yin), (.clearAndBright, .yin),
@@ -256,7 +260,7 @@ import Testing
       (.rainWater, .chou), (.awakeningOfInsects, .chou),
     ]
     for (jieqi, expectedDizhi) in expected {
-      #expect(jieqi.dizhi == expectedDizhi,
+      #expect((jieqi as any DizhiConvertable).dizhi == expectedDizhi,
               "\(jieqi.stringValue) should map to \(expectedDizhi.chineseCharacter)")
     }
   }
