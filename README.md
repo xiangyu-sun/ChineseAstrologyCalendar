@@ -69,6 +69,14 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 - **`Jieqi.startDate(in:)`** → `Date?` — the start of the period containing a given date
 - **`Jieqi.nextOccurrence(after:)`** → `JieqiOccurrence?` — the next time a specific jieqi occurs
 
+### 🌞 Transits, Pentads and Seasonal Counts — New in v4.3
+- **`Date.nextJieqiTransit`** / **`previousJieqiTransit`** → `JieqiTransit` — the exact instant of a solar term (about ±12 min)
+- **`JieqiTransit.transits(inYear:timeZone:)`** — a year's 24 transits; **`day(in:)`** for the civil day in any time zone
+- **`Pentad`** / **`Date.pentad`** — the 72 pentads (七十二候) with their phenology text and boundaries
+- **`SeasonalCount`** — 數九, 三伏 and 梅雨 with the period and day within it
+- **`Jieqi.monthBranch`** — the 月建 branch of a term (replaces the deprecated `dizhi`)
+- **`Date.nextMidnights(count:in:)`** — DST-safe midnights in any time zone, for widget timelines
+
 ### 🔥 Five Elements Theory
 - **Wuxing** (五行): Wood, Fire, Earth, Metal, Water with generating (生) and controlling (克) cycles
 - **Directions** (方位): Cardinal and intermediate directions with element associations
@@ -108,7 +116,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.0.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.3.0")
 ]
 ```
 
