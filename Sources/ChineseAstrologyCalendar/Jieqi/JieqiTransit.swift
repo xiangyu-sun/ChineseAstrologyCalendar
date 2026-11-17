@@ -103,24 +103,14 @@ extension Jieqi {
   /// ecliptic longitude. A crossing within a second of `date` counts as at
   /// `date` and is skipped, so passing a transit instant returns the next year's.
   public func transit(after date: Date) -> Date {
-    let target = Double(celestialLongitude)
-    let ahead = normalizedDegrees(target - date.solarLongitude)
-    let found = refineCrossing(of: target, near: date.addingTimeInterval(ahead / 360 * tropicalYear))
-    if found.timeIntervalSince(date) > crossingResolution { return found }
-    // The crossing at `date` itself (or a hair before it) was found; the
-    // next one is a year later.
-    return transit(after: date.addingTimeInterval(86_400))
+    solarLongitudeCrossing(Double(celestialLongitude), after: date)
   }
 
   /// The last instant before `date` at which the sun reached this term's
   /// ecliptic longitude. A crossing within a second of `date` counts as at
   /// `date` and is skipped, so passing a transit instant returns the previous year's.
   public func transit(before date: Date) -> Date {
-    let target = Double(celestialLongitude)
-    let behind = normalizedDegrees(date.solarLongitude - target)
-    let found = refineCrossing(of: target, near: date.addingTimeInterval(-behind / 360 * tropicalYear))
-    if date.timeIntervalSince(found) > crossingResolution { return found }
-    return transit(before: date.addingTimeInterval(-86_400))
+    solarLongitudeCrossing(Double(celestialLongitude), before: date)
   }
 
   /// The transit of this term inside the Gregorian `year` as reckoned in
@@ -143,7 +133,7 @@ extension Jieqi {
 // MARK: - Root finding
 
 /// How closely `refineCrossing` pins a crossing, in seconds.
-private let crossingResolution: TimeInterval = 1
+let crossingResolution: TimeInterval = 1
 
 /// Mean tropical year, used only to seed the bisection.
 private let tropicalYear: TimeInterval = 365.242_19 * 86_400
@@ -152,6 +142,26 @@ private let tropicalYear: TimeInterval = 365.242_19 * 86_400
 func normalizedDegrees(_ degrees: Double) -> Double {
   let reduced = degrees.truncatingRemainder(dividingBy: 360)
   return reduced < 0 ? reduced + 360 : reduced
+}
+
+/// The first instant after `date` (by more than `crossingResolution`) at which
+/// the solar longitude reaches `target` degrees.
+func solarLongitudeCrossing(_ target: Double, after date: Date) -> Date {
+  let ahead = normalizedDegrees(target - date.solarLongitude)
+  let found = refineCrossing(of: target, near: date.addingTimeInterval(ahead / 360 * tropicalYear))
+  if found.timeIntervalSince(date) > crossingResolution { return found }
+  // The crossing at `date` itself (or a hair before it) was found; the
+  // next one is a year later.
+  return solarLongitudeCrossing(target, after: date.addingTimeInterval(86_400))
+}
+
+/// The last instant before `date` (by more than `crossingResolution`) at which
+/// the solar longitude reached `target` degrees.
+func solarLongitudeCrossing(_ target: Double, before date: Date) -> Date {
+  let behind = normalizedDegrees(date.solarLongitude - target)
+  let found = refineCrossing(of: target, near: date.addingTimeInterval(-behind / 360 * tropicalYear))
+  if date.timeIntervalSince(found) > crossingResolution { return found }
+  return solarLongitudeCrossing(target, before: date.addingTimeInterval(-86_400))
 }
 
 /// `a − b` reduced to `-180..<180`, so the 360°→0° wrap at 春分 compares correctly.
