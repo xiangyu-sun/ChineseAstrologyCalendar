@@ -2,6 +2,11 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.3.1
+
+### Changed
+- Require Astral 1.4.0 (`from: "1.4.0"`). No API changes.
+
 ## 4.3.0
 
 ### Added
