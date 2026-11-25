@@ -25,28 +25,22 @@ public struct LocalizedFestivalContentProvider: ChineseFestivalContentProvider {
   }
 
   public func detail(for festival: ChineseFestival) -> String {
-    switch language {
-    case .ru: return RussianFestivalContent().detail(for: festival)
-    case .es: return SpanishFestivalContent().detail(for: festival)
-    default: break
-    }
+    if language == .ru { return RussianFestivalContent().detail(for: festival) }
     switch language.base {
     case .zhHant: return festival.meaning
     case .zhHans: return Self.simplifiedMeanings[festival] ?? festival.meaning
     case .en: return Self.englishMeanings[festival] ?? festival.meaning
+    case .es: return SpanishFestivalContent().detail(for: festival)
     }
   }
 
   public var category: String {
-    switch language {
-    case .ru: return RussianFestivalContent().category
-    case .es: return SpanishFestivalContent().category
-    default: break
-    }
+    if language == .ru { return RussianFestivalContent().category }
     switch language.base {
     case .zhHant: return FestivalSource.categoryName
     case .zhHans: return "节日"
     case .en: return "Festival"
+    case .es: return SpanishFestivalContent().category
     }
   }
 

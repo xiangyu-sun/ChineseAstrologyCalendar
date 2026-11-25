@@ -6,6 +6,7 @@ extension Nayin: LocalizedNaming {
     case .zhHant: return traditionalChineseName
     case .zhHans: return Self.simplifiedNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -56,5 +57,38 @@ extension Nayin: LocalizedNaming {
     .heavenlyFire: "Fire in the Sky",
     .pomegranateWood: "Pomegranate Wood",
     .oceanWater: "Water of the Great Sea",
+  ]
+
+  private static let spanishNames: [Nayin: String] = [
+    .seaGold: "Oro en el mar",
+    .furnaceFire: "Fuego en el horno",
+    .forestWood: "Madera del gran bosque",
+    .roadsideEarth: "Tierra al borde del camino",
+    .swordEdgeMetal: "Metal del filo de la espada",
+    .mountaintopFire: "Fuego en la cima de la montaña",
+    .ravineWater: "Agua del barranco",
+    .rampartEarth: "Tierra sobre la muralla",
+    .beeswaxMetal: "Metal de cera blanca",
+    .willowWood: "Madera de sauce",
+    .springWater: "Agua del manantial",
+    .rooftopEarth: "Tierra sobre el tejado",
+    .thunderFire: "Fuego del rayo",
+    .pineWood: "Madera de pino y ciprés",
+    .longRiverWater: "Agua de corriente incesante",
+    .sandGold: "Oro en la arena",
+    .footOfMountainFire: "Fuego al pie de la montaña",
+    .flatlandWood: "Madera de la llanura",
+    .wallEarth: "Tierra sobre la pared",
+    .goldLeafMetal: "Metal en pan de oro",
+    .lanternFire: "Fuego de la lámpara",
+    .celestialRiverWater: "Agua del río celestial",
+    .postRoadEarth: "Tierra del gran camino de postas",
+    .braceletMetal: "Oro de horquillas y brazaletes",
+    .mulberryWood: "Madera de morera",
+    .streamWater: "Agua del gran arroyo",
+    .sandEarth: "Tierra en la arena",
+    .heavenlyFire: "Fuego en el cielo",
+    .pomegranateWood: "Madera de granado",
+    .oceanWater: "Agua del gran mar",
   ]
 }

@@ -9,6 +9,7 @@ extension EventModel {
   /// - `.zhHant` / `.zhHans`: the Chinese numeral month plus the day name,
   ///   e.g. `"正月 初一"`.
   /// - `.en`: e.g. `"Month 1, 1st"`.
+  /// - `.es`: e.g. `"Día 1 del 1.er mes"`.
   public func localizedTitle(in language: DisplayLanguage) -> String {
     if let alternativeTitle {
       return alternativeTitle
@@ -23,6 +24,9 @@ extension EventModel {
       return "\(monthString) \(day.localizedName(in: language))"
     case .en:
       return "Month \(monthValue), \(day.localizedName(in: .en))"
+    case .es:
+      let monthText = LunarMonth(number: monthValue)?.localizedName(in: .es) ?? "mes \(monthValue)"
+      return "\(day.localizedName(in: .es)) del \(monthText)"
     }
   }
 }

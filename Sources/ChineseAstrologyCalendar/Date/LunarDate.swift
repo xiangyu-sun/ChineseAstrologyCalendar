@@ -11,6 +11,7 @@ import Foundation
 /// lunar?.formatted(.yearZodiacMonthDay, in: .zhHant) // "甲辰龍年正月初一"
 /// lunar?.formatted(.yearZodiacMonthDay, in: .zhHans) // "甲辰龙年正月初一"
 /// lunar?.formatted(.yearZodiacMonthDay, in: .en)     // "1st Month 1st, Year of the Dragon (Jiǎchén)"
+/// lunar?.formatted(.yearZodiacMonthDay, in: .es)     // "Día 1 del 1.er mes, año del Dragón (Jiǎchén)"
 /// ```
 public struct LunarDate: Hashable, Sendable {
 
@@ -55,20 +56,22 @@ extension LunarDate {
 
   /// Which parts of a ``LunarDate`` to render.
   public enum Style: Sendable, CaseIterable {
-    /// The day only: 初九 / "9th".
+    /// The day only: 初九 / "9th" / "Día 9".
     case day
-    /// Month and day: 五月初九 / "5th Month 9th".
+    /// Month and day: 五月初九 / "5th Month 9th" / "Día 9 del 5.º mes".
     case monthDay
-    /// Year, month and day: 壬寅年五月初九 / "5th Month 9th, Rényín year".
+    /// Year, month and day: 壬寅年五月初九 / "5th Month 9th, Rényín year" /
+    /// "Día 9 del 5.º mes, año Rényín".
     case yearMonthDay
     /// Year with its zodiac animal, month and day: 壬寅虎年五月初九 /
-    /// "5th Month 9th, Year of the Tiger (Rényín)".
+    /// "5th Month 9th, Year of the Tiger (Rényín)" /
+    /// "Día 9 del 5.º mes, año del Tigre (Rényín)".
     case yearZodiacMonthDay
   }
 
   /// The date rendered in the given style and language.
   ///
-  /// Languages without their own date wording (Russian, Spanish) use English.
+  /// Languages without their own date wording (Russian) use English.
   public func formatted(_ style: Style = .yearMonthDay, in language: DisplayLanguage = .zhHant) -> String {
     let dayText = day.localizedName(in: language)
     let monthText = month.localizedName(in: language)
@@ -92,6 +95,17 @@ extension LunarDate {
       case .yearMonthDay: return "\(monthDay), \(yearText) year"
       case .yearZodiacMonthDay:
         return "\(monthDay), Year of the \(zodiac.localizedName(in: language)) (\(yearText))"
+      }
+    case .es:
+      let monthDay = "\(dayText) del \(monthText)"
+      switch style {
+      case .day: return dayText
+      case .monthDay: return monthDay
+      case .yearMonthDay: return "\(monthDay), año \(yearText)"
+      case .yearZodiacMonthDay:
+        // "del Dragón", but "de la Rata": the animal's name carries a gender.
+        let of = [.rat, .snake, .goat].contains(zodiac) ? "de la" : "del"
+        return "\(monthDay), año \(of) \(zodiac.localizedName(in: language)) (\(yearText))"
       }
     }
   }

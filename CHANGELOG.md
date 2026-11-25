@@ -2,6 +2,21 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.4.0
+
+### Added
+- Spanish names for every type. `localizedName(in: .es)` now has its own text for `Tiangan`, `Dizhi`
+  (and `localizedHourName`, e.g. "Hora Zǐ"), `Ganzhi`, `Nayin`, `Wuxing` (with `localizedColorDescription` and
+  `localizedFlavor`), `Zodiac`, `TwelveGods`, `LunarMansion`, `FourSymbol`, `FangWei`, `Season`, `ChineseMoonPhase`,
+  `LunarMonth`, `DizhiRelationship`, `Day` and the seasonal counts, and so do `Shichen.localizedKeSpellOut`,
+  `Bazi.localizedFormattedDescription`, `EventModel.localizedTitle`, `LunarDate.formatted(_:in:)` and
+  `ChineseAlmanac`'s `AlmanacText`. Stems, branches and stem-branch pairs are Pinyin, as in English.
+
+### Changed
+- Everything above returned English for `.es` before; it now returns Spanish. `.ru` is unchanged. No API changes.
+- Long-form prose (solar-term health tips, seasonal foods, Twelve Gods guidance, festival `meaning`) stays in
+  Traditional Chinese. The Spanish solar-term and festival descriptions are unchanged.
+
 ## 4.3.1
 
 ### Changed

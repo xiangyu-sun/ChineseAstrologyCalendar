@@ -52,7 +52,8 @@ Dictionary lookups keyed by `DisplayLanguage` keep working, but now see `.ru` an
 - New: `identifier` (`"zh-Hant"`, `"zh-Hans"`, `"en"`, `"ru"`, `"es"`), `Codable`
   (encodes as the identifier string) and `CustomStringConvertible`.
 - For `.ru` and `.es`, every type renders in English except `ChineseFestival` and
-  `Jieqi`, which have Russian and Spanish text.
+  `Jieqi`, which have Russian and Spanish text. (Since 4.4.0, every type has Spanish
+  text.)
 
 ## 2. Russian and Spanish providers folded into `DisplayLanguage`
 

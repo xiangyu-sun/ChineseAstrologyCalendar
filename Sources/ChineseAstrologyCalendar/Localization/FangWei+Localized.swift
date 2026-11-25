@@ -6,6 +6,7 @@ extension FangWei: LocalizedNaming {
     case .zhHant: return traditionalChineseName
     case .zhHans: return Self.simplifiedNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -18,5 +19,13 @@ extension FangWei: LocalizedNaming {
     .west: "West",
     .north: "North",
     .center: "Center",
+  ]
+
+  private static let spanishNames: [FangWei: String] = [
+    .east: "Este",
+    .south: "Sur",
+    .west: "Oeste",
+    .north: "Norte",
+    .center: "Centro",
   ]
 }

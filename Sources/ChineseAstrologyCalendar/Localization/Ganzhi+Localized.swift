@@ -3,12 +3,13 @@ import Foundation
 // MARK: - Tiangan + LocalizedNaming
 
 /// The ten stems are written identically in Traditional and Simplified script.
-/// English has no established translation, so it uses capitalized Hanyu Pinyin.
+/// English and Spanish have no established translation, so they use capitalized
+/// Hanyu Pinyin.
 extension Tiangan: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     switch language.base {
     case .zhHant, .zhHans: return chineseCharacter
-    case .en: return pinyin.capitalizedFirstLetter
+    case .en, .es: return pinyin.capitalizedFirstLetter
     }
   }
 }
@@ -16,16 +17,17 @@ extension Tiangan: LocalizedNaming {
 // MARK: - Dizhi + LocalizedNaming
 
 /// The twelve branches are written identically in Traditional and Simplified
-/// script. English uses capitalized Hanyu Pinyin.
+/// script. English and Spanish use capitalized Hanyu Pinyin.
 extension Dizhi: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     switch language.base {
     case .zhHant, .zhHans: return chineseCharacter
-    case .en: return pinyin.capitalizedFirstLetter
+    case .en, .es: return pinyin.capitalizedFirstLetter
     }
   }
 
-  /// The name of the double-hour (時辰) governed by this branch, e.g. 子時 / 子时 / "Zǐ hour".
+  /// The name of the double-hour (時辰) governed by this branch, e.g. 子時 / 子时 /
+  /// "Zǐ hour" / "Hora Zǐ".
   ///
   /// Equivalent to ``displayHourText`` for `.zhHant`.
   public func localizedHourName(in language: DisplayLanguage) -> String {
@@ -33,19 +35,20 @@ extension Dizhi: LocalizedNaming {
     case .zhHant: return displayHourText
     case .zhHans: return chineseCharacter + "时"
     case .en: return "\(localizedName(in: .en)) hour"
+    case .es: return "Hora \(localizedName(in: .es))"
     }
   }
 }
 
 // MARK: - Ganzhi + LocalizedNaming
 
-/// Stem-branch pairs read the same in both Chinese scripts. English uses
-/// capitalized Hanyu Pinyin, e.g. "Guǐmǎo" for 癸卯.
+/// Stem-branch pairs read the same in both Chinese scripts. English and Spanish
+/// use capitalized Hanyu Pinyin, e.g. "Guǐmǎo" for 癸卯.
 extension Ganzhi: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
     switch language.base {
     case .zhHant, .zhHans: return description
-    case .en: return pinyin
+    case .en, .es: return pinyin
     }
   }
 }

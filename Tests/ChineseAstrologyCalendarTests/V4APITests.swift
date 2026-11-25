@@ -23,7 +23,7 @@ import Testing
 
   @Test func untranslatedTypesFallBackToEnglish() {
     #expect(Zodiac.dragon.localizedName(in: .ru) == "Dragon")
-    #expect(LunarMonth(number: 1)?.localizedName(in: .es) == "1st Month")
+    #expect(LunarMonth(number: 1)?.localizedName(in: .ru) == "1st Month")
   }
 
   @Test func festivalsAndSolarTermsAreTranslated() {
@@ -102,6 +102,18 @@ import Testing
     #expect(day.text.festival == "Spring Festival")
     #expect(day.text.shichen == "Wǔ hour")
     #expect(day.text.lunarDate == "1st Month 1st, Year of the Dragon (Jiǎchén)")
+  }
+
+  @Test func spanishText() {
+    let text = ChineseAlmanac(language: .es).day(for: cstNoon(2024, 2, 10)).text
+    #expect(text.lunarDate == "Día 1 del 1.er mes, año del Dragón (Jiǎchén)")
+    #expect(text.lunarMonthDay == "Día 1 del 1.er mes")
+    #expect(text.zodiac == "Dragón")
+    #expect(text.festival == "Fiesta de la Primavera (Año Nuevo Chino)")
+    #expect(text.jieqi == "Comienzo de la primavera")
+    #expect(text.moonPhase == "Luna nueva")
+    #expect(text.shichen == "Hora Wǔ")
+    #expect(text.pillars?.hasPrefix("Año: Jiǎchén (甲辰)") == true)
   }
 
   @Test func midAutumn() {

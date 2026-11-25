@@ -9,6 +9,7 @@ extension LunarMansion: LocalizedNaming {
     case .zhHant: return name
     case .zhHans: return (Self.simplifiedCharacters[self] ?? rawValue) + "宿"
     case .en: return Self.englishNames[self] ?? name
+    case .es: return Self.spanishNames[self] ?? name
     }
   }
 
@@ -52,6 +53,37 @@ extension LunarMansion: LocalizedNaming {
     .wings: "Wings",
     .chariot: "Chariot",
   ]
+
+  private static let spanishNames: [LunarMansion: String] = [
+    .horn: "Cuerno",
+    .neck: "Cuello",
+    .root: "Raíz",
+    .room: "Habitación",
+    .heart: "Corazón",
+    .tail: "Cola",
+    .winnowingBasket: "Cesta de aventar",
+    .dipper: "Cucharón",
+    .ox: "Buey",
+    .girl: "Muchacha",
+    .emptiness: "Vacío",
+    .rooftop: "Tejado",
+    .encampment: "Campamento",
+    .wall: "Muro",
+    .legs: "Piernas",
+    .bond: "Lazo",
+    .stomach: "Estómago",
+    .pleiades: "Cabeza peluda",
+    .net: "Red",
+    .turtleBeak: "Pico de tortuga",
+    .threeStars: "Tres estrellas",
+    .well: "Pozo",
+    .ghost: "Fantasma",
+    .willow: "Sauce",
+    .star: "Estrella",
+    .extendedNet: "Red extendida",
+    .wings: "Alas",
+    .chariot: "Carro",
+  ]
 }
 
 // MARK: - FourSymbol + LocalizedNaming
@@ -69,6 +101,13 @@ extension FourSymbol: LocalizedNaming {
       case .vermilionBird: return "Vermilion Bird"
       case .whiteTiger: return "White Tiger"
       case .blackTortoise: return "Black Tortoise"
+      }
+    case .es:
+      switch self {
+      case .azureDragon: return "Dragón Azul"
+      case .vermilionBird: return "Pájaro Bermellón"
+      case .whiteTiger: return "Tigre Blanco"
+      case .blackTortoise: return "Tortuga Negra"
       }
     }
   }

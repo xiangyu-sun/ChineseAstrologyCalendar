@@ -11,6 +11,7 @@ extension ChineseMoonPhase: LocalizedNaming {
     case .zhHant: return Self.traditionalModernNames[self] ?? traditionalChineseName
     case .zhHans: return Self.simplifiedModernNames[self] ?? Self.traditionalModernNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -43,5 +44,17 @@ extension ChineseMoonPhase: LocalizedNaming {
     .lastQuarter: "Last Quarter",
     .waningCrescent: "Waning Crescent",
     .darkMoon: "Dark Moon",
+  ]
+
+  private static let spanishNames: [ChineseMoonPhase: String] = [
+    .newMoon: "Luna nueva",
+    .waxingCrescent: "Luna creciente",
+    .firstQuarter: "Cuarto creciente",
+    .waxingGibbous: "Gibosa creciente",
+    .fullMoon: "Luna llena",
+    .waningGibbous: "Gibosa menguante",
+    .lastQuarter: "Cuarto menguante",
+    .waningCrescent: "Luna menguante",
+    .darkMoon: "Luna oscura",
   ]
 }

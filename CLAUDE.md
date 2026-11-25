@@ -8,7 +8,7 @@ iOS 13+ / macOS 10.14+ / watchOS 6+, swift-tools-version 6.0. Default branch is 
 ## Commands
 ```bash
 swift build
-swift test                      # ~20 s, 315 Swift Testing tests (all files `import Testing`)
+swift test                      # ~20 s, ~385 Swift Testing tests (all files `import Testing`)
 swift test --filter <Suite/test>
 ```
 No lint/format plugins are wired up (CONTRIBUTING.md's `swift package format/lint` don't exist).
@@ -24,7 +24,7 @@ cannot be imported", a stale prebuilt module from an older toolchain is in `.bui
 - `DizhiGanzhi/` Tiangan/Dizhi/Ganzhi/Jiazi/Nayin/Zodiac · `FiveElements/` Wuxing, FangWei, Season
 - `Jieqi/` solar terms + health tips · `Moon/` · `Event/EventModel` · top-level Bazi, Day, Shichen, TwelveGods, LunarMansion, ChineseFestival
 - `SpecialDaySources/` — `SpecialDaySource` protocol, `FestivalSource`, `JieqiSource`, `RecurringDaySource`, content providers
-- `Localization/` — `DisplayLanguage`, `*+Localized.swift`; `Tables/` holds internal ru/es tables
+- `Localization/` — `DisplayLanguage`, `*+Localized.swift` (including es names); `Tables/` holds ru and es festival/節氣 text
 
 Concepts, data flow and extension points: `docs/architecture.md` (read when new to the domain).
 
@@ -50,8 +50,10 @@ Concepts, data flow and extension points: `docs/architecture.md` (read when new 
 
 ## Localization rules
 - `DisplayLanguage` is a **struct** (`zhHant`, `zhHans`, `en`, `ru`, `es`), not an enum, so adding a language isn't source-breaking. Never make it an enum.
-- Switch on internal `language.base` (zhHant/zhHans/en) for types translated only into Chinese/English; ru/es fall back to English.
-  Types with their own ru/es text (`ChineseFestival`, `Jieqi`) check `language == .ru/.es` first.
+- Switch exhaustively on internal `language.base` (zhHant/zhHans/en/es): every type needs all four; ru falls back to English.
+  Types with their own ru text (`ChineseFestival`, `Jieqi`) check `language == .ru` first.
+- Spanish writes stems, branches and 干支 in Pinyin, and uses "Día 9 del 5.º mes" for lunar dates.
+  `LocalizationCoverageTests` rejects Spanish that equals the English or contains Han characters; add new types to its list.
 - `.zhHant` is canonical and must equal `traditionalChineseName`/`chineseCharacter`; canonical strings are Traditional script.
 - Long-form prose (Jieqi `healthTip`, TwelveGods almanac text) is intentionally not machine-translated.
 - Every `localizedName(in:)` must be non-empty for all `DisplayLanguage.allCases` (`LocalizationCoverageTests`).

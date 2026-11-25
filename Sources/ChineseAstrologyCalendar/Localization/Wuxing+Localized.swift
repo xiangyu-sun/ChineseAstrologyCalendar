@@ -5,6 +5,7 @@ extension Wuxing: LocalizedNaming {
     switch language.base {
     case .zhHant, .zhHans: return traditionalChineseName // 金木水火土 identical in both scripts
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -14,6 +15,7 @@ extension Wuxing: LocalizedNaming {
     case .zhHant: return colorDescription
     case .zhHans: return Self.simplifiedColors[self] ?? colorDescription
     case .en: return Self.englishColors[self] ?? colorDescription
+    case .es: return Self.spanishColors[self] ?? colorDescription
     }
   }
 
@@ -23,6 +25,7 @@ extension Wuxing: LocalizedNaming {
     case .zhHant: return fiveFlavor
     case .zhHans: return Self.simplifiedFlavors[self] ?? fiveFlavor
     case .en: return Self.englishFlavors[self] ?? fiveFlavor
+    case .es: return Self.spanishFlavors[self] ?? fiveFlavor
     }
   }
 
@@ -56,5 +59,29 @@ extension Wuxing: LocalizedNaming {
     .earth: "Sweet",
     .metal: "Pungent",
     .water: "Salty",
+  ]
+
+  private static let spanishNames: [Wuxing: String] = [
+    .wood: "Madera",
+    .fire: "Fuego",
+    .earth: "Tierra",
+    .metal: "Metal",
+    .water: "Agua",
+  ]
+
+  private static let spanishColors: [Wuxing: String] = [
+    .metal: "Blanco",
+    .wood: "Verde",
+    .water: "Negro",
+    .fire: "Rojo",
+    .earth: "Amarillo",
+  ]
+
+  private static let spanishFlavors: [Wuxing: String] = [
+    .wood: "Ácido",
+    .fire: "Amargo",
+    .earth: "Dulce",
+    .metal: "Picante",
+    .water: "Salado",
   ]
 }

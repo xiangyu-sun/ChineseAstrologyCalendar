@@ -6,6 +6,7 @@ extension Zodiac: LocalizedNaming {
     case .zhHant: return traditionalChineseName
     case .zhHans: return Self.simplifiedNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -30,5 +31,20 @@ extension Zodiac: LocalizedNaming {
     .rooster: "Rooster",
     .dog: "Dog",
     .pig: "Pig",
+  ]
+
+  private static let spanishNames: [Zodiac: String] = [
+    .rat: "Rata",
+    .ox: "Buey",
+    .tiger: "Tigre",
+    .rabbit: "Conejo",
+    .dragon: "Dragón",
+    .snake: "Serpiente",
+    .horse: "Caballo",
+    .goat: "Cabra",
+    .monkey: "Mono",
+    .rooster: "Gallo",
+    .dog: "Perro",
+    .pig: "Cerdo",
   ]
 }

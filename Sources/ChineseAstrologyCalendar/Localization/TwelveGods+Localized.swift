@@ -12,6 +12,7 @@ extension TwelveGods: LocalizedNaming {
     case .zhHant: return traditionalChineseName
     case .zhHans: return Self.simplifiedNames[self] ?? traditionalChineseName
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -36,5 +37,20 @@ extension TwelveGods: LocalizedNaming {
     .harvest: "Harvest",
     .opening: "Opening",
     .closing: "Closing",
+  ]
+
+  private static let spanishNames: [TwelveGods: String] = [
+    .establish: "Establecimiento",
+    .remove: "Eliminación",
+    .fullness: "Plenitud",
+    .balance: "Equilibrio",
+    .stability: "Estabilidad",
+    .grasp: "Sujeción",
+    .destruction: "Destrucción",
+    .danger: "Peligro",
+    .completion: "Logro",
+    .harvest: "Cosecha",
+    .opening: "Apertura",
+    .closing: "Cierre",
   ]
 }

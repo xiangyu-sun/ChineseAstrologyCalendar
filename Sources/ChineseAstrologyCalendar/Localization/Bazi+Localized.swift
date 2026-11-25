@@ -11,12 +11,14 @@ extension Bazi {
     case .zhHans:
       return "年:\(nian.description) 月:\(yue.description) 日:\(ri.description) 时:\(shi.description)"
     case .en:
-      return "Year: \(pillarEN(nian))  Month: \(pillarEN(yue))  Day: \(pillarEN(ri))  Hour: \(pillarEN(shi))"
+      return "Year: \(pinyinPillar(nian))  Month: \(pinyinPillar(yue))  Day: \(pinyinPillar(ri))  Hour: \(pinyinPillar(shi))"
+    case .es:
+      return "Año: \(pinyinPillar(nian))  Mes: \(pinyinPillar(yue))  Día: \(pinyinPillar(ri))  Hora: \(pinyinPillar(shi))"
     }
   }
 
-  /// Renders a single pillar for English display as `"Pinyin (漢字)"`.
-  private func pillarEN(_ pillar: Ganzhi) -> String {
+  /// Renders a single pillar for non-Chinese display as `"Pinyin (漢字)"`.
+  private func pinyinPillar(_ pillar: Ganzhi) -> String {
     "\(pillar.pinyin) (\(pillar.description))"
   }
 }

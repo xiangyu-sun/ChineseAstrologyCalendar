@@ -221,6 +221,9 @@ extension SeasonalCount.Kind: LocalizedNaming {
     case (.dogDays, .en): return "Dog Days"
     case (.plumRains, .zhHant), (.plumRains, .zhHans): return "梅雨"
     case (.plumRains, .en): return "Plum Rains"
+    case (.nines, .es): return "Cuenta de los nueves"
+    case (.dogDays, .es): return "Canícula"
+    case (.plumRains, .es): return "Lluvias de las ciruelas"
     }
   }
 }
@@ -231,14 +234,24 @@ extension SeasonalCount.Period: LocalizedNaming {
     "First Nine", "Second Nine", "Third Nine", "Fourth Nine", "Fifth Nine",
     "Sixth Nine", "Seventh Nine", "Eighth Nine", "Ninth Nine",
   ]
+  private static let nineSpanish = [
+    "Primer nueve", "Segundo nueve", "Tercer nueve", "Cuarto nueve", "Quinto nueve",
+    "Sexto nueve", "Séptimo nueve", "Octavo nueve", "Noveno nueve",
+  ]
   private static let fuNames = ["初伏", "中伏", "末伏"]
   private static let fuEnglish = ["Early Fu", "Middle Fu", "Late Fu"]
+  private static let fuSpanish = ["Fu inicial", "Fu medio", "Fu final"]
 
   public func localizedName(in language: DisplayLanguage) -> String {
-    let english = language.base == .en
+    let names: (nines: [String], fu: [String])
+    switch language.base {
+    case .zhHant, .zhHans: names = (Self.nineNames, Self.fuNames)
+    case .en: names = (Self.nineEnglish, Self.fuEnglish)
+    case .es: names = (Self.nineSpanish, Self.fuSpanish)
+    }
     switch kind {
-    case .nines: return english ? Self.nineEnglish[index] : Self.nineNames[index]
-    case .dogDays: return english ? Self.fuEnglish[index] : Self.fuNames[index]
+    case .nines: return names.nines[index]
+    case .dogDays: return names.fu[index]
     case .plumRains: return kind.localizedName(in: language)
     }
   }

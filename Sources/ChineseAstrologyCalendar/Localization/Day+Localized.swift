@@ -4,13 +4,16 @@ extension Day: LocalizedNaming {
   /// The lunar day name in the given language.
   ///
   /// The Chinese forms (初一…三十) are identical in Traditional and Simplified
-  /// script, so both return ``name``. English returns an ordinal ("1st"…"30th").
+  /// script, so both return ``name``. English returns an ordinal ("1st"…"30th")
+  /// and Spanish a numbered day ("Día 1"…"Día 30").
   public func localizedName(in language: DisplayLanguage) -> String {
     switch language.base {
     case .zhHant, .zhHans:
       return name
     case .en:
       return Self.englishOrdinal(rawValue)
+    case .es:
+      return "Día \(rawValue)"
     }
   }
 

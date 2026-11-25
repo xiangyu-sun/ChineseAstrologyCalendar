@@ -2,15 +2,12 @@ import Foundation
 
 extension ChineseFestival: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
-    case .ru: return RussianFestivalContent().name(for: self)
-    case .es: return SpanishFestivalContent().name(for: self)
-    default: break
-    }
+    if language == .ru { return RussianFestivalContent().name(for: self) }
     switch language.base {
     case .zhHant: return chineseName
     case .zhHans: return Self.simplifiedNames[self] ?? chineseName
     case .en: return Self.englishNames[self] ?? chineseName
+    case .es: return SpanishFestivalContent().name(for: self)
     }
   }
 

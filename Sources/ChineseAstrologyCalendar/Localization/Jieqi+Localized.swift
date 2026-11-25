@@ -2,15 +2,12 @@ import Foundation
 
 extension Jieqi: LocalizedNaming {
   public func localizedName(in language: DisplayLanguage) -> String {
-    switch language {
-    case .ru: return RussianJieqiContent().name(for: self)
-    case .es: return SpanishJieqiContent().name(for: self)
-    default: break
-    }
+    if language == .ru { return RussianJieqiContent().name(for: self) }
     switch language.base {
     case .zhHant: return chineseName
     case .zhHans: return Self.simplifiedNames[self] ?? chineseName
     case .en: return Self.englishNames[self] ?? chineseName
+    case .es: return SpanishJieqiContent().name(for: self)
     }
   }
 

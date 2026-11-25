@@ -97,7 +97,7 @@ A comprehensive Swift package for working with traditional Chinese lunar calenda
 
 ### 🌐 Localization — Expanded in v4.0
 - **`DisplayLanguage`**: Traditional Chinese (canonical), Simplified Chinese, English, Russian and Spanish. It is a struct, so future languages are not breaking changes
-- Russian and Spanish translate festivals and solar terms (names and descriptions); other types fall back to English
+- Spanish names every type (since 4.4.0). Russian translates festivals and solar terms (names and descriptions); other types fall back to English
 - **`LocalizedNaming`**: one `localizedName(in:)` call for Zodiac, Tiangan, Dizhi, Ganzhi, Wuxing, Season, FangWei, Jieqi, ChineseFestival, ChineseMoonPhase, TwelveGods, Nayin, LunarMansion, FourSymbol, DizhiRelationship, Day and `LunarMonth`
 - Downstream packages can adopt `LocalizedNaming` for their own types
 
@@ -116,7 +116,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.3.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.4.0")
 ]
 ```
 

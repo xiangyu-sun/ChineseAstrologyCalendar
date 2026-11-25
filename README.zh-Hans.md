@@ -89,7 +89,7 @@
 
 ### 🌐 本地化 — v4.0 扩展
 - **`DisplayLanguage`**：繁体中文（标准）、简体中文、英文、俄文与西班牙文。它是 struct，因此日后新增语言不属于破坏性变更
-- 俄文与西班牙文翻译了节日与节气（名称与说明）；其他类型会回退为英文
+- 西班牙文涵盖所有类型的名称（4.4.0 起）。俄文翻译了节日与节气（名称与说明）；其他类型会回退为英文
 - **`LocalizedNaming`**：通过一个 `localizedName(in:)` 调用即可获取 Zodiac、Tiangan、Dizhi、Ganzhi、Wuxing、Season、FangWei、Jieqi、ChineseFestival、ChineseMoonPhase、TwelveGods、Nayin、LunarMansion、FourSymbol、DizhiRelationship、Day 与 `LunarMonth` 的显示名称
 - 下游包可为自己的类型采用 `LocalizedNaming`
 
@@ -108,7 +108,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.3.0")
+    .package(url: "https://github.com/xiangyu-sun/ChineseAstrologyCalendar.git", from: "4.4.0")
 ]
 ```
 

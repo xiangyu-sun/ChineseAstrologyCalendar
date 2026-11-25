@@ -36,15 +36,12 @@ public struct LocalizedJieqiContentProvider: JieqiContentProvider {
   }
 
   public var category: String {
-    switch language {
-    case .ru: return RussianJieqiContent().category
-    case .es: return SpanishJieqiContent().category
-    default: break
-    }
+    if language == .ru { return RussianJieqiContent().category }
     switch language.base {
     case .zhHant: return JieqiSource.categoryName
     case .zhHans: return "节气"
     case .en: return "Solar Term"
+    case .es: return SpanishJieqiContent().category
     }
   }
 }

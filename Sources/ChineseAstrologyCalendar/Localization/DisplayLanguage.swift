@@ -14,8 +14,10 @@ import Foundation
 ///   always matches a type's `traditionalChineseName` / `chineseCharacter`.
 /// - ``zhHans`` — Simplified Chinese.
 /// - ``en`` — English.
-/// - ``ru`` — Russian, and ``es`` — Spanish. Festival and solar-term names and
-///   descriptions are translated; every other type falls back to English.
+/// - ``es`` — Spanish. Every type has Spanish names; stems, branches and
+///   stem-branch pairs are written in Pinyin, as in English.
+/// - ``ru`` — Russian. Festival and solar-term names and descriptions are
+///   translated; every other type falls back to English.
 public struct DisplayLanguage: Hashable, Sendable, CustomStringConvertible {
 
   /// The BCP 47 identifier of the language, e.g. `"zh-Hant"` or `"en"`.
@@ -33,7 +35,7 @@ public struct DisplayLanguage: Hashable, Sendable, CustomStringConvertible {
   public static let en = DisplayLanguage(uncheckedIdentifier: "en")
   /// Russian (русский). Types without Russian text fall back to English.
   public static let ru = DisplayLanguage(uncheckedIdentifier: "ru")
-  /// Spanish (español). Types without Spanish text fall back to English.
+  /// Spanish (español).
   public static let es = DisplayLanguage(uncheckedIdentifier: "es")
 
   public var description: String { identifier }
@@ -118,22 +120,24 @@ extension DisplayLanguage: Codable {
   }
 }
 
-// MARK: - Script fallback
+// MARK: - Language fallback
 
-/// The three scripts every type in the package is translated into. Languages
+/// The languages every type in the package is translated into. Languages
 /// without their own text for a type render it in English.
 enum BaseLanguage {
   case zhHant
   case zhHans
   case en
+  case es
 }
 
 extension DisplayLanguage {
-  /// The base language to use for types that only carry Chinese and English text.
+  /// The base language to use for types without their own text in this language.
   var base: BaseLanguage {
     switch self {
     case .zhHant: return .zhHant
     case .zhHans: return .zhHans
+    case .es: return .es
     default: return .en
     }
   }

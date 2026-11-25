@@ -5,6 +5,7 @@ extension Season: LocalizedNaming {
     switch language.base {
     case .zhHant, .zhHans: return traditionalChineseName // 春夏秋冬 identical in both scripts
     case .en: return Self.englishNames[self] ?? traditionalChineseName
+    case .es: return Self.spanishNames[self] ?? traditionalChineseName
     }
   }
 
@@ -13,5 +14,12 @@ extension Season: LocalizedNaming {
     .summer: "Summer",
     .fall: "Autumn",
     .winter: "Winter",
+  ]
+
+  private static let spanishNames: [Season: String] = [
+    .spring: "Primavera",
+    .summer: "Verano",
+    .fall: "Otoño",
+    .winter: "Invierno",
   ]
 }
