@@ -58,6 +58,18 @@ public struct RecurringDaySource: SpecialDaySource {
   /// The default category string used in `SpecialDay.category`.
   public static let categoryName = "自訂"
 
+  /// ``categoryName`` in `language`, to pass as `category` when the other
+  /// sources show localized text.
+  public static func categoryName(in language: DisplayLanguage) -> String {
+    if language == .ru { return "Личное" }
+    switch language.base {
+    case .zhHant: return categoryName
+    case .zhHans: return "自定义"
+    case .en: return "Custom"
+    case .es: return "Personal"
+    }
+  }
+
   public let days: [RecurringDay]
   public let timeZone: TimeZone
   private let category: String

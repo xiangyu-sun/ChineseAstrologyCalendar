@@ -2,6 +2,12 @@
 
 All notable changes to this package. Releases follow [Semantic Versioning](https://semver.org).
 
+## 4.4.1
+
+### Added
+- `RecurringDaySource.categoryName(in:)`: the category of user-defined days in any `DisplayLanguage`
+  ("Personal" in Spanish). The default category is still 自訂, so pass it as `category` to localize it.
+
 ## 4.4.0
 
 ### Added

@@ -178,6 +178,23 @@ import Testing
     #expect(en.contains("Hour: Guǐchǒu (癸丑)"))
   }
 
+  // MARK: - Custom days
+
+  @Test func recurringDayCategoryLocalized() {
+    #expect(RecurringDaySource.categoryName(in: .zhHant) == RecurringDaySource.categoryName)
+    #expect(RecurringDaySource.categoryName(in: .zhHans) == "自定义")
+    #expect(RecurringDaySource.categoryName(in: .en) == "Custom")
+    #expect(RecurringDaySource.categoryName(in: .es) == "Personal")
+    #expect(RecurringDaySource.categoryName(in: .ru) == "Личное")
+  }
+
+  @Test func recurringDaySourceUsesTheLocalizedCategory() throws {
+    let day = RecurringDay(name: "Cumpleaños", reckoning: .gregorian, month: 5, day: 1)
+    let source = RecurringDaySource(days: [day], category: RecurringDaySource.categoryName(in: .es))
+    let next = try #require(source.nextSpecialDay(after: Date()))
+    #expect(next.category == "Personal")
+  }
+
   // MARK: - Day / EventModel
 
   @Test func dayLocalized() {
